@@ -106,12 +106,23 @@ export function cupon(cambios: Partial<Cupon> = {}): Cupon {
 
 const cuponesCreados: number[] = []
 
-/** Publica el cupón desde el panel y lo anota para borrarlo al final. */
-export async function publicarCupon(panel: Panel, datos: Cupon): Promise<Cupon> {
-  const res = await enviarAlPanel(panel, 'marketing/coupon.save', { coupon_id: 0, ...datos })
+/**
+ * Publica el cupón desde el panel y lo anota para borrarlo al final. Si se
+ * pasan productos, el cupón solo descuenta sobre esos productos.
+ */
+export async function publicarCupon(panel: Panel, datos: Cupon, soloParaProductos: number[] = []): Promise<Cupon> {
+  const res = await enviarAlPanel(panel, 'marketing/coupon.save', { coupon_id: 0, ...datos, 'coupon_product[]': soloParaProductos })
   if (!res.body.coupon_id) throw new Error(`El panel no creó el cupón: ${JSON.stringify(res.body)}`)
   cuponesCreados.push(res.body.coupon_id)
   return { ...datos, coupon_id: res.body.coupon_id }
+}
+
+/** Guarda cambios sobre un cupón que ya existe (por ejemplo, deshabilitarlo). */
+export const editarCupon = (panel: Panel, datos: Cupon) => enviarAlPanel(panel, 'marketing/coupon.save', datos)
+
+/** Anota un cupón creado directamente con enviarAlPanel, para que también se borre. */
+export const anotarCuponParaBorrar = (couponId: unknown): void => {
+  if (typeof couponId === 'number') cuponesCreados.push(couponId)
 }
 
 /** Borra los cupones que publicó este archivo de pruebas. */

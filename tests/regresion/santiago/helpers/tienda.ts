@@ -149,6 +149,14 @@ export interface Carrito {
 export const agregarAlCarrito = (quien: Visitante, productoId: number | string, cantidad: number | string = 1) =>
   enviar(quien, 'checkout/cart.add', { product_id: productoId, quantity: cantidad })
 
+/** Cambia la cantidad de una línea del carrito. */
+export const cambiarCantidad = (quien: Visitante, clave: string | number, cantidad: number | string) =>
+  enviar(quien, 'checkout/cart.edit', { key: clave, quantity: cantidad })
+
+/** Quita una línea del carrito (el botón rojo de la página manda la clave en la dirección). */
+export const quitarDelCarrito = (quien: Visitante, clave: string | number) =>
+  quien.get(ruta('checkout/cart.remove', { key: clave })).buffer(true).parse(leerRespuesta)
+
 /**
  * Lo que hay en el carrito del visitante, tal como lo muestra la página
  * "Shopping Cart": cada línea de la tabla y cada renglón de totales.
