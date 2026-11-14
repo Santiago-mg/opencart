@@ -191,10 +191,21 @@ export function cambiarEstadoDeResena(panel: Panel, reviewId: number, datos: Dat
   })
 }
 
-/** Borra todas las reseñas de ese autor. */
+/** Busca en el panel la reseña de ese autor y la habilita, como hace la administradora. */
+export async function aprobarResenaDe(panel: Panel, autor: string, datos: Omit<DatosDeResena, 'author'>) {
+  const [pendiente] = await resenasEnElPanel(panel, autor)
+  if (!pendiente) throw new Error(`En el panel no hay ninguna reseña de "${autor}"`)
+  await cambiarEstadoDeResena(panel, pendiente.review_id, { author: autor, ...datos }, true)
+  return pendiente.review_id
+}
+
+/** Borra todas las reseñas cuyo autor empieza así (el panel las muestra de a 10). */
 export async function borrarResenasDe(panel: Panel, autor: string): Promise<void> {
-  const ids = (await resenasEnElPanel(panel, autor)).map((r) => r.review_id)
-  if (ids.length > 0) await enviarAlPanel(panel, 'catalog/review.delete', { 'selected[]': ids })
+  for (let pagina = 0; pagina < 50; pagina++) {
+    const ids = (await resenasEnElPanel(panel, autor)).map((r) => r.review_id)
+    if (ids.length === 0) return
+    await enviarAlPanel(panel, 'catalog/review.delete', { 'selected[]': ids })
+  }
 }
 
 // ── Devoluciones (Sales > Returns) ────────────────────────────────────────
@@ -235,8 +246,11 @@ export function cambiarEstadoDeDevolucion(panel: Panel, returnId: number | strin
   return enviarAlPanel(panel, 'sale/returns.addHistory', { return_status_id: estado, comment: comentario, notify: 0 }, { return_id: returnId })
 }
 
-/** Borra todas las devoluciones de ese cliente. */
+/** Borra todas las devoluciones cuyo cliente empieza así (el panel las muestra de a 10). */
 export async function borrarDevolucionesDe(panel: Panel, cliente: string): Promise<void> {
-  const ids = (await devolucionesEnElPanel(panel, cliente)).map((d) => d.return_id)
-  if (ids.length > 0) await enviarAlPanel(panel, 'sale/returns.delete', { 'selected[]': ids })
+  for (let pagina = 0; pagina < 50; pagina++) {
+    const ids = (await devolucionesEnElPanel(panel, cliente)).map((d) => d.return_id)
+    if (ids.length === 0) return
+    await enviarAlPanel(panel, 'sale/returns.delete', { 'selected[]': ids })
+  }
 }

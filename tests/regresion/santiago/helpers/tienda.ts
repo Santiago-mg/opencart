@@ -220,9 +220,17 @@ export interface Resena {
   [otroCampo: string]: unknown
 }
 
+let resenasEscritas = 0
+
+/**
+ * Un nombre de autor distinto en cada prueba (siempre empieza por "QA", para
+ * poder encontrar sus reseñas en el panel y borrarlas al final).
+ */
+export const autorUnico = (): string => `QA ${Date.now().toString(36)}${(resenasEscritas++).toString(36)}`
+
 /** Una reseña que cumple todas las reglas; cada prueba cambia solo lo que le interesa. */
 export const resena = (cambios: Resena = {}): Resena => ({
-  author: 'Santiago QA',
+  author: autorUnico(),
   text: 'El producto llegó a tiempo y funciona muy bien.',
   rating: 5,
   ...cambios,
