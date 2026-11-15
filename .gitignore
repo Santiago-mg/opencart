@@ -44,3 +44,6 @@
 /.DS_Store
 /.cache
 /.php-cs-fixer.cache
+
+# Instalación local (la crea el contenedor al instalar OpenCart)
+/upload/install.lock
