@@ -1,0 +1,11 @@
+# Text
+text_wishlist: 'Lista de deseos (%s)'
+text_shopping_cart: 'Carrito de compra'
+text_account: 'Mi cuenta'
+text_register: 'Registrarse'
+text_login: 'Iniciar sesión'
+text_order: 'Historial de pedidos'
+text_transaction: 'Transacciones'
+text_download: 'Descargas'
+text_logout: 'Salir'
+text_checkout: 'Finalizar compra'
