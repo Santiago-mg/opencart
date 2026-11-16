@@ -14,6 +14,7 @@ customElements.define('common-cart', class extends WebComponent {
         data.set('products', cart.getProducts());
         data.set('quantity', cart.countProducts());
         data.set('total', cart.getTotal());
+        data.set('totals', []);
 
         data.set('currency', local.get('currency'));
 

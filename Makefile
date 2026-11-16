@@ -36,7 +36,7 @@ define check_service_running
 endef
 
 # List of all known targets.
-KNOWN_TARGETS := help init build up down restart logs apache php mysql exec ps
+KNOWN_TARGETS := help init build up down restart logs apache php mysql exec ps test
 
 # Phony targets are not files.
 .PHONY: $(KNOWN_TARGETS)
@@ -63,6 +63,7 @@ help: ## Show this help message
 	@echo -e "  $(OPENCART_COLOR)make apache$(COLOR_RESET)         - Enter the Apache container (sh)"
 	@echo -e "  $(OPENCART_COLOR)make mysql$(COLOR_RESET)          - Enter the MySQL container (bash)"
 	@echo -e "  $(OPENCART_COLOR)make exec$(COLOR_RESET)           - Execute a command in a service"
+	@echo -e "  $(OPENCART_COLOR)make test$(COLOR_RESET)           - Run the PHPUnit test suite"
 	@echo ""
 	@echo "Examples:"
 	@echo "  make up profiles=\"adminer redis\""
@@ -151,3 +152,7 @@ php: ## Enter the PHP container (bash)
 mysql: ## Enter the MySQL container (bash)
 	$(call check_service_running,mysql)
 	@$(COMPOSE) exec mysql bash
+
+test: ## Run the PHPUnit test suite
+	$(call check_service_running,php)
+	@$(COMPOSE) exec -T php sh -c 'cd /var/www/tests && composer install --no-interaction --prefer-dist --quiet && cd /var/www && tests/vendor/bin/phpunit -c phpunit.xml'

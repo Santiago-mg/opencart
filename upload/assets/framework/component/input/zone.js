@@ -1,9 +1,6 @@
 import { loader, local } from '../../library.js';
 import { InputSelect } from './select.js';
 
-// Config
-const config = await loader.config('default');
-
 /**
  * input-zone
  *
@@ -18,92 +15,66 @@ const config = await loader.config('default');
 customElements.define('input-zone', class extends InputSelect {
     static observedAttributes = [
         'country_id',
+        'value',
         'required',
         'disabled',
         'readonly'
-	];
-	
-	#options = [];
-	
-    default = HTMLInputElement;
+    ];
 
-    get value() {
-        return this.getAttribute('value');
+    async getZones() {
+        let country_id = this.getAttribute('country_id');
+
+        if (!country_id) return [];
+
+        let country = await loader.storage('localisation/country-' + country_id);
+
+        if (!(country instanceof Map)) return [];
+
+        return country.get('zone') || [];
     }
-
-    set value(value) {
-        this.setAttribute('value', value);
-    }
-
-	constructor() { 
-		super();
-		
-		this.#options = Array.from(this.querySelectorAll('option')).map(option => {
-			return {
-				text: option.outerHTML,
-				value: option.value
-			};
-		});
-
-		for (let country of config.countries) {
-			this.#options.push({
-				text: country.description[local.get('language')] ? country.description[local.get('language')].name : '',
-				value: country.country_id
-			});
-		}
-	}
 
     async render() {
-        let html = '<select name="' + this.getAttribute('name') + '" id="select" @change="handleChange" class="form-select"';
+        let html = '<select name="' + this.name + '" id="input" @ref="input" @change="onChange" class="form-control"';
 
-        if (this.hasAttribute('required')) {
-            html += ' required';
+        if (this.required) html += ' required';
+        if (this.disabled) html += ' disabled';
+        if (this.readonly) html += ' readonly';
+
+        html += '>';
+
+        let zones = await this.getZones();
+
+        if (!zones.length) {
+            html += '<option value="0">-- Please Select --</option>';
         }
 
-        if (this.hasAttribute('disabled')) {
-            html += ' disabled';
+        for (let zone of zones) {
+            let description = zone.description[local.get('language')] || {};
+            let name = description.name || zone.name || '';
+
+            html += '<option value="' + zone.zone_id + '"';
+
+            if (zone.zone_id == this.value) html += ' selected';
+
+            html += '>' + name + '</option>';
         }
 
-        html += '>' + this.default;
-
-        //if () {
-
-        //}
-
-        let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
-
-        console.log(country);
-
-        if (country instanceof Map) {
-            for (let zone of country['zone']) {
-                html += '<option value="' + zone.zone_id + '"';
-
-                if (zone.zone_id == this.value) {
-                    html += ' selected';
-                }
-
-                let name = '';
-
-                if (local.get('language') in zone.description) {
-                    name = zone.description[local.get('language')].name;
-                }
-
-                html += '>' + name + '</option>';
-            }
-        }
-
-        html += '</select>';
+        html += '</select><div @ref="error" class="invalid-feedback"></div>';
 
         return html;
     }
 
     async handleConnect() {
-        this.default = this.innerHTML;
+        super.handleConnect();
     }
 
-    async handleChange(e) {
-		this.value = e.target.value;
-		
-		let country = await loader.storage('localisation/country-' + this.getAttribute('country_id'));
+    async handleAttribute(name, value, value_old) {
+        if (name === 'country_id') {
+            await this.update();
+
+            return;
+        }
+
+        super.handleAttribute(name, value, value_old);
     }
 });

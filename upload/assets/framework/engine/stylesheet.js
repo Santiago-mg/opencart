@@ -37,6 +37,24 @@ class Stylesheet {
 
     /** Loads the files and adds them to the root. A file that fails is logged and skipped. */
     async adopt(root, names = []) {
+        // Older browsers / engines without constructable stylesheets: fall back
+        // to a plain <link> inside the shadow root (or document).
+        if (!this.#canAdopt()) {
+            for (const link of root.querySelectorAll('link[data-opencart-style]')) link.remove();
+
+            for (const name of names) {
+                const link = document.createElement('link');
+
+                link.rel = 'stylesheet';
+                link.href = this.resolve(name);
+                link.dataset.opencartStyle = '';
+
+                root.append(link);
+            }
+
+            return;
+        }
+
         const sheets = await Promise.all(names.map(name => this.#load(this.resolve(name)).catch(error => {
             console.error(error);
 
@@ -48,11 +66,40 @@ class Stylesheet {
 
     /** Adds CSS text to the root. */
     async adoptText(root, texts = []) {
+        if (!this.#canAdopt()) {
+            for (const style of root.querySelectorAll('style[data-opencart-style]')) style.remove();
+
+            for (const css of texts) {
+                const style = document.createElement('style');
+
+                style.textContent = css;
+                style.dataset.opencartStyle = '';
+
+                root.append(style);
+            }
+
+            return;
+        }
+
         this.#add(root, texts.map(css => {
             if (!this.#texts.has(css)) this.#texts.set(css, this.#sheet(css));
 
             return this.#texts.get(css);
         }));
+    }
+
+    /** Whether this browser supports constructable stylesheets on shadow roots. */
+    get supportsAdopted() {
+        return this.#canAdopt();
+    }
+
+    /** Whether this browser supports constructable stylesheets on shadow roots. */
+    #canAdopt() {
+        return typeof CSSStyleSheet === 'function'
+            && 'replaceSync' in CSSStyleSheet.prototype
+            && typeof ShadowRoot !== 'undefined'
+            && 'adoptedStyleSheets' in ShadowRoot.prototype
+            && 'adoptedStyleSheets' in Document.prototype;
     }
 
     #load(url) {

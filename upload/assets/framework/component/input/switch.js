@@ -1,5 +1,13 @@
 import { WebComponent } from '../../engine.js';
 
+const isChecked = (element) => {
+    if (!element.hasAttribute('checked')) return false;
+
+    const value = element.getAttribute('checked');
+
+    return value === '1' || value === 'true' || value === 'checked';
+};
+
 customElements.define('input-switch', class extends WebComponent {
     static formAssociated = true;
     static observedAttributes = [
@@ -14,7 +22,7 @@ customElements.define('input-switch', class extends WebComponent {
 		return {
 			value: this.getAttribute('value'),
             error: '',
-            checked: this.hasAttribute('checked'),
+            checked: isChecked(this),
             required: this.hasAttribute('required'),
             disabled: this.hasAttribute('disabled'),
             readonly: this.hasAttribute('readonly')
@@ -34,7 +42,7 @@ customElements.define('input-switch', class extends WebComponent {
     }
 	
     get checked() {
-        return this.hasAttribute('checked');
+        return isChecked(this);
     }
 
     set checked(value) {
@@ -78,8 +86,14 @@ customElements.define('input-switch', class extends WebComponent {
         return html;
     }
 
+    handleConnect() {
+        this.internal.setFormValue(this.checked ? this.getAttribute('value') : '');
+    }
+
     handleChange(e) {
         this.checked = e.target.checked;
+
+        this.internal.setFormValue(this.checked ? this.getAttribute('value') : '');
     }
 
     // Updates the field in place, so nothing the user typed (or focus) is lost.
@@ -87,6 +101,8 @@ customElements.define('input-switch', class extends WebComponent {
         value = value ?? false;
 
         this.toggleAttribute('checked', value);
+
+        this.internal.setFormValue(value ? this.getAttribute('value') : '');
 
         if (this.input) this.input.toggleAttribute('checked', value);
     }

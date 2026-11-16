@@ -17,8 +17,10 @@ customElements.define('common-language', class extends WebComponent {
         // Local storage language code
         let value = languages.get(local.get('language'));
 
-        data.set('name', value.name);
-        data.set('code', value.code);
+        // `code`/`name` collide with the keys in default.yaml, which are merged
+        // over this data by loader.template(), so use distinct names here.
+        data.set('language_name', value.name);
+        data.set('language_code', value.code);
 
         data.set('languages', Array.from(languages.values()));
 

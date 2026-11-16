@@ -108,7 +108,7 @@ export class WebComponent extends HTMLElement {
     // page's CSS, since anything adopted into the document would apply to the whole page.
     // The files go first and styles() after them, so the component's own rules win.
     async #style() {
-        if (!this.shadow) return;
+        if (!this.constructor.shadow) return;
 
         await stylesheet.adopt(this.root, this.stylesheets());
 
@@ -126,6 +126,10 @@ export class WebComponent extends HTMLElement {
 			this.binder.refresh(this.root);
 		}
 
+        // `adoptedStyleSheets` survive an innerHTML assignment, plain <link>
+        // elements injected for older engines do not, so re-apply those here.
+        if (!stylesheet.supportsAdopted) await this.#style();
+
         if (typeof this.handleConnect === 'function') {
             await this.handleConnect();
 		}
@@ -139,6 +143,8 @@ export class WebComponent extends HTMLElement {
 		this.root.innerHTML = await this.render();
 
 		this.binder.refresh(this.root);
+
+        if (!stylesheet.supportsAdopted) await this.#style();
 	}
 	
     async disconnectedCallback() {

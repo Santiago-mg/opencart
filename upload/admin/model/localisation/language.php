@@ -42,19 +42,17 @@ class Language extends \Opencart\System\Engine\Model {
 		// Attribute
 		$this->load->model('catalog/attribute');
 
-		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+		$results = $this->model_catalog_attribute->getAttributeDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute) {
-			$this->model_catalog_attribute->addDescription((int)$attribute['attribute_id'], $language_id, $attribute);
+			$this->model_catalog_attribute->addAttributeDescription((int)$attribute['attribute_id'], $language_id, $attribute);
 		}
 
 		// Attribute Group
-		$this->load->model('catalog/attribute_group');
-
-		$results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute_group) {
-			$this->model_catalog_attribute_group->addDescription((int)$attribute_group['attribute_group_id'], $language_id, $attribute_group);
+			$this->model_catalog_attribute->addDescription((int)$attribute_group['attribute_group_id'], $language_id, $attribute_group);
 		}
 
 		// Banner
@@ -93,22 +91,6 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_customer_customer_group->addDescription((int)$customer_group['customer_group_id'], $language_id, $customer_group);
 		}
 
-		// Custom Field
-		$this->load->model('customer/custom_field');
-
-		$results = $this->model_customer_custom_field->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $custom_field) {
-			$this->model_customer_custom_field->addDescription((int)$custom_field['custom_field_id'], $language_id, $custom_field);
-		}
-
-		// Custom Field Value
-		$results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $custom_field_value) {
-			$this->model_customer_custom_field->addValueDescription((int)$custom_field_value['custom_field_value_id'], (int)$custom_field_value['custom_field_id'], $language_id, $custom_field_value);
-		}
-
 		// Download
 		$this->load->model('catalog/download');
 
@@ -118,22 +100,20 @@ class Language extends \Opencart\System\Engine\Model {
 			$this->model_catalog_download->addDescription((int)$download['download_id'], $language_id, $download);
 		}
 
-		// Filter
+		// Filter Group
 		$this->load->model('catalog/filter');
 
 		$results = $this->model_catalog_filter->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($results as $filter) {
-			$this->model_catalog_filter->addDescription((int)$filter['filter_id'], $language_id, $filter);
+		foreach ($results as $filter_group) {
+			$this->model_catalog_filter->addDescription((int)$filter_group['filter_group_id'], $language_id, $filter_group);
 		}
 
-		// Filter Group
-		$this->load->model('catalog/filter_group');
+		// Filter
+		$results = $this->model_catalog_filter->getFilterDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		$results = $this->model_catalog_filter_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $filter_group) {
-			$this->model_catalog_filter_group->addDescription((int)$filter_group['filter_group_id'], $language_id, $filter_group);
+		foreach ($results as $filter) {
+			$this->model_catalog_filter->addFilterDescription((int)$filter['filter_id'], $language_id, $filter);
 		}
 
 		// Information
@@ -401,12 +381,6 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_customer_customer_group->deleteDescriptionsByLanguageId($language_id);
 
-		// Custom Field
-		$this->load->model('customer/custom_field');
-
-		$this->model_customer_custom_field->deleteDescriptionsByLanguageId($language_id);
-		$this->model_customer_custom_field->deleteValueDescriptionsByLanguageId($language_id);
-
 		// Download
 		$this->load->model('catalog/download');
 
@@ -634,15 +608,13 @@ class Language extends \Opencart\System\Engine\Model {
 		$language_data = [];
 
 		foreach ($results as $result) {
-			$image = HTTP_CATALOG;
-
 			if (!$result['extension']) {
-				$image .= 'catalog/';
+				$image = HTTP_SERVER . 'language/' . $result['code'] . '/' . $result['code'] . '.png';
 			} else {
-				$image .= 'extension/' . $result['extension'] . '/catalog/';
+				$image = HTTP_CATALOG . 'extension/' . $result['extension'] . '/catalog/language/' . $result['code'] . '/' . $result['code'] . '.png';
 			}
 
-			$language_data[$result['language_id']] = $result + ['image' => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png'];
+			$language_data[$result['language_id']] = $result + ['image' => $image];
 		}
 
 		return $language_data;
