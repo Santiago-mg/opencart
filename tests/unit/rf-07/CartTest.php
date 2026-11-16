@@ -52,7 +52,9 @@ class CartTest extends TestCase {
 
     public function test_agregar_otra_vez_el_mismo_producto_suma_la_cantidad(): void {
         // Arrange
-        $this->db->answer('/SELECT COUNT\(\*\) AS `total` FROM `oc_cart`/', [['total' => 1]]);
+        // The cart first looks the existing line up by cart_id; returning one
+        // row makes add() take the UPDATE path instead of inserting a new line.
+        $this->db->answer('/^SELECT `cart_id` FROM `oc_cart`/', [['cart_id' => 3]]);
         $carrito = $this->carrito();
 
         // Act

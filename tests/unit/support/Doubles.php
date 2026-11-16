@@ -67,6 +67,17 @@ class LanguageStub {
         $path = str_starts_with($file, 'extension/')
             ? preg_replace('#^extension/([^/]+)/#', 'extension/$1/catalog/language/en-gb/', $file)
             : 'catalog/language/en-gb/' . $file;
+
+        // OpenCart 5 moved the storefront product languages to the catalog/
+        // directory; fall back to the new location when the old one is gone.
+        if (!is_file(OPENCART . $path . '.php')) {
+            $renamed = preg_replace('#^catalog/language/en-gb/product/#', 'catalog/language/en-gb/catalog/', $path);
+
+            if ($renamed !== $path && is_file(OPENCART . $renamed . '.php')) {
+                $path = $renamed;
+            }
+        }
+
         $_ = [];
         if (is_file(OPENCART . $path . '.php')) {
             require OPENCART . $path . '.php';

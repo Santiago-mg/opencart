@@ -125,9 +125,9 @@ class ProductSearchTest extends TestCase {
 
     public function ordenesPermitidos(): array {
         return [
-            'por nombre' => ['pd.name', 'ORDER BY LCASE(pd.name)'],
-            'por modelo' => ['p.model', 'ORDER BY LCASE(p.model)'],
-            'por precio (oferta, descuento o normal)' => ['p.price', 'ORDER BY (CASE WHEN `special` IS NOT NULL'],
+            'por nombre' => ['name', 'ORDER BY LCASE(pd.name)'],
+            'por modelo' => ['model', 'ORDER BY LCASE(p.model)'],
+            'por precio (oferta, descuento o normal)' => ['price', 'ORDER BY (CASE WHEN `special` IS NOT NULL'],
             'por calificación' => ['rating', 'ORDER BY rating'],
         ];
     }

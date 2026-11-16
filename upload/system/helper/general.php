@@ -299,7 +299,19 @@ function oc_validate_email(string $email): bool {
 
 		$domain = oc_substr($email, (oc_strrpos($email, '@') + 1));
 
-		$email = $local . '@' . idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+		// idn_to_ascii() throws a ValueError on PHP 8 when the domain is empty,
+		// so reject addresses such as "ana@" before converting.
+		if ($domain === '') {
+			return false;
+		}
+
+		$domain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+
+		if ($domain === false) {
+			return false;
+		}
+
+		$email = $local . '@' . $domain;
 	}
 
 	return filter_var($email, FILTER_VALIDATE_EMAIL);

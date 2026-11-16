@@ -18,7 +18,12 @@ require_once DIR_SYSTEM . 'engine/registry.php';
 require_once DIR_SYSTEM . 'engine/model.php';
 require_once DIR_SYSTEM . 'engine/controller.php';
 require_once DIR_SYSTEM . 'helper/general.php';
-require_once DIR_SYSTEM . 'helper/validation.php';
+// OpenCart 5 moved the validation helpers into general.php; keep the
+// conditional include so the suite also works on the 4.1.0.3 base.
+$validation = DIR_SYSTEM . 'helper/validation.php';
+if (is_file($validation)) {
+    require_once $validation;
+}
 
 // Hamcrest: el mismo estilo de PyHamcrest del repositorio del curso
 // (assertThat(valor, equalTo(...))). En Composer es hamcrest/hamcrest-php.
@@ -41,6 +46,18 @@ spl_autoload_register(function (string $class): void {
     //   Opencart\Catalog\Model\Extension\Opencart\Total\Coupon → extension/opencart/catalog/model/total/coupon.php
     $path = preg_replace('#^(catalog|admin)/(model|controller)/extension/([^/]+)/#', 'extension/$3/$1/$2/', $path);
     $file = OPENCART . $path . '.php';
+
+    // OpenCart 5 moved the storefront product controllers to the catalog/
+    // directory but kept their Product namespace. Resolve that rename so the
+    // tests can keep referring to the classes by their public names.
+    if (!is_file($file)) {
+        $renamed = preg_replace('#^catalog/controller/product/#', 'catalog/controller/catalog/', $path);
+
+        if ($renamed !== $path) {
+            $file = OPENCART . $renamed . '.php';
+        }
+    }
+
     if (is_file($file)) {
         require_once $file;
     }
