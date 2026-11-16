@@ -44,6 +44,22 @@ docker compose --env-file=./docker/.env.docker exec -T php \
   sh -c 'cd /var/www && tests/vendor/bin/phpunit -c phpunit.xml --testsuite Regression'
 ```
 
+## Feature unit suite (RF-06 to RF-11)
+
+The PHPUnit suite from the `proyecto-4.1.0.3` branch is kept in `tests/unit`
+and runs independently of the suite above. It needs its own dependencies:
+
+```bash
+docker compose --env-file=./docker/.env.docker exec -T php \
+  sh -c 'cd /var/www/tests/unit && composer install --no-interaction --prefer-dist'
+docker compose --env-file=./docker/.env.docker exec -T php \
+  sh -c 'cd /var/www/tests/unit && vendor/bin/phpunit --exclude-group defecto'
+```
+
+Use `--group defecto` to run the seven red-phase tests that intentionally fail
+until the corresponding OpenCart defects are fixed. See `tests/unit/README.md`
+for the full feature breakdown.
+
 ## How isolation works
 
 `tests/bootstrap.php` builds a normal OpenCart registry (`Config`, `DB`,

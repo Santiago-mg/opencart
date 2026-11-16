@@ -57,6 +57,11 @@ docker run --rm -v "$PWD/../..":/app -w /app/tests/unit composer:2 \
 Una funcionalidad sola: `vendor/bin/phpunit rf-08`. Con los nombres en
 español: `vendor/bin/phpunit --testdox`.
 
+> **Compatibilidad con OpenCart 5:** la suite quedó adaptada a
+> `5.0.0.0 Alpha`. Los dobles de prueba resuelven los controladores y archivos
+> de idioma que se movieron de `product/` a `catalog/`, y el bootstrap ya no
+> exige `validation.php` porque esas funciones viven en `general.php`.
+
 ## Resultados
 
 Corrida del 15/11/2026 (PHPUnit 9.6.17, PHP 8.3, OpenCart 4.1.0.3), guardada en `evidencia/`:
