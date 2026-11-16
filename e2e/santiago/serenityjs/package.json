@@ -2,7 +2,7 @@
   "name": "opencart-e2e-serenityjs",
   "version": "1.0.0",
   "private": true,
-  "description": "Pruebas E2E de OpenCart (RF-06 a RF-11) con Serenity/JS, Playwright, Cucumber y Screenplay",
+  "description": "Pruebas E2E de OpenCart (RF-01 a RF-11) con Serenity/JS, Playwright, Cucumber y Screenplay",
   "scripts": {
     "clean": "node scripts/clean.js",
     "typecheck": "tsc --noEmit",
@@ -27,6 +27,7 @@
     "@serenity-js/rest": "3.48.0",
     "@serenity-js/web": "3.48.0",
     "@types/node": "24.10.0",
+    "mysql2": "3.24.6",
     "playwright": "1.63.0",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"

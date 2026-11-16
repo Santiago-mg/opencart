@@ -2,7 +2,7 @@ import { AnswersQuestions, Interaction, Question, Task, TakeNotes, UsesAbilities
 import { CallAnApi } from '@serenity-js/rest';
 
 import { environment } from '../../support/environment';
-import { Coupon, WrittenReview, productId } from '../../support/testData';
+import { Coupon, CurrencyFixture, GeoZoneFixture, LanguageFixture, TaxClassFixture, WrittenReview, productId } from '../../support/testData';
 
 /**
  * El panel de administración, usado por HTTP para PREPARAR datos y revisar el
@@ -53,6 +53,75 @@ async function callThePanel(actor: Actor, route: string, options: { parameters?:
 const idsInTheList = (html: string): number[] =>
   [...html.matchAll(/name="selected\[\]" value="(\d+)"/g)].map((match) => Number(match[1]));
 
+/** Una fila de una lista del panel, con sus celdas ya sin etiquetas HTML. */
+export interface PanelListRow {
+  id: number;
+  cells: string[];
+  htmlCells: string[];
+  /** Las clases de la fila (<tr class="…">). */
+  classes: string[];
+}
+
+const plainText = (html: string): string =>
+  html.replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .trim();
+
+/** Las filas de una lista del panel (las que tienen una casilla selected[]). */
+export const rowsInTheList = (html: string): PanelListRow[] => {
+  const body = html.slice(html.indexOf('<tbody>'));
+
+  return [...body.matchAll(/<tr\b([^>]*)>([\s\S]*?)<\/tr>/g)]
+    .map(([, attributes, row]) => {
+      const id = Number(row.match(/name="selected\[\]" value="(\d+)"/)?.[1]);
+      if (!id) return undefined;
+
+      const htmlCells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((match) => match[1]);
+      const classes = (attributes.match(/class="([^"]*)"/)?.[1] ?? '').split(/\s+/).filter(Boolean);
+
+      return { id, cells: htmlCells.map(plainText), htmlCells, classes };
+    })
+    .filter((row): row is PanelListRow => row !== undefined);
+};
+
+/**
+ * Si una fila de idiomas o monedas está habilitada. En OpenCart 4.1.0.3 esas
+ * listas no tienen columna de estado: la fila deshabilitada se ve atenuada
+ * (<tr class="table-active opacity-50">).
+ */
+export const statusShownIn = (row: PanelListRow): 'Enabled' | 'Disabled' =>
+  (row.classes.includes('opacity-50') ? 'Disabled' : 'Enabled');
+
+/** El contenido de los <textarea> de una página del panel (por ejemplo, el visor de logs). */
+export const textareasInThePage = (html: string): string[] =>
+  [...html.matchAll(/<textarea[^>]*>([\s\S]*?)<\/textarea>/g)].map((match) => match[1]);
+
+/**
+ * Pide una lista del panel página por página. Las listas de idiomas, monedas y
+ * zonas no filtran por nombre, así que la única forma de encontrar un registro
+ * recién creado es recorrerlas.
+ */
+export async function callThePanelList(actor: Actor, route: string, parameters: Record<string, string | number> = {}): Promise<PanelListRow[]> {
+  const rows: PanelListRow[] = [];
+  const seen = new Set<number>();
+
+  for (let page = 1; page <= 20; page++) {
+    const answer = await callThePanel(actor, route, { parameters: { ...parameters, page } });
+    const pageRows = rowsInTheList(String(answer.data)).filter((row) => !seen.has(row.id));
+
+    if (pageRows.length === 0) break;
+
+    pageRows.forEach((row) => seen.add(row.id));
+    rows.push(...pageRows);
+  }
+
+  return rows;
+}
+
 /** Inicia sesión en el panel y anota la cookie y el token. */
 export const StartAdminSession = {
   asAdministrator: () => Interaction.where('#actor inicia sesión en el panel de administración', async (actor) => {
@@ -72,6 +141,18 @@ export const StartAdminSession = {
 
     TakeNotes.as(actor).notepad.set('adminCookie', cookie).set('userToken', userToken);
   }),
+};
+
+/** Acceso de bajo nivel al panel, compartido por las tareas de RF-01 a RF-05. */
+export const AdminPanel = {
+  call: callThePanel,
+  list: callThePanelList,
+  rows: rowsInTheList,
+  status: statusShownIn,
+  textareas: textareasInThePage,
+  ids: idsInTheList,
+  form: asForm,
+  url: panelUrl,
 };
 
 /** RF-08: Marketing > Coupons > Add New. */
@@ -130,7 +211,24 @@ export const CleanUp = {
       if (ids.length > 0) await callThePanel(actor, 'sale/returns.delete', { fields: { 'selected[]': ids } });
     }
   }),
+  languages: (languages: LanguageFixture[]) => removeFromTheList('#actor borra los idiomas de prueba', 'localisation/language', languages),
+  currencies: (currencies: CurrencyFixture[]) => removeFromTheList('#actor borra las monedas de prueba', 'localisation/currency', currencies),
+  // Primero las clases (sus reglas usan tasas) y después las zonas geográficas.
+  taxClasses: (taxClasses: TaxClassFixture[]) => removeFromTheList('#actor borra las clases de impuesto de prueba', 'localisation/tax_class', taxClasses),
+  geoZones: (geoZones: GeoZoneFixture[]) => removeFromTheList('#actor borra las zonas geográficas de prueba', 'localisation/geo_zone', geoZones),
 };
+
+/** Borra desde el panel los registros de prueba que todavía aparecen en su lista. */
+function removeFromTheList(description: string, section: string, records: Array<{ id?: number }>) {
+  return Interaction.where(description, async (actor) => {
+    const ids = records.map((record) => record.id).filter((id): id is number => id !== undefined);
+    if (ids.length === 0) return;
+
+    const existing = new Set((await callThePanelList(actor, `${ section }.list`)).map((row) => row.id));
+    const present = ids.filter((id) => existing.has(id));
+    if (present.length > 0) await callThePanel(actor, `${ section }.delete`, { fields: { 'selected[]': present } });
+  });
+}
 
 /** Lo que la administradora ve en Sales > Returns. */
 export const ReturnsInThePanel = {
