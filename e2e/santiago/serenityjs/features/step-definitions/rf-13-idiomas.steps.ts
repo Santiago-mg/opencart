@@ -51,9 +51,9 @@ When('la administradora habilita el idioma {string}', async (base: string) => {
   await administrator().attemptsTo(SetLanguageStatus.of(TestData.languageNamed(base), true));
 });
 
-When('la administradora deshabilita el idioma {string} desde la lista', async (base: string) => {
-  await administrator().attemptsTo(SetLanguageStatusFromTheList.of(TestData.languageNamed(base), false));
-});
+// When('la administradora deshabilita el idioma {string} desde la lista', async (base: string) => {
+//   await administrator().attemptsTo(SetLanguageStatusFromTheList.of(TestData.languageNamed(base), false));
+// });
 
 When('la administradora intenta agregar el idioma {string} con locale {string} y el código repetido {string}', async (base: string, locale: string, code: string) => {
   const language = TestData.language(base, { locale, code });

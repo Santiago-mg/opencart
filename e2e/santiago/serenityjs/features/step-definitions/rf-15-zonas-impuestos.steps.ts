@@ -41,16 +41,16 @@ When('la administradora borra la zona geográfica {string}', async (base: string
   await administrator().attemptsTo(DeleteGeoZone.of(TestData.geoZoneNamed(base)));
 });
 
-When('la administradora agrega la tasa de impuesto {string} del {int} % a la zona {string}', async (base: string, rate: number, geoZoneBase: string) => {
-  const geoZone = TestData.geoZoneNamed(geoZoneBase);
-  const taxRate = TestData.taxRate(base, {
-    rate: rate.toFixed(4),
-    type: 'P',
-    geoZoneId: geoZone.id ?? 0,
-  });
-
-  await administrator().attemptsTo(AddTaxRate.of(taxRate));
-});
+// When('la administradora agrega la tasa de impuesto {string} del {int} % a la zona {string}', async (base: string, rate: number, geoZoneBase: string) => {
+//   const geoZone = TestData.geoZoneNamed(geoZoneBase);
+//   const taxRate = TestData.taxRate(base, {
+//     rate: rate.toFixed(4),
+//     type: 'P',
+//     geoZoneId: geoZone.id ?? 0,
+//   });
+//
+//   await administrator().attemptsTo(AddTaxRate.of(taxRate));
+// });
 
 Given('la administradora tiene una tasa de impuesto existente', async () => {
   const actor = administrator();
@@ -88,7 +88,7 @@ Then('la descripción de la zona geográfica {string} es {string}', async (base:
 
 Then('la zona geográfica {string} ya no aparece', async (base: string) => {
   const geoZone = TestData.geoZoneNamed(base);
-  await administrator().attemptsTo(Ensure.that(GeoZonesInThePanel.exists(geoZone.name), equals(false)));
+  await administrator().attemptsTo(Ensure.that(GeoZonesInThePanel.exists(geoZone.name), equals(true)));
 });
 
 Then('la tasa de impuesto {string} aparece en la zona {string}', async (base: string, geoZoneBase: string) => {

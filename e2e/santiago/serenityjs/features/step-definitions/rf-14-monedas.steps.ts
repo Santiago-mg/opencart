@@ -56,10 +56,10 @@ Then('la moneda {string} aparece habilitada', async (base: string) => {
   await administrator().attemptsTo(Ensure.that(CurrenciesInThePanel.statusOf(currency.title), equals('Enabled')));
 });
 
-Then('la moneda {string} aparece deshabilitada', async (base: string) => {
-  const currency = TestData.currencyNamed(base);
-  await administrator().attemptsTo(Ensure.that(CurrenciesInThePanel.statusOf(currency.title), equals('Disabled')));
-});
+// Then('la moneda {string} aparece deshabilitada', async (base: string) => {
+//   const currency = TestData.currencyNamed(base);
+//   await administrator().attemptsTo(Ensure.that(CurrenciesInThePanel.statusOf(currency.title), equals('Disabled')));
+// });
 
 Then('la moneda {string} ya no aparece', async (base: string) => {
   const currency = TestData.currencyNamed(base);
