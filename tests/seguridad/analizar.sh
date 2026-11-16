@@ -20,6 +20,7 @@ SONAR_URL=${SONAR_URL:-http://localhost:9000}
 PROYECTO=OpenCart-Santiago
 TIENDA=${OPENCART_URL:-http://localhost}
 EVIDENCIA=tests/seguridad/evidencia
+mkdir -p "$EVIDENCIA/sonarqube" "$EVIDENCIA/dependencias" "$EVIDENCIA/dinamico"
 
 paso() { printf '\n══ %s ══\n' "$1"; }
 sonar_arriba() { curl -s "$SONAR_URL/api/system/status" | grep -q '"status":"UP"'; }
