@@ -1,0 +1,29 @@
+Revisión previa de dependencias PHP de OpenCart (composer.lock, 16 paquetes)
+Base de datos: FriendsOfPHP/security-advisories (actualizada 2026-11-13), la misma que usa composer audit.
+La revisión oficial con `composer audit --locked` la hace tests/seguridad/analizar.sh en el Mac.
+
+aws/aws-sdk-php 3.342.6 | CVE-2025-14761 | Key Commitment Issues in S3 Encryption Clients | https://aws.amazon.com/security/security-bulletins/AWS-2025-032/
+guzzlehttp/guzzle 7.9.2 | CVE-2026-55568 | Silent HTTPS proxy downgrade to cleartext | https://github.com/guzzle/guzzle/security/advisories/GHSA-wpwq-4j6v-78m3
+guzzlehttp/guzzle 7.9.2 | CVE-2026-55767 | Dot-only cookie domains match all hosts | https://github.com/guzzle/guzzle/security/advisories/GHSA-cwxw-98qj-8qjx
+guzzlehttp/psr7 2.7.0 | CVE-2026-48998 | Host confusion via authority reinterpretation | https://github.com/guzzle/psr7/security/advisories/GHSA-34xg-wgjx-8xph
+guzzlehttp/psr7 2.7.0 | CVE-2026-49214 | CRLF injection via URI host component | https://github.com/guzzle/psr7/security/advisories/GHSA-hq7v-mx3g-29hw
+guzzlehttp/psr7 2.7.0 | CVE-2026-55766 | CRLF injection in HTTP start-line serialization | https://github.com/guzzle/psr7/security/advisories/GHSA-vm85-hxw5-5432
+mtdowling/jmespath.php 2.8.0 | CVE-2026-54133 | CompilerRuntime code injection via unescaped function names | https://github.com/jmespath/jmespath.php/security/advisories/GHSA-pcw8-m77r-2528
+twig/twig 3.18.0 | CVE-2025-24374 | Missing output escaping for the null coalesce operator | https://symfony.com/blog/twig-cve-2025-24374-missing-output-escaping-for-the-null-coalesce-operator
+twig/twig 3.18.0 | CVE-2026-24425 | Possible sandbox bypass when using a source policy | https://symfony.com/cve-2026-24425
+twig/twig 3.18.0 | CVE-2026-46627 | Sandbox does not protect against resource exhaustion | https://symfony.com/cve-2026-46627
+twig/twig 3.18.0 | CVE-2026-46628 | The `spaceless` filter implicitly marks its output as safe | https://symfony.com/cve-2026-46628
+twig/twig 3.18.0 | CVE-2026-46633 | PHP code injection via `{% use %}` template name | https://symfony.com/cve-2026-46633
+twig/twig 3.18.0 | CVE-2026-46634 | `template_from_string()` escapes a SourcePolicy-driven sandbox via synthesized template name | https://symfony.com/cve-2026-46634
+twig/twig 3.18.0 | CVE-2026-46635 | Sandbox property allowlist bypass via the `column` filter (array_column on objects) | https://symfony.com/cve-2026-46635
+twig/twig 3.18.0 | CVE-2026-46636 | Sandbox filter, tag and function allow-list bypass when sandbox state changes between renders | https://symfony.com/blog/cve-2026-46636-sandbox-filter-tag-and-function-allow-list-bypass-when-sandbox-state-changes-between-renders
+twig/twig 3.18.0 | CVE-2026-46638 | `{% sandbox %}{% include %}` skips checkSecurity() on cached templates (incomplete fix for CVE-2024-45411) | https://symfony.com/cve-2026-46638
+twig/twig 3.18.0 | CVE-2026-46640 | Arbitrary PHP code execution via `_self.(<string>)` macro-reference compilation | https://symfony.com/cve-2026-46640
+twig/twig 3.18.0 | CVE-2026-47730 | XSS in profiler HtmlDumper via unescaped template and profile names | https://symfony.com/cve-2026-47730
+twig/twig 3.18.0 | CVE-2026-47732 | Sandbox: multiple `__toString()` policy bypasses via unguarded string coercion points | https://symfony.com/cve-2026-47732
+twig/twig 3.18.0 | CVE-2026-48805 | Sandbox state regression in deprecated internal wrappers in `src/Resources/core.php` | https://symfony.com/blog/cve-2026-48805-sandbox-state-regression-in-deprecated-internal-wrappers-in-src-resources-core-php
+twig/twig 3.18.0 | CVE-2026-48806 | Sandbox `__toString()` policy bypass via dynamic mapping keys | https://symfony.com/blog/cve-2026-48806-sandbox-tostring-policy-bypass-via-dynamic-mapping-keys
+twig/twig 3.18.0 | CVE-2026-48807 | Sandbox `__toString()` policy bypass via `Traversable` in `join`/`replace` and `in`/`not in` operators | https://symfony.com/blog/cve-2026-48807-sandbox-tostring-policy-bypass-via-traversable-in-join-replace-and-in-not-in-operators
+twig/twig 3.18.0 | CVE-2026-48808 | Sandbox property allowlist bypass via the `column` filter under `SourcePolicyInterface` | https://symfony.com/blog/cve-2026-48808-sandbox-property-allowlist-bypass-via-the-column-filter-under-sourcepolicyinterface
+
+Total: 23 avisos en 16 paquetes revisados.

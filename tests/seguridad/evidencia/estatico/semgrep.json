@@ -1,0 +1,217 @@
+{
+  "version": "1.185.0",
+  "results": [
+    {
+      "check_id": "tmp.claude-0.-home-claude.af88fef2-0a0f-502f-b95e-7856f11327a5.scratchpad.sg.php-lang.security.weak-crypto",
+      "path": "upload/catalog/model/catalog/product.php",
+      "start": {
+        "line": 243,
+        "col": 10,
+        "offset": 10438
+      },
+      "end": {
+        "line": 243,
+        "col": 19,
+        "offset": 10447
+      },
+      "extra": {
+        "message": "Detected usage of weak crypto function. Consider using stronger alternatives.",
+        "metadata": {
+          "cwe": [
+            "CWE-328: Use of Weak Hash"
+          ],
+          "references": [
+            "https://www.php.net/manual/en/book.sodium.php",
+            "https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/CryptoFunctionsSniff.php"
+          ],
+          "category": "security",
+          "technology": [
+            "php"
+          ],
+          "owasp": [
+            "A03:2017 - Sensitive Data Exposure",
+            "A02:2021 - Cryptographic Failures",
+            "A04:2025 - Cryptographic Failures"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "$key = md5($sql);",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "tmp.claude-0.-home-claude.af88fef2-0a0f-502f-b95e-7856f11327a5.scratchpad.sg.php-lang.security.weak-crypto",
+      "path": "upload/catalog/model/catalog/product.php",
+      "start": {
+        "line": 739,
+        "col": 10,
+        "offset": 32466
+      },
+      "end": {
+        "line": 739,
+        "col": 19,
+        "offset": 32475
+      },
+      "extra": {
+        "message": "Detected usage of weak crypto function. Consider using stronger alternatives.",
+        "metadata": {
+          "cwe": [
+            "CWE-328: Use of Weak Hash"
+          ],
+          "references": [
+            "https://www.php.net/manual/en/book.sodium.php",
+            "https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/CryptoFunctionsSniff.php"
+          ],
+          "category": "security",
+          "technology": [
+            "php"
+          ],
+          "owasp": [
+            "A03:2017 - Sensitive Data Exposure",
+            "A02:2021 - Cryptographic Failures",
+            "A04:2025 - Cryptographic Failures"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "$key = md5($sql);",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "tmp.claude-0.-home-claude.af88fef2-0a0f-502f-b95e-7856f11327a5.scratchpad.sg.php-lang.security.weak-crypto",
+      "path": "upload/catalog/model/catalog/product.php",
+      "start": {
+        "line": 810,
+        "col": 10,
+        "offset": 35168
+      },
+      "end": {
+        "line": 810,
+        "col": 19,
+        "offset": 35177
+      },
+      "extra": {
+        "message": "Detected usage of weak crypto function. Consider using stronger alternatives.",
+        "metadata": {
+          "cwe": [
+            "CWE-328: Use of Weak Hash"
+          ],
+          "references": [
+            "https://www.php.net/manual/en/book.sodium.php",
+            "https://github.com/FloeDesignTechnologies/phpcs-security-audit/blob/master/Security/Sniffs/BadFunctions/CryptoFunctionsSniff.php"
+          ],
+          "category": "security",
+          "technology": [
+            "php"
+          ],
+          "owasp": [
+            "A03:2017 - Sensitive Data Exposure",
+            "A02:2021 - Cryptographic Failures",
+            "A04:2025 - Cryptographic Failures"
+          ],
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "MEDIUM",
+          "confidence": "LOW"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "$key = md5($sql);",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    }
+  ],
+  "errors": [],
+  "time": {
+    "rules": [],
+    "rules_parse_time": 0.04336905479431152,
+    "profiling_times": {
+      "config_time": 12.38653039932251,
+      "core_time": 0.8927023410797119,
+      "ignores_time": 0.0003428459167480469,
+      "total_time": 13.284422159194946
+    },
+    "parsing_time": {
+      "total_time": 0.30550336837768555,
+      "per_file_time": {
+        "mean": 0.0044275850489519635,
+        "std_dev": 0.0001251490888719102
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_files": []
+    },
+    "scanning_time": {
+      "total_time": 1.3588709831237793,
+      "per_file_time": {
+        "mean": 0.02028165646453402,
+        "std_dev": 0.001728576760663627
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_files": []
+    },
+    "matching_time": {
+      "total_time": 0.3703007698059082,
+      "per_file_and_rule_time": {
+        "mean": 0.005366677823274032,
+        "std_dev": 5.94066105926882e-05
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_rules_on_files": []
+    },
+    "tainting_time": {
+      "total_time": 0.012753725051879883,
+      "per_def_and_rule_time": {
+        "mean": 0.0004905278866107648,
+        "std_dev": 6.376848125152865e-07
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_rules_on_defs": []
+    },
+    "fixpoint_timeouts": [],
+    "prefiltering": {
+      "project_level_time": 0.0,
+      "file_level_time": 0.0,
+      "rules_with_project_prefilters_ratio": 0.0,
+      "rules_with_file_prefilters_ratio": 0.9945196647324307,
+      "rules_selected_ratio": 0.02014829142488717,
+      "rules_matched_ratio": 0.02014829142488717
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 208429696
+  },
+  "engine_requested": "OSS",
+  "skipped_rules": [],
+  "profiling_results": []
+}
