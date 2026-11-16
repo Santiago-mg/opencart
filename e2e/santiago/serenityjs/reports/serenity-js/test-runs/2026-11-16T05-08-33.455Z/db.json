@@ -1,0 +1,2356 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-16T05:08:17.455Z",
+  "finishedAt": "2026-11-16T05:08:33.379Z",
+  "outcomes": {
+    "passed": 7,
+    "failed": 0,
+    "pending": 0,
+    "skipped": 0,
+    "compromised": 0,
+    "error": 0
+  },
+  "scenes": [
+    {
+      "name": "Filtrar un pedido por su identificador",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 1604,
+      "startedAt": "2026-11-16T05:08:17.455Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 15
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        },
+        {
+          "type": "tag",
+          "name": "smoke"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 1,
+          "startedAt": "2026-11-16T05:08:17.456Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 33,
+          "startedAt": "2026-11-16T05:08:17.462Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos por el identificador del pedido de \"Mateo Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 857,
+          "startedAt": "2026-11-16T05:08:17.496Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos por el identificador 1371",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 840,
+              "startedAt": "2026-11-16T05:08:17.503Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 580,
+                  "startedAt": "2026-11-16T05:08:17.503Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos por el identificador 1371",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 239,
+                  "startedAt": "2026-11-16T05:08:18.093Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 44,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 44,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 16
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella ve un solo pedido",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 16,
+          "startedAt": "2026-11-16T05:08:18.354Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 1",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 2,
+              "startedAt": "2026-11-16T05:08:18.358Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 57,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 17
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And el cliente del pedido es \"Mateo Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:18.371Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los clientes de los pedidos does equal [ \"Mateo Pedidos mwisyy642\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:18.373Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 69,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 18
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And el estado del pedido es \"Shipped\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:18.384Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los estados de los pedidos does equal [ \"Shipped\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:18.386Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 73,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 19
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 625,
+          "startedAt": "2026-11-16T05:08:18.398Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 491,
+              "startedAt": "2026-11-16T05:08:18.401Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:18.903Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 61,
+              "startedAt": "2026-11-16T05:08:18.913Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:18.985Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:18.996Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:19.006Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Filtrar los pedidos por el nombre del cliente",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 2308,
+      "startedAt": "2026-11-16T05:08:19.063Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 21
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 1,
+          "startedAt": "2026-11-16T05:08:19.064Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 12,
+          "startedAt": "2026-11-16T05:08:19.067Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos por el cliente \"Lucía Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 1126,
+          "startedAt": "2026-11-16T05:08:19.080Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos de Lucía Pedidos mwisyy645",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1114,
+              "startedAt": "2026-11-16T05:08:19.082Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 632,
+                  "startedAt": "2026-11-16T05:08:19.082Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos de Lucía Pedidos mwisyy645",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 460,
+                  "startedAt": "2026-11-16T05:08:19.725Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 47,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 47,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 22
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella ve 2 pedidos",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 12,
+          "startedAt": "2026-11-16T05:08:20.207Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 2",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:20.208Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 61,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 23
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los clientes de los pedidos son \"Lucía Pedidos, Lucía Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:20.220Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los clientes de los pedidos does equal [ \"Lucía Pedidos mwisyy645\", \"Lucía Pedidos mwisyy645\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:20.222Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 77,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 24
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los totales de los pedidos son \"150.00, 350.00\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:20.233Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los totales de los pedidos does equal [ \"150.00\", \"350.00\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:20.235Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 85,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 25
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 1090,
+          "startedAt": "2026-11-16T05:08:20.247Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 750,
+              "startedAt": "2026-11-16T05:08:20.249Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:21.010Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 269,
+              "startedAt": "2026-11-16T05:08:21.020Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:21.300Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:21.310Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:21.321Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Filtrar los pedidos por su estado",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 1782,
+      "startedAt": "2026-11-16T05:08:21.374Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 27
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 0,
+          "startedAt": "2026-11-16T05:08:21.374Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 12,
+          "startedAt": "2026-11-16T05:08:21.375Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos por el estado \"Shipped\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 1008,
+          "startedAt": "2026-11-16T05:08:21.387Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos con estado Shipped",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 995,
+              "startedAt": "2026-11-16T05:08:21.389Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 900,
+                  "startedAt": "2026-11-16T05:08:21.389Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos con estado Shipped",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 75,
+                  "startedAt": "2026-11-16T05:08:22.299Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 50,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 50,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 28
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella ve un solo pedido",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:22.395Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 1",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:22.397Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 57,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 29
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los estados de los pedidos son \"Shipped\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 12,
+          "startedAt": "2026-11-16T05:08:22.409Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los estados de los pedidos does equal [ \"Shipped\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:22.411Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 81,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 30
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los clientes de los pedidos son \"Mateo Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:22.422Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los clientes de los pedidos does equal [ \"Mateo Pedidos mwisyy64c\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:22.424Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 77,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 31
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 699,
+          "startedAt": "2026-11-16T05:08:22.435Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 567,
+              "startedAt": "2026-11-16T05:08:22.437Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:23.013Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 61,
+              "startedAt": "2026-11-16T05:08:23.024Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:23.095Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:23.105Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:23.116Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Filtrar los pedidos por su total exacto",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 1786,
+      "startedAt": "2026-11-16T05:08:23.158Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 33
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 0,
+          "startedAt": "2026-11-16T05:08:23.158Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 12,
+          "startedAt": "2026-11-16T05:08:23.159Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos por el total \"350.00\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 742,
+          "startedAt": "2026-11-16T05:08:23.172Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos con total 350.00",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 730,
+              "startedAt": "2026-11-16T05:08:23.173Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 630,
+                  "startedAt": "2026-11-16T05:08:23.173Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos con total 350.00",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 79,
+                  "startedAt": "2026-11-16T05:08:23.813Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 53,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 53,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 34
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella ve un solo pedido",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 15,
+          "startedAt": "2026-11-16T05:08:23.914Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 1",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:23.917Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 57,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 35
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los totales de los pedidos son \"350.00\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 15,
+          "startedAt": "2026-11-16T05:08:23.930Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los totales de los pedidos does equal [ \"350.00\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:23.933Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 85,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 36
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And el cliente del pedido es \"Lucía Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 15,
+          "startedAt": "2026-11-16T05:08:23.945Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los clientes de los pedidos does equal [ \"Lucía Pedidos mwisyy64f\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:23.949Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 69,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 37
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 950,
+          "startedAt": "2026-11-16T05:08:23.961Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 822,
+              "startedAt": "2026-11-16T05:08:23.966Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:24.798Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 57,
+              "startedAt": "2026-11-16T05:08:24.809Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:24.875Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:24.886Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:24.897Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Filtrar los pedidos por un rango de fechas",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 2206,
+      "startedAt": "2026-11-16T05:08:24.947Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 39
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 0,
+          "startedAt": "2026-11-16T05:08:24.949Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:24.951Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos entre \"2026-02-01\" y \"2026-02-28\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 1129,
+          "startedAt": "2026-11-16T05:08:24.964Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos entre 2026-02-01 y 2026-02-28",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1115,
+              "startedAt": "2026-11-16T05:08:24.967Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 1038,
+                  "startedAt": "2026-11-16T05:08:24.967Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos entre 2026-02-01 y 2026-02-28",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 57,
+                  "startedAt": "2026-11-16T05:08:26.015Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 56,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 56,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 40
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella ve un solo pedido",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:26.093Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 1",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:26.095Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 57,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 41
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And las fechas de los pedidos son \"15/02/2026\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 14,
+          "startedAt": "2026-11-16T05:08:26.106Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that las fechas de los pedidos does equal [ \"15/02/2026\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:26.108Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 89,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 42
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 999,
+          "startedAt": "2026-11-16T05:08:26.121Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 659,
+              "startedAt": "2026-11-16T05:08:26.124Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:26.792Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 269,
+              "startedAt": "2026-11-16T05:08:26.803Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:27.082Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:27.093Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:27.104Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Combinar el filtro de cliente con el de estado",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 4628,
+      "startedAt": "2026-11-16T05:08:27.156Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 44
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 0,
+          "startedAt": "2026-11-16T05:08:27.157Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 14,
+          "startedAt": "2026-11-16T05:08:27.159Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos por el cliente \"Lucía Pedidos\" y el estado \"Complete\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 618,
+          "startedAt": "2026-11-16T05:08:27.174Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos de Lucía Pedidos mwisyy64p con estado Complete",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 604,
+              "startedAt": "2026-11-16T05:08:27.177Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 512,
+                  "startedAt": "2026-11-16T05:08:27.177Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos de Lucía Pedidos mwisyy64p con estado Complete",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 71,
+                  "startedAt": "2026-11-16T05:08:27.700Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 59,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 59,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 45
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella ve un solo pedido",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:27.792Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 1",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:27.794Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 57,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 46
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los totales de los pedidos son \"350.00\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 14,
+          "startedAt": "2026-11-16T05:08:27.805Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los totales de los pedidos does equal [ \"350.00\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:27.807Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 85,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 47
+          }
+        },
+        {
+          "type": "Task",
+          "name": "And los estados de los pedidos son \"Complete\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:27.819Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that los estados de los pedidos does equal [ \"Complete\" ]",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 1,
+              "startedAt": "2026-11-16T05:08:27.821Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 81,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 48
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 3920,
+          "startedAt": "2026-11-16T05:08:27.832Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 3609,
+              "startedAt": "2026-11-16T05:08:27.834Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:31.453Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 241,
+              "startedAt": "2026-11-16T05:08:31.463Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:31.715Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:31.726Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:31.736Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Un filtro sin coincidencias no devuelve pedidos",
+      "category": "Filtrado de pedidos en el panel (RF-12)",
+      "outcome": {
+        "code": 64
+      },
+      "duration": 1592,
+      "startedAt": "2026-11-16T05:08:31.787Z",
+      "source": {
+        "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+        "line": 50
+      },
+      "tags": [
+        {
+          "type": "feature",
+          "name": "Filtrado de pedidos en el panel (RF-12)"
+        },
+        {
+          "type": "tag",
+          "name": "rf-12"
+        }
+      ],
+      "activities": [
+        {
+          "type": "Task",
+          "name": "Before",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 0,
+          "startedAt": "2026-11-16T05:08:31.788Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 10
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Given la tienda tiene estos pedidos:\n| cliente       | estado     | total  | fecha      |\n| Lucía Pedidos | Processing | 150.00 | 2026-01-10 |\n| Mateo Pedidos | Shipped    | 250.00 | 2026-02-15 |\n| Lucía Pedidos | Complete   | 350.00 | 2026-03-20 |",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 11,
+          "startedAt": "2026-11-16T05:08:31.789Z",
+          "children": [],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 8
+          }
+        },
+        {
+          "type": "Task",
+          "name": "When la administradora filtra los pedidos por el cliente \"Nadie Pedidos\"",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 827,
+          "startedAt": "2026-11-16T05:08:31.800Z",
+          "children": [
+            {
+              "type": "Task",
+              "name": "Ana filtra los pedidos de Nadie Pedidos mwisyy64z",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 815,
+              "startedAt": "2026-11-16T05:08:31.802Z",
+              "children": [
+                {
+                  "type": "Interaction",
+                  "name": "Ana inicia sesión en el panel de administración",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 725,
+                  "startedAt": "2026-11-16T05:08:31.802Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 34,
+                    "column": 23
+                  }
+                },
+                {
+                  "type": "Interaction",
+                  "name": "Ana filtra los pedidos de Nadie Pedidos mwisyy64z",
+                  "outcome": {
+                    "code": 64
+                  },
+                  "duration": 68,
+                  "startedAt": "2026-11-16T05:08:32.538Z",
+                  "children": [],
+                  "location": {
+                    "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                    "line": 47,
+                    "column": 5
+                  }
+                }
+              ],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/test/tasks/admin/Orders.ts",
+                "line": 47,
+                "column": 5
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 51
+          }
+        },
+        {
+          "type": "Task",
+          "name": "Then ella no ve ningún pedido",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 13,
+          "startedAt": "2026-11-16T05:08:32.627Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana ensures that cuántos pedidos muestra el panel does equal 0",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:32.629Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/step-definitions/rf-12-pedidos.steps.ts",
+                "line": 65,
+                "column": 43
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/rf-12-pedidos.feature",
+            "line": 52
+          }
+        },
+        {
+          "type": "Task",
+          "name": "After",
+          "outcome": {
+            "code": 64
+          },
+          "duration": 718,
+          "startedAt": "2026-11-16T05:08:32.640Z",
+          "children": [
+            {
+              "type": "Interaction",
+              "name": "Ana inicia sesión en el panel de administración",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 592,
+              "startedAt": "2026-11-16T05:08:32.642Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 31,
+                "column": 25
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los cupones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:33.245Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 32,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las reseñas de \"QA…\"",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 53,
+              "startedAt": "2026-11-16T05:08:33.255Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 33,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las devoluciones de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:33.319Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 34,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra los idiomas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:33.329Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 35,
+                "column": 15
+              }
+            },
+            {
+              "type": "Interaction",
+              "name": "Ana borra las monedas de prueba",
+              "outcome": {
+                "code": 64
+              },
+              "duration": 0,
+              "startedAt": "2026-11-16T05:08:33.340Z",
+              "children": [],
+              "location": {
+                "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+                "line": 36,
+                "column": 15
+              }
+            }
+          ],
+          "location": {
+            "path": "/home/andres/validation/opencart/e2e/santiago/serenityjs/features/support/hooks.ts",
+            "line": 21
+          }
+        }
+      ],
+      "narrative": "Como administradora de la tienda\nQuiero filtrar los pedidos por identificador, cliente, estado, total y fechas\nPara encontrar rápido los pedidos que necesito revisar",
+      "cast": [
+        {
+          "name": "Ana",
+          "abilities": [
+            {
+              "name": "PerformActivities"
+            },
+            {
+              "name": "AnswerQuestions"
+            },
+            {
+              "name": "RaiseErrors"
+            },
+            {
+              "name": "ScheduleWork",
+              "details": "{\"scheduler\":{\"clock\":{\"timeAdjustment\":{\"milliseconds\":0}},\"interactionTimeout\":{\"milliseconds\":5000}}}"
+            },
+            {
+              "name": "BrowseTheWebWithPlaywright"
+            },
+            {
+              "name": "CallAnApi",
+              "details": "{\"baseURL\":\"http://localhost/\",\"headers\":{\"common\":{\"Accept\":\"application/json, text/plain, */*\"}},\"timeout\":30000}"
+            },
+            {
+              "name": "TakeNotes",
+              "details": "{\"notepad\":{}}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "type": "feature",
+      "name": "Filtrado de pedidos en el panel (RF-12)"
+    },
+    {
+      "type": "tag",
+      "name": "rf-12"
+    },
+    {
+      "type": "tag",
+      "name": "smoke"
+    }
+  ],
+  "testRunner": {
+    "name": "Cucumber",
+    "version": "13.3.0"
+  },
+  "systemContext": {
+    "nodeVersion": "v26.3.0",
+    "os": {
+      "name": "linux",
+      "version": "6.6.87.2-microsoft-standard-WSL2",
+      "arch": "x64"
+    },
+    "serenityVersion": "3.48.0",
+    "runtime": {
+      "provider": "localhost (DESKTOP-5L15E4A)",
+      "buildNumber": "2026-11-16 05:08",
+      "branch": "proyecto-4.1.0.3",
+      "commit": "3c39f12507",
+      "commitMessage": "docs(test): document the merged feature unit suite on OpenCart 5",
+      "commitAuthor": "Andrés Mendoza",
+      "repositoryUrl": "https://github.com/Santiago-mg/opencart.git"
+    },
+    "projectName": "opencart-e2e-serenityjs",
+    "packageManager": "npm"
+  },
+  "testRunId": "2026-11-16T05-08-33.455Z",
+  "attempt": 1
+}
