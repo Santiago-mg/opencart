@@ -1,0 +1,44 @@
+# 16/11/2026 · OpenCart 4.1.0.3 · PHPUnit 9.6.17 · PHP 8.3.6 · MariaDB 10.11 (base de prueba opencart_phpunit)
+$ phpunit --group defecto --testdox
+
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Geo Zone Tax (OpenCart\Tests\Unit\Localisation\GeoZoneTax)
+ ✘ Add geo zone with zones
+   │
+   │ Exception: <b>Notice</b>:  Undefined property: Proxy::getTotalZoneToGeoZoneByCountryId in <b>opencart/tests/andres/Unit/Localisation/GeoZoneTaxTest.php</b> on line <b>53</b>
+   │
+   │ opencart/upload/system/engine/proxy.php:91
+   │ opencart/tests/andres/Unit/Localisation/GeoZoneTaxTest.php:53
+   │
+
+ ✘ Edit geo zone replaces its zones
+   │
+   │ Exception: <b>Notice</b>:  Undefined property: Proxy::getTotalZoneToGeoZoneByZoneId in <b>opencart/tests/andres/Unit/Localisation/GeoZoneTaxTest.php</b> on line <b>92</b>
+   │
+   │ opencart/upload/system/engine/proxy.php:91
+   │ opencart/tests/andres/Unit/Localisation/GeoZoneTaxTest.php:92
+   │
+
+ ✘ Delete geo zone removes its zones
+   │
+   │ Exception: <b>Notice</b>:  Undefined property: Proxy::getTotalZoneToGeoZoneByCountryId in <b>opencart/tests/andres/Unit/Localisation/GeoZoneTaxTest.php</b> on line <b>118</b>
+   │
+   │ opencart/upload/system/engine/proxy.php:91
+   │ opencart/tests/andres/Unit/Localisation/GeoZoneTaxTest.php:118
+   │
+
+Geo Zone Tax Regression (OpenCart\Tests\Regression\GeoZoneTaxRegression)
+ ✘ Editing geo zone without zone list clears assignments
+   │
+   │ Exception: <b>Notice</b>:  Undefined property: Proxy::getTotalZoneToGeoZoneByCountryId in <b>opencart/tests/andres/Regression/GeoZoneTaxRegressionTest.php</b> on line <b>43</b>
+   │
+   │ opencart/upload/system/engine/proxy.php:91
+   │ opencart/tests/andres/Regression/GeoZoneTaxRegressionTest.php:43
+   │
+
+Time: 00:00.008, Memory: 6.00 MB
+
+
+ERRORS!
+Tests: 4, Assertions: 14, Errors: 4.

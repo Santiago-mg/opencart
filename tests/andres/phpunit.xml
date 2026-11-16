@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OC 4.1.0.3 / PHPUnit 9.6: la configuración vive en tests/andres (las rutas son
+     relativas a esta carpeta), el caché usa cacheResultFile (cacheDirectory es de
+     PHPUnit 10+) y la cobertura usa <coverage> (<source> es de PHPUnit 10+). -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         cacheResultFile=".phpunit.cache/test-results"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true">
+    <testsuites>
+        <testsuite name="OpenCart">
+            <directory>Unit</directory>
+        </testsuite>
+        <testsuite name="Regression">
+            <directory>Regression</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">../../upload/system/library</directory>
+            <directory suffix=".php">../../upload/admin/model</directory>
+        </include>
+    </coverage>
+</phpunit>

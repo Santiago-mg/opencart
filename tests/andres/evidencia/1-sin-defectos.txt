@@ -1,0 +1,112 @@
+# 16/11/2026 · OpenCart 4.1.0.3 · PHPUnit 9.6.17 · PHP 8.3.6 · MariaDB 10.11 (base de prueba opencart_phpunit)
+$ phpunit --exclude-group defecto --testdox
+
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Currency (OpenCart\Tests\Unit\Localisation\Currency)
+ ✔ Add currency creates the currency record
+ ✔ Add currency can be created disabled
+ ✔ Get currency by code
+ ✔ Get currency returns empty array for unknown id
+ ✔ Edit currency updates configuration
+ ✔ Edit value by code updates only the value
+ ✔ Get currencies returns records keyed by code
+ ✔ Get currencies supports sorting and pagination
+ ✔ Delete currency removes the record
+
+Geo Zone Tax (OpenCart\Tests\Unit\Localisation\GeoZoneTax)
+ ✔ Get geo zones supports sorting and pagination
+ ✔ Add tax rate linked to geo zone and customer groups
+ ✔ Edit tax rate replaces customer groups
+ ✔ Delete tax rate removes customer groups
+ ✔ Tax class stores rules and orders them by priority
+ ✔ Geo zone drives tax rules
+ ✔ Edit tax class replaces rules
+ ✔ Delete tax class removes rules
+
+Language (OpenCart\Tests\Unit\Localisation\Language)
+ ✔ Add language creates the language record
+ ✔ Add language can be created disabled
+ ✔ Add language copies order status descriptions
+ ✔ Get language by code
+ ✔ Get language returns empty array for unknown id
+ ✔ Edit language updates configuration
+ ✔ Get languages returns records keyed by code
+ ✔ Get languages supports sorting and pagination
+ ✔ Get languages by extension
+ ✔ Delete language removes the record and its descriptions
+
+Order Filter (OpenCart\Tests\Unit\Order\OrderFilter)
+ ✔ Default list excludes orders with status zero
+ ✔ Filter by order id returns only that order
+ ✔ Filter by customer name is partial and case insensitive
+ ✔ Filter by order status id
+ ✔ Filter by comma separated order status list
+ ✔ Filter by total
+ ✔ Filter by date range
+ ✔ Filter by date from
+ ✔ Filter by date to
+ ✔ Filter by date modified range
+ ✔ Filters can be combined
+ ✔ Sorting and pagination
+ ✔ Total orders uses the same filters
+ ✔ Result contains status name and decoded json fields
+
+Log (OpenCart\Tests\Unit\System\Log)
+ ✔ Constructor creates the log file
+ ✔ Write adds a timestamped line
+ ✔ Write appends each message
+ ✔ Write formats arrays and objects
+ ✔ Existing log content is preserved
+ ✔ Different log files are independent
+
+Geo Zone Tax Regression (OpenCart\Tests\Regression\GeoZoneTaxRegression)
+ ✔ Deleting one tax class keeps rules of another class
+ ✔ Tax rates are isolated by geo zone
+ ✔ Total tax rates by geo zone counts rates not rules
+ ✔ Tax rate customer groups are replaced not duplicated
+
+Localisation Regression (OpenCart\Tests\Regression\LocalisationRegression)
+ ✔ Adding language creates seo urls for every language
+ ✔ Deleting language removes its seo urls
+ ✔ Deleting language keeps descriptions of other languages
+ ✔ Editing language keeps its descriptions
+ ✔ Currency value precision is preserved
+ ✔ Edit value by code does not affect other currencies
+ ✔ Deleting currency does not affect other currencies
+
+Log Regression (OpenCart\Tests\Regression\LogRegression)
+ ✔ Falsy values are still logged
+ ✔ Multiline messages preserve line breaks
+ ✔ No extra blank lines are added
+ ✔ New instance does not truncate existing log
+ ✔ Timestamp uses the expected format
+
+Order Filter Regression (OpenCart\Tests\Regression\OrderFilterRegression)
+ ✔ Customer filter handles apostrophes
+ ✔ Customer filter does not search email addresses
+ ✔ Explicit zero status returns abandoned orders
+ ✔ Empty status filter falls back to the default
+ ✔ Status list takes precedence over single status id
+ ✔ Date range uses calendar days and ignores time
+ ✔ Total filter uses exact value
+ ✔ Invalid sort falls back to order id
+ ✔ Negative start and zero limit are normalized
+ ✔ Default ordering is order id ascending
+
+Time: 00:01.666, Memory: 10.00 MB
+
+OK (73 tests, 203 assertions)
+
+$ phpunit --exclude-group defecto --order-by=random --random-order-seed=11
+
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Random Seed:   11
+
+................................................................. 65 / 73 ( 89%)
+........                                                          73 / 73 (100%)
+
+Time: 00:01.656, Memory: 10.00 MB
+
+OK (73 tests, 203 assertions)

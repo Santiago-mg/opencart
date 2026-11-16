@@ -1,0 +1,20 @@
+{
+    "name": "opencart/tests",
+    "description": "PHPUnit test suite for the OpenCart 4.1.0.3 admin (RF1-RF5)",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:sin-defectos": "phpunit --exclude-group defecto",
+        "test:defectos": "phpunit --group defecto"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.2.0"
+        }
+    }
+}
