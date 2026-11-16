@@ -2,7 +2,7 @@ import { AnswersQuestions, Interaction, Question, Task, TakeNotes, UsesAbilities
 import { CallAnApi } from '@serenity-js/rest';
 
 import { environment } from '../../support/environment';
-import { Coupon, WrittenReview, productId } from '../../support/testData';
+import { Coupon, CurrencyFixture, LanguageFixture, WrittenReview, productId } from '../../support/testData';
 
 /**
  * El panel de administración, usado por HTTP para PREPARAR datos y revisar el
@@ -53,6 +53,64 @@ async function callThePanel(actor: Actor, route: string, options: { parameters?:
 const idsInTheList = (html: string): number[] =>
   [...html.matchAll(/name="selected\[\]" value="(\d+)"/g)].map((match) => Number(match[1]));
 
+/** Una fila de una lista del panel, con sus celdas ya sin etiquetas HTML. */
+export interface PanelListRow {
+  id: number;
+  cells: string[];
+  htmlCells: string[];
+}
+
+const plainText = (html: string): string =>
+  html.replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .trim();
+
+/** Las filas de una lista del panel (las que tienen una casilla selected[]). */
+export const rowsInTheList = (html: string): PanelListRow[] => {
+  const body = html.slice(html.indexOf('<tbody>'));
+
+  return body.split(/<tr[\s>]/).slice(1)
+    .map((row) => {
+      const id = Number(row.match(/name="selected\[\]" value="(\d+)"/)?.[1]);
+      if (!id) return undefined;
+
+      const htmlCells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((match) => match[1]);
+
+      return { id, cells: htmlCells.map(plainText), htmlCells };
+    })
+    .filter((row): row is PanelListRow => row !== undefined);
+};
+
+/** El contenido de los <textarea> de una página del panel (por ejemplo, el visor de logs). */
+export const textareasInThePage = (html: string): string[] =>
+  [...html.matchAll(/<textarea[^>]*>([\s\S]*?)<\/textarea>/g)].map((match) => match[1]);
+
+/**
+ * Pide una lista del panel página por página. Las listas de idiomas, monedas y
+ * tasas no filtran por nombre, así que la única forma de encontrar un registro
+ * recién creado es recorrerlas.
+ */
+export async function callThePanelList(actor: Actor, route: string, parameters: Record<string, string | number> = {}): Promise<PanelListRow[]> {
+  const rows: PanelListRow[] = [];
+  const seen = new Set<number>();
+
+  for (let page = 1; page <= 20; page++) {
+    const answer = await callThePanel(actor, route, { parameters: { ...parameters, page } });
+    const pageRows = rowsInTheList(String(answer.data)).filter((row) => !seen.has(row.id));
+
+    if (pageRows.length === 0) break;
+
+    pageRows.forEach((row) => seen.add(row.id));
+    rows.push(...pageRows);
+  }
+
+  return rows;
+}
+
 /** Inicia sesión en el panel y anota la cookie y el token. */
 export const StartAdminSession = {
   asAdministrator: () => Interaction.where('#actor inicia sesión en el panel de administración', async (actor) => {
@@ -72,6 +130,17 @@ export const StartAdminSession = {
 
     TakeNotes.as(actor).notepad.set('adminCookie', cookie).set('userToken', userToken);
   }),
+};
+
+/** Acceso de bajo nivel al panel, compartido por las tareas de RF-12 a RF-16. */
+export const AdminPanel = {
+  call: callThePanel,
+  list: callThePanelList,
+  rows: rowsInTheList,
+  textareas: textareasInThePage,
+  ids: idsInTheList,
+  form: asForm,
+  url: panelUrl,
 };
 
 /** RF-08: Marketing > Coupons > Add New. */
@@ -129,6 +198,24 @@ export const CleanUp = {
       const ids = idsInTheList(String((await callThePanel(actor, 'sale/returns.list', { parameters: { filter_customer: customer } })).data));
       if (ids.length > 0) await callThePanel(actor, 'sale/returns.delete', { fields: { 'selected[]': ids } });
     }
+  }),
+  languages: (languages: LanguageFixture[]) => Interaction.where('#actor borra los idiomas de prueba', async (actor) => {
+    const ids = languages.map((language) => language.id).filter((id): id is number => id !== undefined);
+    if (ids.length === 0) return;
+
+    const rows = await callThePanelList(actor, 'localisation/language.list');
+    const existing = new Set(rows.map((row) => row.id));
+    const present = ids.filter((id) => existing.has(id));
+    if (present.length > 0) await callThePanel(actor, 'localisation/language.delete', { fields: { 'selected[]': present } });
+  }),
+  currencies: (currencies: CurrencyFixture[]) => Interaction.where('#actor borra las monedas de prueba', async (actor) => {
+    const ids = currencies.map((currency) => currency.id).filter((id): id is number => id !== undefined);
+    if (ids.length === 0) return;
+
+    const rows = await callThePanelList(actor, 'localisation/currency.list');
+    const existing = new Set(rows.map((row) => row.id));
+    const present = ids.filter((id) => existing.has(id));
+    if (present.length > 0) await callThePanel(actor, 'localisation/currency.delete', { fields: { 'selected[]': present } });
   }),
 };
 
