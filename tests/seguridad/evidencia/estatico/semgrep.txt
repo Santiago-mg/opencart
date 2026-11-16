@@ -1,0 +1,18 @@
+Semgrep 1.185.0 — reglas públicas de semgrep-rules (php/lang: security + audit, y generic/secrets): 260 reglas
+Comando: semgrep scan --metrics=off --config php/lang --config generic/secrets --json <los 25 archivos de sonar-project.properties>
+Fecha: 2026-11-15
+
+Archivos revisados: 25 | Reglas: 260 | Hallazgos: 3 | Errores de lectura: 0
+
+[ERROR] weak-crypto — upload/catalog/model/catalog/product.php:243
+    $key = md5($sql);
+    Detected usage of weak crypto function. Consider using stronger alternatives.
+[ERROR] weak-crypto — upload/catalog/model/catalog/product.php:739
+    $key = md5($sql);
+    Detected usage of weak crypto function. Consider using stronger alternatives.
+[ERROR] weak-crypto — upload/catalog/model/catalog/product.php:810
+    $key = md5($sql);
+    Detected usage of weak crypto function. Consider using stronger alternatives.
+
+Validación: falso positivo. md5() se usa para armar la llave del caché de la consulta,
+no para guardar contraseñas ni cifrar datos. No hay riesgo de seguridad.

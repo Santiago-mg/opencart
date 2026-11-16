@@ -1,0 +1,236 @@
+Pruebas de seguridad de Vitest (tests/regresion/santiago/security-testing) contra OpenCart 4.1.0.3 local — 2026-11-15
+Comando: cd tests/regresion/santiago && npx vitest run security-testing --reporter=verbose
+
+
+ RUN  v2.1.9 /home/claude/opencart/tests/regresion/santiago
+
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > El formulario solo se envía desde la tienda (token) > el token del formulario de Ana no le sirve a Carlos
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > El formulario solo se envía desde la tienda (token) > sin haber abierto el formulario no se puede enviar una solicitud
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > El visitante no decide lo que le corresponde a la administradora > mandar return_status_id en el formulario no cambia el estado inicial
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > El visitante no decide lo que le corresponde a la administradora > sin sesión no se puede cambiar el estado desde el panel
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > El visitante no decide lo que le corresponde a la administradora > sin sesión, con el token de la administradora no se puede cambiar el estado desde el panel
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > El visitante no decide lo que le corresponde a la administradora > sin sesión, la lista de devoluciones del panel no muestra datos de los clientes
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > XSS almacenado: lo que escribe el cliente lo lee la administradora > un script en el nombre del producto se muestra como texto en la lista del panel
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > XSS almacenado: lo que escribe el cliente lo lee la administradora > una imagen con onerror en el modelo se muestra como texto en la lista del panel
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > XSS almacenado: lo que escribe el cliente lo lee la administradora > un script en el comentario se muestra como texto al abrir la devolución en el panel
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > product="' OR 1=1 -- " (condición siempre verdadera) se guarda como texto
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > product="'; DROP TABLE oc_product; -- " (consulta apilada) se guarda como texto
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > product="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) se guarda como texto
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > product="') OR ('1'='1" (cierre de paréntesis) se guarda como texto
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > filter_customer="' OR 1=1 -- " (condición siempre verdadera) en el panel no rompe la lista
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > filter_customer="'; DROP TABLE oc_product; -- " (consulta apilada) en el panel no rompe la lista
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > filter_customer="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) en el panel no rompe la lista
+ ✓ security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > Inyección SQL > filter_customer="') OR ('1'='1" (cierre de paréntesis) en el panel no rompe la lista
+ × security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > [DEF-11-06] no se acepta la devolución de un pedido que no existe
+   → expected { Object (redirect) } to have property 'error'
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > El formulario solo se envía desde la ficha (token) > el token de la ficha de Ana no le sirve a Carlos
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > El formulario solo se envía desde la ficha (token) > sin haber abierto la ficha no se puede enviar una reseña
+ × security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > El formulario solo se envía desde la ficha (token) > [DEF-09-02] el mismo token no sirve para enviar una segunda reseña
+   → expected { Object (success) } to not have property 'success'
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Solo la administradora publica > mandar status=1 en el formulario no publica la reseña
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Solo la administradora publica > sin sesión no se puede habilitar una reseña desde el panel
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Solo la administradora publica > sin sesión, con el token de la administradora no se puede habilitar una reseña desde el panel
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > XSS almacenado > un script en el texto se muestra como texto cuando la reseña se publica
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > XSS almacenado > una imagen con onerror en el texto se muestra como texto cuando la reseña se publica
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > XSS almacenado > HTML en el nombre del autor tampoco llega como HTML a la ficha ni al panel
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > author="' OR 1=1 -- " (condición siempre verdadera) se guarda como texto
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > author="') OR ('1'='1" (cierre de paréntesis) se guarda como texto
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > text="' OR 1=1 -- " (condición siempre verdadera) se guarda como texto
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > text="'; DROP TABLE oc_product; -- " (consulta apilada) se guarda como texto
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > text="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) se guarda como texto
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > text="') OR ('1'='1" (cierre de paréntesis) se guarda como texto
+ ✓ security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > Inyección SQL > product_id con SQL en la dirección se trata como un producto inexistente
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Solo la administradora publica cupones > sin sesión y sin token: el cupón no se crea
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Solo la administradora publica cupones > sin sesión, con un token inventado: el cupón no se crea
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Solo la administradora publica cupones > sin sesión, con el token de la administradora (robado): el cupón no se crea
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Solo la administradora publica cupones > con la sesión de la administradora, pero con otro token: el cupón no se crea
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > El descuento lo calcula la tienda > mandar el descuento en el formulario no lo cambia
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > El descuento lo calcula la tienda > el cupón de Ana no descuenta en el carrito de Carlos
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > El descuento lo calcula la tienda > ni con un cupón del 100 % el total queda negativo
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Inyección por el campo del código > coupon="' OR 1=1 -- " (condición siempre verdadera) se rechaza como un código cualquiera
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Inyección por el campo del código > coupon="'; DROP TABLE oc_product; -- " (consulta apilada) se rechaza como un código cualquiera
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Inyección por el campo del código > coupon="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) se rechaza como un código cualquiera
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Inyección por el campo del código > coupon="') OR ('1'='1" (cierre de paréntesis) se rechaza como un código cualquiera
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Inyección por el campo del código > un script como código no vuelve en la respuesta ni en el carrito
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Inyección por el campo del código > un código de 5.000 caracteres se rechaza sin error interno
+ ✓ security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Adivinar códigos > el mensaje de rechazo es el mismo exista o no el cupón: no revela cuáles códigos son reales
+ × security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Adivinar códigos > [DEF-08-04] después de veinte códigos equivocados seguidos la tienda frena los intentos
+   → expected 'Success: Your coupon discount has bee…' to not equal 'Success: Your coupon discount has bee…'
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Cada visitante solo ve y cambia su propio carrito > lo que agrega Ana no aparece en el carrito de Carlos
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Cada visitante solo ve y cambia su propio carrito > Carlos no puede cambiar la cantidad de una línea de Ana
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Cada visitante solo ve y cambia su propio carrito > Carlos no puede quitar una línea de Ana
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > El precio lo pone la tienda, no el navegador > mandar un precio en el formulario no cambia lo que se cobra
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > El precio lo pone la tienda, no el navegador > una cantidad negativa no deja un total negativo
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > El precio lo pone la tienda, no el navegador > editar a una cantidad negativa no deja líneas negativas
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > product_id="' OR 1=1 -- " (condición siempre verdadera) no llega a la base como SQL
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > product_id="'; DROP TABLE oc_product; -- " (consulta apilada) no llega a la base como SQL
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > product_id="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) no llega a la base como SQL
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > product_id="') OR ('1'='1" (cierre de paréntesis) no llega a la base como SQL
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > key="' OR 1=1 -- " (condición siempre verdadera) al editar no rompe nada
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > key="'; DROP TABLE oc_product; -- " (consulta apilada) al editar no rompe nada
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > key="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) al editar no rompe nada
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > key="') OR ('1'='1" (cierre de paréntesis) al editar no rompe nada
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > un script en el product_id no vuelve en la respuesta
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > Inyección > un número fuera de rango no produce un error interno
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > La cookie de sesión > lleva SameSite=Strict: otro sitio no puede usarla para agregar al carrito
+ × security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > La cookie de sesión > [DEF-SEG-01] lleva HttpOnly: un script de la página no puede leerla
+   → expected 'OCSESSID=a440d43fda1cba81ccd5efa24a; …' to match /HttpOnly/i
+ ✓ security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > La cookie de sesión > el identificador de sesión no viaja en las direcciones de la página
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > search="' OR 1=1 -- " (condición siempre verdadera) se busca como texto literal
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > search="'; DROP TABLE oc_product; -- " (consulta apilada) se busca como texto literal
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > search="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) se busca como texto literal
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > search="') OR ('1'='1" (cierre de paréntesis) se busca como texto literal
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > el parámetro sort no acepta SQL
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > el parámetro order no acepta SQL
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > el parámetro category_id no acepta SQL
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > el parámetro limit no acepta SQL
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Inyección SQL > el parámetro page no acepta SQL
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en search vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en search vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en tag vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en description vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en category_id vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en sort vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en order vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > lo que llega en limit vuelve escapado, no como HTML
+ ✓ security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > XSS reflejado > el término aparece en el título como texto: &lt;script&gt;
+ × security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Comodines de la búsqueda > [DEF-06-03] buscar "%" no devuelve el catálogo entero
+   → expected [ 'Apple Cinema 30"', …(18) ] to be empty
+ × security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Comodines de la búsqueda > [DEF-06-03] buscar "_" no devuelve el catálogo entero
+   → expected [ 'Apple Cinema 30"', …(18) ] to be empty
+ × security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Cabeceras de la respuesta > [DEF-SEG-02] la página declara que no se puede incrustar en otro sitio (anti-clickjacking)
+   → Falta X-Frame-Options o Content-Security-Policy: frame-ancestors: expected false to equal true
+ × security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Cabeceras de la respuesta > [DEF-SEG-03] no se permite a cualquier sitio leer la tienda con las credenciales del visitante
+   → expected true to equal false
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > la lista de Ana no aparece en la sesión de Carlos
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Carlos no puede quitar un producto de la lista de Ana
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > treinta peticiones seguidas no hacen crecer la lista por encima de cuatro
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > product_id="' OR 1=1 -- " (condición siempre verdadera) se responde como producto inexistente
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > product_id="'; DROP TABLE oc_product; -- " (consulta apilada) se responde como producto inexistente
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > product_id="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) se responde como producto inexistente
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > product_id="') OR ('1'='1" (cierre de paréntesis) se responde como producto inexistente
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > remove="' OR 1=1 -- " (condición siempre verdadera) no rompe la página ni borra la lista
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > remove="'; DROP TABLE oc_product; -- " (consulta apilada) no rompe la página ni borra la lista
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > remove="' UNION SELECT username, password FROM oc_user -- " (unión con la tabla de usuarios) no rompe la página ni borra la lista
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > remove="') OR ('1'='1" (cierre de paréntesis) no rompe la página ni borra la lista
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > un script en product_id no vuelve en la respuesta
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > Inyección > un script en remove no vuelve en la página
+ ✓ security-testing/rf-10-comparar.test.ts > RF-10 · Seguridad — comparar productos > un producto deshabilitado o inexistente no se puede colar en la comparación
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Comodines de la búsqueda > [DEF-06-03] buscar "%" no devuelve el catálogo entero
+AssertionError: expected [ 'Apple Cinema 30"', …(18) ] to be empty
+ ❯ security-testing/rf-06-busqueda-filtrado.test.ts:79:44
+     77| 
+     78|       // Assert: ningún producto tiene "%" en el nombre; hoy devuelve …
+     79|       expect(nombresListados(res.text)).to.be.empty
+       |                                            ^
+     80|     })
+     81| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Comodines de la búsqueda > [DEF-06-03] buscar "_" no devuelve el catálogo entero
+AssertionError: expected [ 'Apple Cinema 30"', …(18) ] to be empty
+ ❯ security-testing/rf-06-busqueda-filtrado.test.ts:87:44
+     85| 
+     86|       // Assert: "_" es el comodín de "un carácter cualquiera" en LIKE.
+     87|       expect(nombresListados(res.text)).to.be.empty
+       |                                            ^
+     88|     })
+     89|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Cabeceras de la respuesta > [DEF-SEG-02] la página declara que no se puede incrustar en otro sitio (anti-clickjacking)
+AssertionError: Falta X-Frame-Options o Content-Security-Policy: frame-ancestors: expected false to equal true
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ security-testing/rf-06-busqueda-filtrado.test.ts:99:96
+     97|       const protegida =
+     98|         res.headers['x-frame-options'] !== undefined || /frame-ancesto…
+     99|       expect(protegida, 'Falta X-Frame-Options o Content-Security-Poli…
+       |                                                                                                ^
+    100|     })
+    101| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  security-testing/rf-06-busqueda-filtrado.test.ts > RF-06 · Seguridad — búsqueda y filtrado de productos > Cabeceras de la respuesta > [DEF-SEG-03] no se permite a cualquier sitio leer la tienda con las credenciales del visitante
+AssertionError: expected true to equal false
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ security-testing/rf-06-busqueda-filtrado.test.ts:108:32
+    106|       // Assert: hoy responde "Access-Control-Allow-Origin: *" junto c…
+    107|       const abiertaATodos = res.headers['access-control-allow-origin']…
+    108|       expect(abiertaATodos).to.equal(false)
+       |                                ^
+    109|     })
+    110|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  security-testing/rf-07-carrito.test.ts > RF-07 · Seguridad — carrito de compras > La cookie de sesión > [DEF-SEG-01] lleva HttpOnly: un script de la página no puede leerla
+AssertionError: expected 'OCSESSID=a440d43fda1cba81ccd5efa24a; …' to match /HttpOnly/i
+ ❯ security-testing/rf-07-carrito.test.ts:162:25
+    160|       // Assert
+    161|       const sesion = (res.headers['set-cookie'] as unknown as string[]…
+    162|       expect(sesion).to.match(/HttpOnly/i)
+       |                         ^
+    163|     })
+    164| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  security-testing/rf-08-cupones.test.ts > RF-08 · Seguridad — cupones de descuento > Adivinar códigos > [DEF-08-04] después de veinte códigos equivocados seguidos la tienda frena los intentos
+AssertionError: expected 'Success: Your coupon discount has bee…' to not equal 'Success: Your coupon discount has bee…'
+ ❯ security-testing/rf-08-cupones.test.ts:165:39
+    163| 
+    164|       // Assert: hoy el intento 21 pasa como si nada; no hay ningún lí…
+    165|       expect(res.body.success).to.not.equal(CUPON_APLICADO)
+       |                                       ^
+    166|     })
+    167|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  security-testing/rf-09-resenas.test.ts > RF-09 · Seguridad — reseñas de productos > El formulario solo se envía desde la ficha (token) > [DEF-09-02] el mismo token no sirve para enviar una segunda reseña
+AssertionError: expected { Object (success) } to not have property 'success'
+ ❯ security-testing/rf-09-resenas.test.ts:67:40
+     65| 
+     66|       // Assert: hoy se pueden mandar cuantas se quiera con un solo to…
+     67|       expect(segunda.body).to.not.have.property('success')
+       |                                        ^
+     68|     })
+     69|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  security-testing/rf-11-devoluciones.test.ts > RF-11 · Seguridad — devoluciones > [DEF-11-06] no se acepta la devolución de un pedido que no existe
+AssertionError: expected { Object (redirect) } to have property 'error'
+ ❯ security-testing/rf-11-devoluciones.test.ts:181:30
+    179| 
+    180|     // Assert: hoy cualquiera registra devoluciones de pedidos inventa…
+    181|     expect(res.body).to.have.property('error')
+       |                              ^
+    182|     expect(await devolucionesEnElPanel(panel, clienteDe(datos))).to.be…
+    183|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+ Test Files  5 failed | 1 passed (6)
+      Tests  8 failed | 96 passed (104)
+   Start at  20:40:16
+   Duration  6.92s (transform 132ms, setup 0ms, collect 498ms, tests 5.48s, environment 1ms, prepare 270ms)
+

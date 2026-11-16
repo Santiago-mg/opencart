@@ -1,0 +1,28 @@
+{
+  "name": "opencart-e2e-cypress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pruebas E2E de OpenCart (RF-06 a RF-11) con Cypress y estructura Screenplay",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "cy:open": "cypress open",
+    "test": "cypress run",
+    "test:sin-defectos": "cypress run --env sinDefectos=true",
+    "test:web": "cypress run --spec \"cypress/e2e/**/*.web.cy.ts\"",
+    "test:api": "cypress run --spec \"cypress/e2e/**/*.api.cy.ts\"",
+    "test:rf-06": "cypress run --spec \"cypress/e2e/rf-06-*.cy.ts\"",
+    "test:rf-07": "cypress run --spec \"cypress/e2e/rf-07-*.cy.ts\"",
+    "test:rf-08": "cypress run --spec \"cypress/e2e/rf-08-*.cy.ts\"",
+    "test:rf-09": "cypress run --spec \"cypress/e2e/rf-09-*.cy.ts\"",
+    "test:rf-10": "cypress run --spec \"cypress/e2e/rf-10-*.cy.ts\"",
+    "test:rf-11": "cypress run --spec \"cypress/e2e/rf-11-*.cy.ts\""
+  },
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "cypress": "13.17.0",
+    "typescript": "5.7.3"
+  }
+}

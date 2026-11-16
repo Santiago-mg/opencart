@@ -1,0 +1,12 @@
+# Ajustes para correr el proyecto en un Mac con chip Apple (M1, M2, M3...).
+#
+# La imagen mysql:5.7 solo existe para procesadores Intel/AMD (amd64). Docker
+# Desktop la puede correr en un Mac con chip Apple emulándola con Rosetta, pero
+# hay que pedírselo explícitamente; si no, falla con "no matching manifest for
+# linux/arm64". En Windows o Linux con procesador Intel/AMD este ajuste no
+# cambia nada.
+#
+# Docker Compose lee este archivo solo, junto con docker-compose.yml.
+services:
+  mysql:
+    platform: linux/amd64

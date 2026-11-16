@@ -64,3 +64,6 @@
 /tests/vendor/
 /tests/.phpunit.cache/
 /tests/tmp/
+
+# Instalación local (la crea el contenedor al instalar OpenCart)
+/upload/install.lock

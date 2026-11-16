@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         colors="true"
+         cacheResult="false"
+         executionOrder="random"
+         beStrictAboutTestsThatDoNotTestAnything="true">
+    <!-- executionOrder="random": las pruebas corren en desorden en cada corrida.
+         Si alguna dependiera de otra (principio FIRST: Independent), fallaría. -->
+    <testsuites>
+        <testsuite name="RF-06 Búsqueda y filtrado"><directory>rf-06</directory></testsuite>
+        <testsuite name="RF-07 Carrito"><directory>rf-07</directory></testsuite>
+        <testsuite name="RF-08 Cupones"><directory>rf-08</directory></testsuite>
+        <testsuite name="RF-09 Reseñas"><directory>rf-09</directory></testsuite>
+        <testsuite name="RF-10 Comparar"><directory>rf-10</directory></testsuite>
+        <testsuite name="RF-11 Devoluciones"><directory>rf-11</directory></testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <file>../../upload/catalog/model/catalog/product.php</file>
+            <file>../../upload/system/library/cart/cart.php</file>
+            <file>../../upload/catalog/model/marketing/coupon.php</file>
+            <file>../../upload/extension/opencart/catalog/model/total/coupon.php</file>
+            <file>../../upload/catalog/controller/product/review.php</file>
+            <file>../../upload/catalog/controller/product/compare.php</file>
+            <file>../../upload/catalog/controller/account/returns.php</file>
+        </include>
+    </coverage>
+</phpunit>
