@@ -1,0 +1,13 @@
+{
+  "name": "opencart-e2e-cypress-andres",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pruebas E2E de OpenCart 4.1.0.3 con Cypress (RF-02 a RF-05) de Andrés Mendoza",
+  "scripts": {
+    "test": "cypress run",
+    "cy:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "16.3.0"
+  }
+}
