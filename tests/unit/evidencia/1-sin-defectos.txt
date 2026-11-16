@@ -1,0 +1,123 @@
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Random Seed:   11
+
+Product Search (Tests\Rf06\ProductSearch)
+ ✔ Sin filtros solo trae productos activos y ya disponibles
+ ✔ Con categoria filtra solo esa categoria
+ ✔ Con subcategorias filtra la categoria y todas sus hijas
+ ✔ La categoria se convierte a numero antes de ir a la consulta
+ ✔ Cada palabra buscada se busca en el nombre unidas con or
+ ✔ Sin marcar la casilla no busca en la descripcion
+ ✔ Marcando la casilla tambien busca en la descripcion
+ ✔ Tambien encuentra un producto por su modelo exacto
+ ✔ Las comillas del texto buscado se escapan
+ ✔ Ordena por los campos de la lista blanca with data set "por nombre"
+ ✔ Ordena por los campos de la lista blanca with data set "por modelo"
+ ✔ Ordena por los campos de la lista blanca with data set "por precio (oferta, descuento o normal)"
+ ✔ Ordena por los campos de la lista blanca with data set "por calificación"
+ ✔ Un orden que no esta en la lista blanca se ignora
+ ✔ Solo desc ordena de mayor a menor with data set "DESC"
+ ✔ Solo desc ordena de mayor a menor with data set "ASC"
+ ✔ Solo desc ordena de mayor a menor with data set "cualquier otra cosa"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "inicio -1 pasa a 0"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "inicio 0 se queda"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "límite 0 pasa a 20"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "límite 1 se queda"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "segunda página de 10"
+ ✔ Si la consulta ya esta en cache no va a la base de datos
+ ✔ Si no esta en cache consulta una vez y guarda el resultado
+ ✔ El conteo de la paginacion usa el mismo filtro de categoria
+
+Cart (Tests\Rf07\Cart)
+ ✔ Una linea de un producto deshabilitado se borra
+ ✔ Un carrito vacio no tiene productos
+ ✔ Un producto agotado nunca tiene stock
+ ✔ Quitar solo borra la linea de esta sesion
+ ✔ La linea trae el precio y el total de la cantidad
+ ✔ Agregar un producto nuevo crea una linea
+ ✔ Una linea con cantidad cero se borra al leer el carrito
+ ✔ Marca sin stock cuando se piden mas unidades de las que hay with data set "4 de 5"
+ ✔ Marca sin stock cuando se piden mas unidades de las que hay with data set "6 de 5"
+ ✔ Marca sin stock cuando se piden mas unidades de las que hay with data set "5 de 5"
+
+Product Search (Tests\Rf06\ProductSearch)
+ ✔ Corrige el inicio y el limite fuera de rango with data set "segunda página de 10"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "límite 1 se queda"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "inicio -1 pasa a 0"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "inicio 0 se queda"
+ ✔ Corrige el inicio y el limite fuera de rango with data set "límite 0 pasa a 20"
+ ✔ Marcando la casilla tambien busca en la descripcion
+ ✔ Un orden que no esta en la lista blanca se ignora
+ ✔ Con categoria filtra solo esa categoria
+ ✔ La categoria se convierte a numero antes de ir a la consulta
+ ✔ Cada palabra buscada se busca en el nombre unidas con or
+ ✔ El conteo de la paginacion usa el mismo filtro de categoria
+ ✔ Solo desc ordena de mayor a menor with data set "DESC"
+ ✔ Solo desc ordena de mayor a menor with data set "ASC"
+ ✔ Solo desc ordena de mayor a menor with data set "cualquier otra cosa"
+ ✔ Si no esta en cache consulta una vez y guarda el resultado
+ ✔ Sin filtros solo trae productos activos y ya disponibles
+ ✔ Ordena por los campos de la lista blanca with data set "por calificación"
+ ✔ Ordena por los campos de la lista blanca with data set "por precio (oferta, descuento o normal)"
+ ✔ Ordena por los campos de la lista blanca with data set "por nombre"
+ ✔ Ordena por los campos de la lista blanca with data set "por modelo"
+ ✔ Si la consulta ya esta en cache no va a la base de datos
+ ✔ Con subcategorias filtra la categoria y todas sus hijas
+ ✔ Sin marcar la casilla no busca en la descripcion
+ ✔ Las comillas del texto buscado se escapan
+ ✔ Tambien encuentra un producto por su modelo exacto
+
+Coupon Model (Tests\Rf08\CouponModel)
+ ✔ Un cupon sin usos disponibles se rechaza
+ ✔ Con usos ilimitados no importa cuantas veces se haya usado
+ ✔ La compra minima se compara con el subtotal with data set "mínimo 101.01 (mayor)"
+ ✔ La compra minima se compara con el subtotal with data set "mínimo 100.99 (menor)"
+ ✔ La compra minima se compara con el subtotal with data set "mínimo 101 (igual)"
+ ✔ Un cupon vigente y sin restricciones se puede usar
+ ✔ Un cupon que vencio o que aun no empieza se rechaza
+ ✔ Un codigo que no existe se rechaza
+ ✔ Un cupon solo para clientes registrados se rechaza a un invitado
+ ✔ Un cupon de otro producto se rechaza
+ ✔ A un invitado no se le consultan los usos por cliente
+ ✔ Un cliente que ya agoto sus usos no puede usarlo otra vez
+ ✔ Sin fechas el cupon no vence
+ ✔ Un cupon del producto que esta en el carrito lo incluye
+
+Coupon Total (Tests\Rf08\CouponTotal)
+ ✔ Un cupon de monto fijo descuenta exactamente ese valor
+ ✔ Un cupon limitado a un producto solo descuenta sobre ese producto
+ ✔ Un monto fijo mayor que la compra solo descuenta hasta el subtotal
+ ✔ Un cupon del 10 por ciento descuenta el 10 por ciento del subtotal
+ ✔ Un monto fijo se reparte entre los productos segun lo que cuesta cada uno
+ ✔ El renglon del cupon lleva el codigo y su orden
+ ✔ Sin cupon en la sesion no agrega ningun renglon
+
+Returns Controller (Tests\Rf11\ReturnsController)
+ ✔ Con el formulario vacio avisa de cada campo obligatorio
+ ✔ Despues de guardar el token ya no sirve
+ ✔ El correo debe tener un formato valido with data set "sin dominio"
+ ✔ El correo debe tener un formato valido with data set "sin arroba"
+ ✔ El correo debe tener un formato valido with data set "válido"
+ ✔ El correo debe tener un formato valido with data set "con espacios"
+ ✔ Si la tienda exige telefono uno de 2 digitos no se acepta
+ ✔ Con otro token vuelve al formulario sin guardar
+ ✔ Una solicitud completa se guarda una vez y lleva a la confirmacion
+ ✔ El nombre debe tener entre 1 y 32 caracteres with data set #3
+ ✔ El nombre debe tener entre 1 y 32 caracteres with data set #1
+ ✔ El nombre debe tener entre 1 y 32 caracteres with data set #2
+ ✔ El nombre debe tener entre 1 y 32 caracteres with data set #0
+ ✔ Sin motivo no se acepta
+
+Compare Controller (Tests\Rf10\CompareController)
+ ✔ El primer producto crea la lista y el contador dice 1
+ ✔ Con tres productos el cuarto entra sin sacar a nadie
+ ✔ Con la lista llena repetir uno no saca a ningun otro
+ ✔ Un producto repetido no se duplica pasa al final
+ ✔ La respuesta es json
+ ✔ Un producto que no existe responde error y no toca la lista
+ ✔ Con la lista llena el quinto entra y sale el mas antiguo
+
+Time: 00:00.031, Memory: 8.00 MB
+
+OK (102 tests, 150 assertions)

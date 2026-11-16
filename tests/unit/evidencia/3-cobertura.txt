@@ -1,0 +1,22 @@
+Code Coverage Report:       
+  2026-11-16 00:57:02       
+                            
+ Summary:                   
+  Classes:  0.00% (0/7)     
+  Methods: 11.94% (8/67)    
+  Lines:   33.24% (353/1062)
+
+Opencart\Catalog\Controller\Account\Returns
+  Methods:   0.00% ( 0/ 7)   Lines:  15.71% ( 44/280)
+Opencart\Catalog\Controller\Product\Compare
+  Methods:   0.00% ( 0/ 2)   Lines:  17.80% ( 21/118)
+Opencart\Catalog\Controller\Product\Review
+  Methods:   0.00% ( 0/ 4)   Lines:  43.33% ( 39/ 90)
+Opencart\Catalog\Model\Catalog\Product
+  Methods:   4.17% ( 1/24)   Lines:  38.08% ( 91/239)
+Opencart\Catalog\Model\Extension\Opencart\Total\Coupon
+  Methods:   0.00% ( 0/ 3)   Lines:  52.05% ( 38/ 73)
+Opencart\Catalog\Model\Marketing\Coupon
+  Methods:   0.00% ( 0/ 8)   Lines:  57.69% ( 30/ 52)
+Opencart\System\Library\Cart\Cart
+  Methods:  36.84% ( 7/19)   Lines:  42.86% ( 90/210)

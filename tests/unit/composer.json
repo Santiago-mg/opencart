@@ -1,0 +1,15 @@
+{
+    "name": "santiago-mg/opencart-unit-tests",
+    "description": "Pruebas unitarias de OpenCart (RF-06 a RF-11) con PHPUnit, Hamcrest y dobles de prueba",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^9.6",
+        "hamcrest/hamcrest-php": "^2.0"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:defectos": "phpunit --group defecto",
+        "test:sin-defectos": "phpunit --exclude-group defecto",
+        "test:cobertura": "php -d pcov.enabled=1 -d pcov.directory=../.. vendor/bin/phpunit --coverage-text --coverage-html reports/cobertura"
+    }
+}
