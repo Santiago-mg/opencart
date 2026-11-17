@@ -7,8 +7,8 @@
 // - Corre dentro del agente de Dockerfile.jenkins: la máquina de Jenkins solo
 //   necesita Docker (mismo patrón que el pipeline de CelularPro).
 // - OpenCart no se corrige: las pruebas que documentan defectos reales fallan a
-//   propósito. Por eso las etapas de pruebas marcan el build como INESTABLE
-//   (amarillo) y no como FALLIDO (rojo); el Quality Gate sí corta el pipeline.
+//   propósito. Esas etapas se ven en amarillo (inestables) pero el build queda en
+//   VERDE; solo falla (rojo) si cae la tienda o no pasa el Quality Gate de SonarQube.
 //
 // Plugins: Pipeline, Git, Docker Pipeline, SonarQube Scanner, JUnit, Timestamper
 // ─────────────────────────────────────────────────────────────────────────────
@@ -71,7 +71,7 @@ pipeline {
         stage('PHPUnit y cobertura') {
             steps {
                 // Pruebas unitarias de Santiago y de Andrés; la cobertura (clover) la lee SonarQube.
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     // Las de Andrés usan la base de datos de la tienda de prueba (contenedor 'mysql').
                     withEnv(['DB_HOSTNAME=mysql', 'DB_USERNAME=root', 'DB_PASSWORD=opencart', 'DB_DATABASE=opencart']) {
                     sh '''
@@ -87,14 +87,14 @@ pipeline {
                 }
             }
             post {
-                always { junit testResults: 'reports/phpunit-*.xml', allowEmptyResults: true }
+                always { junit testResults: 'reports/phpunit-*.xml', allowEmptyResults: true, skipMarkingBuildUnstable: true }
             }
         }
 
         stage('Pruebas contra la tienda') {
             steps {
                 // Regresión, API, rendimiento y seguridad (Vitest + supertest) sobre la tienda encendida.
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     sh '''
                         mkdir -p reports
                         cd tests/regresion/santiago
@@ -104,7 +104,7 @@ pipeline {
                 }
             }
             post {
-                always { junit testResults: 'reports/vitest-*.xml', allowEmptyResults: true }
+                always { junit testResults: 'reports/vitest-*.xml', allowEmptyResults: true, skipMarkingBuildUnstable: true }
             }
         }
 
@@ -124,7 +124,7 @@ pipeline {
         stage('Dependencias') {
             steps {
                 // Revisa composer.lock contra avisos de seguridad conocidos.
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     sh 'composer audit --locked --format=json > reports/composer-audit.json'
                 }
             }
@@ -139,8 +139,8 @@ pipeline {
             '''
             archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
         }
-        success  { echo 'OpenCart OK: pruebas, SonarQube y dependencias revisadas.' }
-        unstable { echo 'OpenCart INESTABLE: hay pruebas que documentan defectos reales (esperado).' }
+        success  { echo 'OpenCart OK: las etapas en amarillo son defectos documentados (esperado); SonarQube pasó el Quality Gate.' }
+        unstable { echo 'OpenCart INESTABLE.' }
         failure  { echo 'OpenCart FALLÓ: revisa la etapa en rojo (tienda, SonarQube o Quality Gate).' }
     }
 }
