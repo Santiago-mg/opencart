@@ -346,7 +346,7 @@
           <tbody id="order-total">
             {% for order_total in order_totals %}
               <tr>
-                <th scope="row" class="text-end">{{ order_total.title }}</th>
+                <td class="text-end"><strong>{{ order_total.title }}</strong></td>
                 <td class="text-end" style="width: 1px;">{{ order_total.text }}</td>
               </tr>
             {% endfor %}
