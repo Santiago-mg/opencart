@@ -47,3 +47,6 @@
 
 # Instalación local (la crea el contenedor al instalar OpenCart)
 /upload/install.lock
+
+# Pipeline de Jenkins
+reports/
