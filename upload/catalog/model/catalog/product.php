@@ -240,7 +240,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$key = hash('sha256', $sql);
 
 		$product_data = $this->cache->get('product.' . $key);
 
@@ -736,7 +736,7 @@ class Product extends \Opencart\System\Engine\Model {
 	public function getRelated(int $product_id): array {
 		$sql = "SELECT DISTINCT *, `pd`.`name` AS `name`, `p`.`image`, " . $this->statement['discount'] . ", " . $this->statement['special'] . ", " . $this->statement['reward'] . ", " . $this->statement['review'] . " FROM `" . DB_PREFIX . "product_related` `pr` LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p2s`.`product_id` = `pr`.`product_id` AND `p2s`.`store_id` = '" . (int)$this->config->get('config_store_id') . "') LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pr`.`related_id` AND `p`.`status` = '1' AND `p`.`date_available` <= NOW()) LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pr`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		$key = md5($sql);
+		$key = hash('sha256', $sql);
 
 		$product_data = $this->cache->get('product.' . $key);
 
@@ -807,7 +807,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$key = hash('sha256', $sql);
 
 		$product_data = $this->cache->get('product.' . $key);
 

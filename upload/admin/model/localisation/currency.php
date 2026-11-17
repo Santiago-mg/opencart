@@ -210,14 +210,14 @@ class Currency extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$results = $this->cache->get('currency.' . md5($sql));
+		$results = $this->cache->get('currency.' . hash('sha256', $sql));
 
 		if (!$results) {
 			$query = $this->db->query($sql);
 
 			$results = $query->rows;
 
-			$this->cache->set('currency.' . md5($sql), $results);
+			$this->cache->set('currency.' . hash('sha256', $sql), $results);
 		}
 
 		$currency_data = [];

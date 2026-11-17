@@ -614,14 +614,14 @@ class Language extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$results = $this->cache->get('language.' . md5($sql));
+		$results = $this->cache->get('language.' . hash('sha256', $sql));
 
 		if (!$results) {
 			$query = $this->db->query($sql);
 
 			$results = $query->rows;
 
-			$this->cache->set('language.' . md5($sql), $results);
+			$this->cache->set('language.' . hash('sha256', $sql), $results);
 		}
 
 		$language_data = [];

@@ -177,7 +177,7 @@ class GeoZone extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$key = hash('sha256', $sql);
 
 		$geo_zone_data = $this->cache->get('geo_zone.' . $key);
 
