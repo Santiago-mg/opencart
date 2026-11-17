@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="col mb-3">
-          <select name="category_id" id="input-category" class="form-select mb-1">
+          <select name="category_id" aria-label="{{ text_category }}" id="input-category" class="form-select mb-1">
             <option value="0">{{ text_category }}</option>
             {% for category_1 in categories %}
               <option value="{{ category_1.category_id }}"{% if category_1.category_id == category_id %} selected{% endif %}>{{ category_1.name }}</option>
