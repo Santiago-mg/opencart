@@ -125,7 +125,10 @@ pipeline {
 
     post {
         always {
-            sh '$COMPOSE down -v || true'
+            sh '''
+                docker network disconnect opencart-pruebas_default "$(hostname)" || true
+                $COMPOSE down -v || true
+            '''
             archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
         }
         success  { echo 'OpenCart OK: pruebas, SonarQube y dependencias revisadas.' }
