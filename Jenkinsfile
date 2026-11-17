@@ -113,7 +113,8 @@ pipeline {
                 // 'SonarQube' es el servidor configurado en Manage Jenkins → System.
                 // Lee sonar-project.properties; qualitygate.wait corta el pipeline si no pasa.
                 withSonarQubeEnv('SonarQube') {
-                    sh 'npx --yes sonarqube-scanner@5 -Dsonar.qualitygate.wait=true'
+                    // La URL del servidor se fija aquí (el SonarQube corre en el Mac, no en la IP de Docker que guarda Jenkins).
+                    sh 'npx --yes sonarqube-scanner@5 -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.qualitygate.wait=true'
                 }
             }
         }
