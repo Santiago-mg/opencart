@@ -6,7 +6,7 @@ lados y organizada con el OWASP Top 10 (2021):
 
 | Tipo | Herramienta | Qué revisa | Evidencia | Estado |
 |---|---|---|---|---|
-| Análisis estático | **SonarQube** | Los 25 archivos de las funcionalidades (`sonar-project.properties`): vulnerabilidades, *security hotspots*, bugs | `evidencia/sonarqube/` | Se corre en el Mac con `analizar.sh` |
+| Análisis estático | **SonarQube** | Solo los archivos de las funcionalidades probadas (RF-01 a RF-11; el resto de OpenCart queda aislado) (`sonar-project.properties`): vulnerabilidades, *security hotspots*, bugs | `evidencia/sonarqube/` | Se corre en el Mac con `analizar.sh` |
 | Análisis estático (complementario) | **Semgrep** 1.185 | Los mismos 25 archivos con 260 reglas públicas de seguridad para PHP y de secretos | `evidencia/estatico/semgrep.*` | Hecho: 3 hallazgos, falsos positivos |
 | Análisis dinámico | **Vitest** (`tests/regresion/santiago/security-testing`) | Ataques reales contra la tienda encendida: inyección SQL, XSS, permisos, sesión, cabeceras, abuso de la lógica | `evidencia/dinamico/vitest-seguridad.txt` | Hecho: 104 pruebas, 96 pasan, 8 defectos |
 | Análisis dinámico (complementario) | **OWASP ZAP** | Escaneo pasivo de las páginas y acciones de las seis funcionalidades | `evidencia/dinamico/zap-reporte.*` | Se corre en el Mac con `analizar.sh` |
