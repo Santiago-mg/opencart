@@ -241,7 +241,9 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
-		if ($product_info) {
+		if ($quantity < 1) {
+			$json['error']['warning'] = $this->language->get('error_quantity');
+		} elseif ($product_info) {
 			// If variant get master product
 			if ($product_info['master_id']) {
 				$product_id = $product_info['master_id'];
@@ -322,10 +324,16 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$quantity = 1;
 		}
 
-		// Handles single item update
-		$this->cart->update($key, $quantity);
+		if (!$this->cart->has($key)) {
+			$json['error'] = $this->language->get('error_product');
+		} else {
+			// Handles single item update
+			$this->cart->update($key, $quantity);
+		}
 
-		if ($this->cart->hasProducts()) {
+		if (isset($json['error'])) {
+			// el error se devuelve tal cual
+		} elseif ($this->cart->hasProducts()) {
 			$json['success'] = $this->language->get('text_edit');
 		} else {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
@@ -357,10 +365,15 @@ class Cart extends \Opencart\System\Engine\Controller {
 			$key = 0;
 		}
 
-		// Remove
-		$this->cart->remove($key);
+		if (!$this->cart->has($key)) {
+			$json['error'] = $this->language->get('error_product');
+		} else {
+			$this->cart->remove($key);
+		}
 
-		if ($this->cart->hasProducts()) {
+		if (isset($json['error'])) {
+			// el error se devuelve tal cual
+		} elseif ($this->cart->hasProducts()) {
 			$json['success'] = $this->language->get('text_remove');
 		} else {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);

@@ -156,7 +156,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
-					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . addcslashes($word, '%_') . '%') . "'";
 				}
 
 				if ($implode) {
@@ -164,7 +164,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . addcslashes((string)$data['filter_search'], '%_') . '%') . "'";
 				}
 			}
 
@@ -179,7 +179,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
-					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . addcslashes($word, '%_') . '%') . "'";
 				}
 
 				if ($implode) {
@@ -188,7 +188,7 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 
 			if (!empty($data['filter_search'])) {
-				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR pc.`value` LIKE '" . $this->db->escape((string)$data['filter_search'] . '%') . "'";
+				$sql .= " OR LCASE(`p`.`model`) = '" . $this->db->escape(oc_strtolower($data['filter_search'])) . "' OR pc.`value` LIKE '" . $this->db->escape(addcslashes((string)$data['filter_search'], '%_') . '%') . "'";
 			}
 
 			$sql .= ")";
@@ -325,7 +325,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
-					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					$implode[] = "`pd`.`name` LIKE '" . $this->db->escape('%' . addcslashes($word, '%_') . '%') . "'";
 				}
 
 				if ($implode) {
@@ -333,7 +333,7 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 
 				if (!empty($data['filter_description'])) {
-					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . (string)$data['filter_search'] . '%') . "'";
+					$sql .= " OR `pd`.`description` LIKE '" . $this->db->escape('%' . addcslashes((string)$data['filter_search'], '%_') . '%') . "'";
 				}
 			}
 
@@ -348,7 +348,7 @@ class Product extends \Opencart\System\Engine\Model {
 				$words = array_filter($words);
 
 				foreach ($words as $word) {
-					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . $word . '%') . "'";
+					$implode[] = "`pd`.`tag` LIKE '" . $this->db->escape('%' . addcslashes($word, '%_') . '%') . "'";
 				}
 
 				if ($implode) {

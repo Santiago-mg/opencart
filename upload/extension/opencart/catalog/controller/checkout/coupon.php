@@ -51,15 +51,26 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_status');
 		}
 
+		// Freno contra la fuerza bruta: después de 20 códigos equivocados seguidos no se aceptan más intentos en la sesión
+		if (($this->session->data['coupon_failed_attempts'] ?? 0) >= 20) {
+			$json['error'] = $this->language->get('error_attempts');
+		}
+
 		$this->load->model('marketing/coupon');
 
-		$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
+		if (!$json) {
+			$coupon_info = $this->model_marketing_coupon->getCoupon($coupon);
 
-		if (!$coupon_info) {
-			$json['error'] = $this->language->get('error_coupon');
+			if (!$coupon_info) {
+				$this->session->data['coupon_failed_attempts'] = ($this->session->data['coupon_failed_attempts'] ?? 0) + 1;
+
+				$json['error'] = $this->language->get('error_coupon');
+			}
 		}
 
 		if (!$json) {
+			unset($this->session->data['coupon_failed_attempts']);
+
 			$json['success'] = $this->language->get('text_success');
 
 			$this->session->data['coupon'] = $coupon;

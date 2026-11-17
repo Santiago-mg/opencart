@@ -26,7 +26,7 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 
-		if ($coupon_info && ($coupon_info['date_start'] == '0000-00-00' || strtotime($coupon_info['date_start']) < strtotime(date('Y-m-d H:i:s'))) && ($coupon_info['date_end'] == '0000-00-00' || strtotime($coupon_info['date_end']) > strtotime(date('Y-m-d H:i:s')))) {
+		if ($coupon_info && ($coupon_info['date_start'] == '0000-00-00' || strtotime($coupon_info['date_start']) < strtotime(date('Y-m-d H:i:s'))) && ($coupon_info['date_end'] == '0000-00-00' || strtotime($coupon_info['date_end'] . ' 23:59:59') >= strtotime(date('Y-m-d H:i:s')))) {
 			if ($coupon_info['total'] > $this->cart->getSubTotal()) {
 				$status = false;
 			}

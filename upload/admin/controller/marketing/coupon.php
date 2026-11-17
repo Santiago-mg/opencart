@@ -387,6 +387,10 @@ class Coupon extends \Opencart\System\Engine\Controller {
 			$json['error']['code'] = $this->language->get('error_code');
 		}
 
+		if ((float)($post_info['discount'] ?? 0) < 0 || (($post_info['type'] ?? '') == 'P' && (float)($post_info['discount'] ?? 0) > 100)) {
+			$json['error']['discount'] = $this->language->get('error_discount');
+		}
+
 		$this->load->model('marketing/coupon');
 
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($post_info['code']);
