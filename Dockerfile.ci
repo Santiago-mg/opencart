@@ -1,0 +1,18 @@
+# Imagen de la tienda para el pipeline de Jenkins: el código de OpenCart va DENTRO
+# de la imagen (COPY) en vez de montarse con un volumen. Jenkins corre en un
+# contenedor, y un volumen con la ruta de su carpeta de trabajo no existe en el
+# Docker del host.
+FROM php:8.2-apache
+
+RUN apt-get update \
+  && apt-get install -y wait-for-it unzip libfreetype6-dev libjpeg62-turbo-dev \
+                        libpng-dev libzip-dev libcurl3-dev libwebp-dev \
+  && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+  && docker-php-ext-install -j$(nproc) gd zip mysqli curl \
+  && docker-php-ext-enable gd zip mysqli curl \
+  && a2enmod rewrite \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY upload /var/www/html
+WORKDIR /var/www/html
+RUN chown -R www-data:www-data /var/www/html

@@ -18,7 +18,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile.jenkins'
             // Socket de Docker del host para levantar la tienda con docker compose.
-            args '-v /var/run/docker.sock:/var/run/docker.sock -u root --add-host=host.docker.internal:host-gateway'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
         }
     }
 
@@ -31,7 +31,8 @@ pipeline {
 
     environment {
         CI           = 'true'
-        OPENCART_URL = 'http://host.docker.internal'
+        OPENCART_URL = 'http://opencart'
+        COMPOSE      = 'docker compose -p opencart-pruebas -f docker-compose.ci.yml'
     }
 
     stages {
@@ -49,15 +50,20 @@ pipeline {
 
         stage('Tienda de prueba') {
             steps {
-                // Levanta OpenCart + MySQL (docker-compose.yml) y espera a que responda.
+                // Levanta OpenCart + MySQL (docker-compose.ci.yml, con el código dentro de la
+                // imagen), conecta este agente a su red y espera a que la tienda responda.
                 sh '''
-                    docker compose up -d --build mysql opencart
-                    for i in $(seq 1 60); do
+                    $COMPOSE up -d --build
+                    docker network connect opencart-pruebas_default "$(hostname)" || true
+                    for i in $(seq 1 72); do
                         code=$(curl -s -o /dev/null -w '%{http_code}' "$OPENCART_URL/index.php?route=common/home" || true)
                         [ "$code" = "200" ] && exit 0
                         sleep 5
                     done
-                    echo "La tienda no respondió a tiempo"; exit 1
+                    echo "La tienda no respondió a tiempo. Estado y registro del contenedor:"
+                    $COMPOSE ps -a
+                    $COMPOSE logs --tail=60 opencart
+                    exit 1
                 '''
             }
         }
@@ -119,7 +125,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker compose down -v || true'
+            sh '$COMPOSE down -v || true'
             archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
         }
         success  { echo 'OpenCart OK: pruebas, SonarQube y dependencias revisadas.' }
