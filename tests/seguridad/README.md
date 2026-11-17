@@ -53,16 +53,17 @@ Corrido en el Mac contra `http://localhost:9000`, proyecto `OpenCart-Santiago`
 | Métrica | Valor | Calificación |
 |---|---|---|
 | Vulnerabilidades | 9 | D |
-| Bugs | 41 | C |
-| Code smells | 297 | A |
+| Fiabilidad (reliability) | 60 | C |
+| Mantenibilidad (maintainability) | 278 | A |
 | Security hotspots | 0 | A |
 | Duplicación | 24,6 % | - |
+| Cobertura | 0 % | Las pruebas atacan la tienda encendida y no generan reporte de cobertura para Sonar |
 
 - **Vulnerabilidades (9):** todas son la misma regla, `php:S4790` (algoritmo de hash débil, `md5`),
   en `catalog/model/catalog/product.php` (3), `admin/model/localisation/{currency,language}.php` (2 c/u),
   `geo_zone.php` y `tax_class.php` (1 c/u). Se usa para armar claves de caché, no para contraseñas,
   así que el riesgo real es bajo. Se documentan sin corregir (código de OpenCart).
-- **Bugs (41):** casi todos en plantillas Twig, son de accesibilidad (campos sin etiqueta,
+- **Fiabilidad (60):** casi todos en plantillas Twig, son de accesibilidad (campos sin etiqueta,
   eventos de mouse sin teclado). La accesibilidad queda fuera de este alcance.
 - **Evidencia:** `evidencia/sonarqube/{issues,hotspots,medidas,quality-gate}.json`.
 
