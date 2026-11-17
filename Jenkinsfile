@@ -72,7 +72,10 @@ pipeline {
             steps {
                 // Pruebas unitarias de Santiago y de Andrés; la cobertura (clover) la lee SonarQube.
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                    // Las de Andrés usan la base de datos de la tienda de prueba (contenedor 'mysql').
+                    withEnv(['DB_HOSTNAME=mysql', 'DB_USERNAME=root', 'DB_PASSWORD=opencart', 'DB_DATABASE=opencart']) {
                     sh '''
+                        mkdir -p reports
                         (cd tests/unit && composer install -q --no-interaction \
                             && php -d pcov.enabled=1 -d pcov.directory=../../upload vendor/bin/phpunit \
                                 --coverage-clover evidencia/cobertura/clover.xml --log-junit ../../reports/phpunit-santiago.xml)
@@ -80,6 +83,7 @@ pipeline {
                             && php -d pcov.enabled=1 -d pcov.directory=../../upload vendor/bin/phpunit \
                                 --coverage-clover evidencia/cobertura/clover.xml --log-junit ../../reports/phpunit-andres.xml)
                     '''
+                    }
                 }
             }
             post {
@@ -92,6 +96,7 @@ pipeline {
                 // Regresión, API, rendimiento y seguridad (Vitest + supertest) sobre la tienda encendida.
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                     sh '''
+                        mkdir -p reports
                         cd tests/regresion/santiago
                         npm ci --no-audit --no-fund
                         npx vitest run --reporter=default --reporter=junit --outputFile.junit=../../../reports/vitest-santiago.xml
