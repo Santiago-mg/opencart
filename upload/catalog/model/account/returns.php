@@ -47,6 +47,21 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Has Order
+	 *
+	 * Comprueba si el pedido de la devolución existe.
+	 *
+	 * @param int $order_id primary key of the order record
+	 *
+	 * @return bool
+	 */
+	public function hasOrder(int $order_id): bool {
+		$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
+
+		return (bool)$query->num_rows;
+	}
+
+	/**
 	 * Get Return
 	 *
 	 * Get the record of the return reason record in the database.

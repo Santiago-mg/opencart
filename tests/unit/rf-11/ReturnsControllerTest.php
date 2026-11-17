@@ -36,6 +36,7 @@ class ReturnsControllerTest extends TestCase {
         $this->session = new SessionStub(['return_token' => self::TOKEN]);
         $this->response = new ResponseSpy();
         $this->returns = $this->createMock(ReturnsModel::class);
+        $this->returns->method('hasOrder')->willReturn(true);
     }
 
     private function enviar(array $campos, string $token = self::TOKEN): array {
@@ -194,5 +195,21 @@ class ReturnsControllerTest extends TestCase {
 
         // Assert
         assertThat($json, hasKey('error'));
+    }
+
+    /**
+     * DEF-11-06: la devolución solo se acepta si el pedido existe.
+     */
+    public function test_un_pedido_que_no_existe_no_se_acepta(): void {
+        // Arrange
+        $this->returns = $this->createMock(ReturnsModel::class);
+        $this->returns->method('hasOrder')->willReturn(false);
+        $this->returns->expects($this->never())->method('addReturn');
+
+        // Act
+        $json = $this->enviar($this->completa(['order_id' => 99999999]));
+
+        // Assert
+        assertThat($json['error'], hasKey('order_id'));
     }
 }

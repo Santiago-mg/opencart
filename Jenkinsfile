@@ -6,9 +6,9 @@
 //
 // - Corre dentro del agente de Dockerfile.jenkins: la máquina de Jenkins solo
 //   necesita Docker (mismo patrón que el pipeline de CelularPro).
-// - OpenCart no se corrige: las pruebas que documentan defectos reales fallan a
-//   propósito. Esas etapas se ven en amarillo (inestables) pero el build queda en
-//   VERDE; solo falla (rojo) si cae la tienda o no pasa el Quality Gate de SonarQube.
+// - Los defectos reales que documentaban las pruebas ya están corregidos en el código
+//   de OpenCart. Si una etapa de pruebas falla se ve en amarillo (inestable) y el build
+//   sigue en VERDE; solo falla (rojo) si cae la tienda o no pasa el Quality Gate.
 //
 // Plugins: Pipeline, Git, Docker Pipeline, SonarQube Scanner, JUnit, Timestamper
 // ─────────────────────────────────────────────────────────────────────────────
@@ -97,6 +97,8 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
                     sh '''
                         mkdir -p reports
+                        # Pedidos 1234 y 4321 para RF-11 (la tienda rechaza devoluciones de pedidos que no existen)
+                        $COMPOSE exec -T mysql mysql -uroot -popencart opencart < tests/regresion/santiago/sembrar-pedido.sql
                         cd tests/regresion/santiago
                         npm ci --no-audit --no-fund
                         npx vitest run --reporter=default --reporter=junit --outputFile.junit=../../../reports/vitest-santiago.xml

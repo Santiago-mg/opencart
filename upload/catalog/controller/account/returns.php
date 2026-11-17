@@ -348,13 +348,24 @@ class Returns extends \Opencart\System\Engine\Controller {
 				'product'          => '',
 				'model'            => '',
 				'return_reason_id' => 0,
+				'product_id'       => 0,
+				'quantity'         => 1,
+				'opened'           => 0,
+				'comment'          => '',
+				'date_ordered'     => '',
 				'agree'            => 0
 			];
 
 			$post_info = $this->request->post + $required;
 
-			if (!$post_info['order_id']) {
+			if (!ctype_digit((string)$post_info['order_id']) || (int)$post_info['order_id'] < 1) {
 				$json['error']['order_id'] = $this->language->get('error_order_id');
+			} else {
+				$this->load->model('account/returns');
+
+				if (!$this->model_account_returns->hasOrder((int)$post_info['order_id'])) {
+					$json['error']['order_id'] = $this->language->get('error_order_id');
+				}
 			}
 
 			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
@@ -373,8 +384,12 @@ class Returns extends \Opencart\System\Engine\Controller {
 				$json['error']['telephone'] = $this->language->get('error_telephone');
 			}
 
-			if (!oc_validate_length($post_info['product'], 1, 255)) {
+			if (!oc_validate_length($post_info['product'], 3, 255)) {
 				$json['error']['product'] = $this->language->get('error_product');
+			}
+
+			if (!ctype_digit((string)$post_info['quantity']) || (int)$post_info['quantity'] < 1) {
+				$json['error']['quantity'] = $this->language->get('error_quantity');
 			}
 
 			if (!oc_validate_length($post_info['model'], 1, 64)) {
@@ -404,7 +419,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 
 				$information_info = $this->model_catalog_information->getInformation((int)$this->config->get('config_return_id'));
 
-				if ($information_info && !isset($post_info['agree'])) {
+				if ($information_info && empty($post_info['agree'])) {
 					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 				}
 			}

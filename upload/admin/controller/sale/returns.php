@@ -864,6 +864,13 @@ class Returns extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_return');
 		}
 
+		// Return status
+		$this->load->model('localisation/return_status');
+
+		if (!$this->model_localisation_return_status->getReturnStatus((int)$post_info['return_status_id'])) {
+			$json['error'] = $this->language->get('error_return_status');
+		}
+
 		if (!$json) {
 			$this->model_sale_returns->addHistory($return_id, $post_info['return_status_id'], $post_info['comment'], $post_info['notify']);
 

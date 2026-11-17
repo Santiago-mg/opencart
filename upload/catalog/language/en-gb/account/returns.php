@@ -61,6 +61,7 @@ $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']        = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']    = 'Telephone must be between 3 and 32 characters!';
 $_['error_product']      = 'Product Name must be greater than 3 and less than 255 characters!';
+$_['error_quantity']     = 'Quantity must be a whole number of 1 or more!';
 $_['error_model']        = 'Product Model must be greater than 3 and less than 64 characters!';
 $_['error_reason']       = 'You must select a return product reason!';
 $_['error_agree']        = 'Warning: You must agree to the %s!';

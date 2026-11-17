@@ -171,7 +171,7 @@ describe('RF-11 · Seguridad — devoluciones', () => {
   })
 
   it('[DEF-11-06] no se acepta la devolución de un pedido que no existe', async () => {
-    // Arrange: en la tienda de demostración no hay ningún pedido.
+    // Arrange: el pedido 99999999 no existe (la tienda de pruebas solo tiene sembrados el 1234 y el 4321).
     const datos = nuevaDevolucion({ order_id: 99999999 })
 
     // Act

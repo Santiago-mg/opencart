@@ -346,4 +346,29 @@ class GeoZone extends \Opencart\System\Engine\Model {
 
 		return (int)$query->row['total'];
 	}
+
+	/**
+	 * Get Total Zone To Geo Zone By Country ID
+	 *
+	 * Los controladores localisation/country y localisation/zone llaman a este nombre,
+	 * por eso se mantiene como alias de getTotalZonesByCountryId().
+	 *
+	 * @param int $country_id primary key of the country record
+	 *
+	 * @return int total number of zone to geo zone records that have country ID
+	 */
+	public function getTotalZoneToGeoZoneByCountryId(int $country_id): int {
+		return $this->getTotalZonesByCountryId($country_id);
+	}
+
+	/**
+	 * Get Total Zone To Geo Zone By Zone ID
+	 *
+	 * @param int $zone_id primary key of the zone record
+	 *
+	 * @return int total number of zone to geo zone records that have zone ID
+	 */
+	public function getTotalZoneToGeoZoneByZoneId(int $zone_id): int {
+		return $this->getTotalZonesByZoneId($zone_id);
+	}
 }

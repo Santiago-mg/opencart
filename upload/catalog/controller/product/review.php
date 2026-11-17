@@ -138,9 +138,9 @@ class Review extends \Opencart\System\Engine\Controller {
 		}
 
 		$required = [
-			'author',
-			'text',
-			'rating'
+			'author' => '',
+			'text'   => '',
+			'rating' => 0
 		];
 
 		$post_info = $this->request->post + $required;
@@ -200,6 +200,9 @@ class Review extends \Opencart\System\Engine\Controller {
 			$this->load->model('catalog/review');
 
 			$this->model_catalog_review->addReview($product_id, $this->request->post);
+
+			// El token es de un solo uso: evita publicar varias reseñas con la misma sesión
+			unset($this->session->data['review_token']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
