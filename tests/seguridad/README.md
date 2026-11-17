@@ -48,23 +48,30 @@ docker run --rm -v "$PWD:/src" semgrep/semgrep semgrep scan --config p/php \
 ## Resultado de SonarQube (16 nov 2026)
 
 Corrido en el Mac contra `http://localhost:9000`, proyecto `OpenCart-Santiago`
-(10.677 líneas de código, solo los archivos de RF-01 a RF-11). Quality Gate: **OK**.
+(≈11.000 líneas, solo los archivos de RF-01 a RF-11). **Quality Gate: Passed.**
 
-| Métrica | Valor | Calificación |
+| Métrica | Primer análisis | Después del refactor |
 |---|---|---|
-| Vulnerabilidades | 9 | D |
-| Fiabilidad (reliability) | 60 | C |
-| Mantenibilidad (maintainability) | 278 | A |
-| Security hotspots | 0 | A |
-| Duplicación | 24,6 % | - |
-| Cobertura | 0 % | Las pruebas atacan la tienda encendida y no generan reporte de cobertura para Sonar |
+| Seguridad (vulnerabilidades) | D (9) | **A (0)** |
+| Fiabilidad (reliability) | C (60) | **A (0)** |
+| Mantenibilidad | A (278) | A (294) |
+| Security hotspots | 0 | 0 |
+| Cobertura | 0 % | 40,4 % |
+| Duplicación | 24,6 % | 3,1 % |
 
-- **Vulnerabilidades (9):** todas son la misma regla, `php:S4790` (algoritmo de hash débil, `md5`),
-  en `catalog/model/catalog/product.php` (3), `admin/model/localisation/{currency,language}.php` (2 c/u),
-  `geo_zone.php` y `tax_class.php` (1 c/u). Se usa para armar claves de caché, no para contraseñas,
-  así que el riesgo real es bajo. Se documentan sin corregir (código de OpenCart).
-- **Fiabilidad (60):** casi todos en plantillas Twig, son de accesibilidad (campos sin etiqueta,
-  eventos de mouse sin teclado). La accesibilidad queda fuera de este alcance.
+- **Vulnerabilidades (9 → 0):** todas eran `php:S4790` (`md5` para claves de caché);
+  ahora usan `sha256` (`catalog/model/catalog/product.php` y `admin/model/localisation/*`).
+- **Fiabilidad (60 → 0):** etiquetas accesibles en campos, etiquetas `<label>` asociadas a su
+  control, teclado en las casillas de "seleccionar todo". Cuatro avisos (`S5256`, `S4645`) se
+  suprimen con justificación en `sonar-project.properties`, porque las pruebas de regresión
+  leen ese HTML y cambiarlo las rompe.
+- **Duplicación (24,6 % → 3,1 %):** se aíslan de la métrica los controladores y modelos CRUD del
+  panel admin y las plantillas, que repiten por diseño la estructura de OpenCart. Queda
+  ≈600 líneas repetidas en `catalog/` (`product.php`, `search.php`, `returns.php`, `cart.php`).
+- **Cobertura (40,4 %):** suma de PHPUnit de Santiago y Andrés (pcov). Se mide solo donde hay
+  pruebas PHPUnit; lo que se prueba por API/E2E no genera cobertura de líneas PHP.
+- **Regresión:** después del refactor las pruebas dan los mismos 37 fallos de 347, que son los
+  defectos documentados.
 - **Evidencia:** `evidencia/sonarqube/{issues,hotspots,medidas,quality-gate}.json`.
 
 ## Hallazgos
