@@ -114,6 +114,8 @@ pipeline {
                 // La URL se fija aquí porque SonarQube corre en el Mac. Lee sonar-project.properties;
                 // qualitygate.wait corta el pipeline si el Quality Gate no pasa.
                 withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    // Diagnóstico: confirma que Jenkins guardó bien el token (largo esperado: 44) y que SonarQube lo acepta.
+                    sh 'echo "largo del token: ${#SONAR_TOKEN}"; curl -s -u "$SONAR_TOKEN:" http://host.docker.internal:9000/api/authentication/validate; echo'
                     sh 'npx --yes sonarqube-scanner@5 -Dsonar.host.url=http://host.docker.internal:9000 -Dsonar.token=$SONAR_TOKEN -Dsonar.qualitygate.wait=true'
                 }
             }
