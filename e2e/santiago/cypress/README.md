@@ -18,6 +18,13 @@ cd ~/Documents/opencart
 docker compose up -d opencart
 ```
 
+Primera vez: espera uno o dos minutos a que termine la instalación. Después siembra los pedidos 1234 y 4321
+(las devoluciones solo se aceptan para pedidos que existen):
+
+```bash
+docker compose exec -T mysql mysql -uroot -popencart opencart < tests/regresion/santiago/sembrar-pedido.sql
+```
+
 Tienda en <http://localhost>, panel en <http://localhost/admin> (`admin` / `admin`).
 Si corre en otro lado: `OPENCART_URL`, `OPENCART_ADMIN_USER` y `OPENCART_ADMIN_PASSWORD`.
 
@@ -31,7 +38,7 @@ npm test                    # los 47 casos, sin abrir ventana
 
 | Comando | Qué corre |
 |---|---|
-| `npm test` | todos los casos (36 pasan y 11 fallan: son los defectos encontrados) |
+| `npm test` | todos los casos (los 11 de defectos ya están corregidos en el código: deben pasar los 47) |
 | `npm run test:sin-defectos` | salta los 11 de defectos: los 36 restantes deben pasar todos |
 | `npm run cy:open` | la ventana interactiva de Cypress, para ver cada paso |
 | `npm run test:web` | los 29 de la interfaz |
