@@ -414,6 +414,21 @@ class Returns extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Has Return Status
+	 *
+	 * Comprueba que el estado de devolución exista.
+	 *
+	 * @param int $return_status_id primary key of the return status record
+	 *
+	 * @return bool
+	 */
+	public function hasReturnStatus(int $return_status_id): bool {
+		$query = $this->db->query("SELECT `return_status_id` FROM `" . DB_PREFIX . "return_status` WHERE `return_status_id` = '" . (int)$return_status_id . "'");
+
+		return (bool)$query->num_rows;
+	}
+
+	/**
 	 * Delete Return Histories
 	 *
 	 * Delete return history records in the database.

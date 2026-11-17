@@ -865,9 +865,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		}
 
 		// Return status
-		$this->load->model('localisation/return_status');
-
-		if (!$this->model_localisation_return_status->getReturnStatus((int)$post_info['return_status_id'])) {
+		if (!$this->model_sale_returns->hasReturnStatus((int)$post_info['return_status_id'])) {
 			$json['error'] = $this->language->get('error_return_status');
 		}
 
