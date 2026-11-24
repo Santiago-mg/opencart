@@ -306,7 +306,8 @@ function oc_db_schema() {
 			],
 			[
 				'name'    => 'attribute_group_id',
-				'type'    => 'int(11)'
+				'type'    => 'int(11)',
+				'default' => '0'
 			],
 			[
 				'name'    => 'sort_order',
@@ -684,11 +685,15 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'description',
-				'type' => 'mediumtext'
+				'type' => 'text'
 			],
 			[
 				'name' => 'image',
 				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'tag',
+				'type' => 'text'
 			],
 			[
 				'name' => 'meta_title',
@@ -902,39 +907,6 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'article_to_tag',
-		'field' => [
-			[
-				'name' => 'article_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'tag_id',
-				'type' => 'int(11)'
-			]
-		],
-		'primary' => [
-			'article_id',
-			'tag_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'article_id',
-				'table' => 'article',
-				'field' => 'article_id'
-			],
-			[
-				'key'   => 'tag_id',
-				'table' => 'tag',
-				'field' => 'tag_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
 		'name'  => 'topic',
 		'field' => [
 			[
@@ -943,13 +915,13 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			]
 		],
@@ -978,7 +950,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'description',
-				'type' => 'mediumtext'
+				'type' => 'text'
 			],
 			[
 				'name' => 'image',
@@ -1215,13 +1187,13 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			]
 		],
@@ -1258,7 +1230,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'description',
-				'type' => 'mediumtext'
+				'type' => 'text'
 			],
 			[
 				'name' => 'meta_title',
@@ -1978,6 +1950,149 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'customer_affiliate',
+		'field' => [
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'company',
+				'type' => 'varchar(60)'
+			],
+			[
+				'name' => 'website',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'tracking',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'balance',
+				'type' => 'decimal(15,4)'
+			],
+			[
+				'name'    => 'commission',
+				'type'    => 'decimal(4,2)',
+				'default' => '0.00'
+			],
+			[
+				'name' => 'tax',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'payment_method',
+				'type' => 'varchar(6)'
+			],
+			[
+				'name' => 'cheque',
+				'type' => 'varchar(100)'
+			],
+			[
+				'name' => 'paypal',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'bank_name',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'bank_branch_number',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'bank_swift_code',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'bank_account_name',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'bank_account_number',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'custom_field',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'customer_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'customer_affiliate_report',
+		'field' => [
+			[
+				'name'           => 'customer_affiliate_report_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'customer_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name' => 'ip',
+				'type' => 'varchar(40)'
+			],
+			[
+				'name' => 'country',
+				'type' => 'varchar(2)'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'customer_affiliate_report_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'customer_approval',
 		'field' => [
 			[
@@ -2312,6 +2427,58 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'customer_reward',
+		'field' => [
+			[
+				'name'           => 'customer_reward_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name'    => 'customer_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'order_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'points',
+				'type'    => 'int(8)',
+				'default' => '0'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
+			]
+		],
+		'primary' => [
+			'customer_reward_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'customer_id',
+				'table' => 'customer',
+				'field' => 'customer_id'
+			],
+			[
+				'key'   => 'order_id',
+				'table' => 'order',
+				'field' => 'order_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'customer_token',
 		'field' => [
 			[
@@ -2523,6 +2690,198 @@ function oc_db_schema() {
 				'key'   => 'product_id',
 				'table' => 'product',
 				'field' => 'product_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'custom_field',
+		'field' => [
+			[
+				'name'           => 'custom_field_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'type',
+				'type' => 'varchar(32)'
+			],
+			[
+				'name' => 'value',
+				'type' => 'text'
+			],
+			[
+				'name' => 'validation',
+				'type' => 'varchar(255)'
+			],
+			[
+				'name' => 'location',
+				'type' => 'varchar(10)'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'custom_field_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'custom_field_customer_group',
+		'field' => [
+			[
+				'name' => 'custom_field_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'customer_group_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name'    => 'required',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'custom_field_id',
+			'customer_group_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'custom_field_id',
+				'table' => 'custom_field',
+				'field' => 'custom_field_id'
+			],
+			[
+				'key'   => 'customer_group_id',
+				'table' => 'customer_group',
+				'field' => 'customer_group_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'custom_field_description',
+		'field' => [
+			[
+				'name' => 'custom_field_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(128)'
+			]
+		],
+		'primary' => [
+			'custom_field_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'custom_field_id',
+				'table' => 'custom_field',
+				'field' => 'custom_field_id'
+			],
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'custom_field_value',
+		'field' => [
+			[
+				'name'           => 'custom_field_value_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'custom_field_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'custom_field_value_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'custom_field_id',
+				'table' => 'custom_field',
+				'field' => 'custom_field_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'custom_field_value_description',
+		'field' => [
+			[
+				'name' => 'custom_field_value_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'language_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'custom_field_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(128)'
+			]
+		],
+		'primary' => [
+			'custom_field_value_id',
+			'language_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'language_id',
+				'table' => 'language',
+				'field' => 'language_id'
+			],
+			[
+				'key'   => 'custom_field_id',
+				'table' => 'custom_field',
+				'field' => 'custom_field_id'
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -3071,14 +3430,14 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '1'
-			],
-			[
 				'name'    => 'sort_order',
 				'type'    => 'int(3)',
 				'default' => '0'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '1'
 			]
 		],
 		'primary' => [
@@ -3240,13 +3599,13 @@ function oc_db_schema() {
 				'type' => 'varchar(255)'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
 				'default' => '0'
 			]
 		],
@@ -3454,6 +3813,10 @@ function oc_db_schema() {
 				'type' => 'varchar(32)'
 			],
 			[
+				'name' => 'geocode',
+				'type' => 'varchar(32)'
+			],
+			[
 				'name' => 'image',
 				'type' => 'varchar(255)'
 			],
@@ -3491,13 +3854,12 @@ function oc_db_schema() {
 				'auto_increment' => true
 			],
 			[
-				'name' => 'image',
-				'type' => 'varchar(255)'
+				'name' => 'name',
+				'type' => 'varchar(64)'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
+				'name' => 'image',
+				'type' => 'varchar(255)'
 			],
 			[
 				'name'    => 'sort_order',
@@ -3507,58 +3869,6 @@ function oc_db_schema() {
 		],
 		'primary' => [
 			'manufacturer_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'manufacturer_description',
-		'field' => [
-			[
-				'name' => 'manufacturer_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'language_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'name',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'meta_title',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'meta_description',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'meta_keyword',
-				'type' => 'varchar(255)'
-			]
-		],
-		'primary' => [
-			'manufacturer_id',
-			'language_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'language_id',
-				'table' => 'language',
-				'field' => 'language_id'
-			]
-		],
-		'index' => [
-			[
-				'name' => 'name',
-				'key'  => [
-					'name'
-				]
-			]
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3644,36 +3954,37 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'menu',
+		'name'  => 'marketing',
 		'field' => [
 			[
-				'name'           => 'menu_id',
+				'name'           => 'marketing_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
+			],
+			[
+				'name' => 'name',
+				'type' => 'varchar(32)'
+			],
+			[
+				'name' => 'description',
+				'type' => 'text'
 			],
 			[
 				'name' => 'code',
 				'type' => 'varchar(64)'
 			],
 			[
-				'name' => 'type',
-				'type' => 'varchar(8)'
+				'name'    => 'clicks',
+				'type'    => 'int(5)',
+				'default' => '0'
 			],
 			[
-				'name' => 'route',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'parent',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'sort_order',
-				'type' => 'int(3)'
+				'name' => 'date_added',
+				'type' => 'datetime'
 			]
 		],
 		'primary' => [
-			'menu_id'
+			'marketing_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -3681,30 +3992,48 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'menu_description',
+		'name'  => 'marketing_report',
 		'field' => [
 			[
-				'name' => 'menu_id',
+				'name'           => 'marketing_report_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'marketing_id',
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'language_id',
-				'type' => 'int(11)'
+				'name'    => 'store_id',
+				'type'    => 'int(11)',
+				'default' => '0'
 			],
 			[
-				'name' => 'name',
-				'type' => 'varchar(64)'
+				'name' => 'ip',
+				'type' => 'varchar(40)'
+			],
+			[
+				'name' => 'country',
+				'type' => 'varchar(2)'
+			],
+			[
+				'name' => 'date_added',
+				'type' => 'datetime'
 			]
 		],
 		'primary' => [
-			'menu_id',
-			'language_id'
+			'marketing_report_id'
 		],
 		'foreign' => [
 			[
-				'key'   => 'language_id',
-				'table' => 'language',
-				'field' => 'language_id'
+				'key'   => 'marketing_id',
+				'table' => 'marketing',
+				'field' => 'marketing_id'
+			],
+			[
+				'key'   => 'store_id',
+				'table' => 'store',
+				'field' => 'store_id'
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -3789,7 +4118,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'setting',
-				'type' => 'mediumtext'
+				'type' => 'text'
 			]
 		],
 		'primary' => [
@@ -4183,6 +4512,24 @@ function oc_db_schema() {
 				'default' => '0'
 			],
 			[
+				'name'    => 'affiliate_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name' => 'commission',
+				'type' => 'decimal(15,4)'
+			],
+			[
+				'name'    => 'marketing_id',
+				'type'    => 'int(11)',
+				'default' => '0'
+			],
+			[
+				'name' => 'tracking',
+				'type' => 'varchar(64)'
+			],
+			[
 				'name' => 'language_id',
 				'type' => 'int(11)'
 			],
@@ -4271,6 +4618,16 @@ function oc_db_schema() {
 				'key'   => 'order_status_id',
 				'table' => 'order_status',
 				'field' => 'order_status_id'
+			],
+			[
+				'key'   => 'affiliate_id',
+				'table' => 'customer_affiliate',
+				'field' => 'customer_id'
+			],
+			[
+				'key'   => 'marketing_id',
+				'table' => 'marketing',
+				'field' => 'marketing_id'
 			],
 			[
 				'key'   => 'language_id',
@@ -4463,6 +4820,11 @@ function oc_db_schema() {
 				'name'    => 'tax',
 				'type'    => 'decimal(15,4)',
 				'default' => '0.0000'
+			],
+			[
+				'name'    => 'reward',
+				'type'    => 'int(8)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
@@ -4722,6 +5084,30 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
+				'name' => 'sku',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'upc',
+				'type' => 'varchar(12)'
+			],
+			[
+				'name' => 'ean',
+				'type' => 'varchar(14)'
+			],
+			[
+				'name' => 'jan',
+				'type' => 'varchar(13)'
+			],
+			[
+				'name' => 'isbn',
+				'type' => 'varchar(17)'
+			],
+			[
+				'name' => 'mpn',
+				'type' => 'varchar(64)'
+			],
+			[
 				'name' => 'location',
 				'type' => 'varchar(128)'
 			],
@@ -4819,23 +5205,18 @@ function oc_db_schema() {
 				'default' => '1'
 			],
 			[
-				'name'    => 'sales',
-				'type'    => 'int(11)',
+				'name'    => 'rating',
+				'type'    => 'int(1)',
 				'default' => '0'
 			],
 			[
-				'name'    => 'rating',
+				'name'    => 'sort_order',
 				'type'    => 'int(11)',
 				'default' => '0'
 			],
 			[
 				'name'    => 'status',
 				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name'    => 'sort_order',
-				'type'    => 'int(11)',
 				'default' => '0'
 			],
 			[
@@ -4947,8 +5328,8 @@ function oc_db_schema() {
 				'type' => 'int(11)'
 			],
 			[
-				'name' => 'identifier_id',
-				'type' => 'varchar(11)'
+				'name' => 'code',
+				'type' => 'varchar(48)'
 			],
 			[
 				'name' => 'value',
@@ -4967,9 +5348,9 @@ function oc_db_schema() {
 		],
 		'index' => [
 			[
-				'name' => 'identifier_id',
+				'name' => 'code',
 				'key'  => [
-					'identifier_id'
+					'code'
 				]
 			]
 		],
@@ -4995,7 +5376,11 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'description',
-				'type' => 'mediumtext'
+				'type' => 'text'
+			],
+			[
+				'name' => 'tag',
+				'type' => 'text'
 			],
 			[
 				'name' => 'meta_title',
@@ -5074,6 +5459,11 @@ function oc_db_schema() {
 				'name'    => 'type',
 				'type'    => 'char(1)',
 				'default' => 'P'
+			],
+			[
+				'name'    => 'special',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
 			],
 			[
 				'name' => 'date_start',
@@ -5276,13 +5666,25 @@ function oc_db_schema() {
 				'type' => 'decimal(15,4)'
 			],
 			[
+				'name' => 'price_prefix',
+				'type' => 'varchar(1)'
+			],
+			[
 				'name'    => 'points',
 				'type'    => 'int(8)',
 				'default' => '0'
 			],
 			[
+				'name' => 'points_prefix',
+				'type' => 'varchar(1)'
+			],
+			[
 				'name' => 'weight',
 				'type' => 'decimal(15,8)'
+			],
+			[
+				'name' => 'weight_prefix',
+				'type' => 'varchar(1)'
 			]
 		],
 		'primary' => [
@@ -5308,6 +5710,57 @@ function oc_db_schema() {
 				'key'   => 'option_value_id',
 				'table' => 'option_value',
 				'field' => 'option_value_id'
+			]
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'product_subscription',
+		'field' => [
+			[
+				'name' => 'product_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'subscription_plan_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'customer_group_id',
+				'type' => 'int(11)'
+			],
+			[
+				'name' => 'trial_price',
+				'type' => 'decimal(10,4)'
+			],
+			[
+				'name' => 'price',
+				'type' => 'decimal(10,4)'
+			]
+		],
+		'primary' => [
+			'product_id',
+			'subscription_plan_id',
+			'customer_group_id'
+		],
+		'foreign' => [
+			[
+				'key'   => 'product_id',
+				'table' => 'product',
+				'field' => 'product_id'
+			],
+			[
+				'key'   => 'subscription_plan_id',
+				'table' => 'subscription_plan',
+				'field' => 'subscription_plan_id'
+			],
+			[
+				'key'   => 'customer_group_id',
+				'table' => 'customer_group',
+				'field' => 'customer_group_id'
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -5399,44 +5852,37 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'product_subscription',
+		'name'  => 'product_reward',
 		'field' => [
 			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
+				'name'           => 'product_reward_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
 			],
 			[
-				'name' => 'subscription_plan_id',
-				'type' => 'int(11)'
+				'name'    => 'product_id',
+				'type'    => 'int(11)',
+				'default' => '0'
 			],
 			[
-				'name' => 'customer_group_id',
-				'type' => 'int(11)'
+				'name'    => 'customer_group_id',
+				'type'    => 'int(11)',
+				'default' => '0'
 			],
 			[
-				'name' => 'trial_price',
-				'type' => 'decimal(10,4)'
-			],
-			[
-				'name' => 'price',
-				'type' => 'decimal(10,4)'
+				'name'    => 'points',
+				'type'    => 'int(8)',
+				'default' => '0'
 			]
 		],
 		'primary' => [
-			'product_id',
-			'subscription_plan_id',
-			'customer_group_id'
+			'product_reward_id'
 		],
 		'foreign' => [
 			[
 				'key'   => 'product_id',
 				'table' => 'product',
 				'field' => 'product_id'
-			],
-			[
-				'key'   => 'subscription_plan_id',
-				'table' => 'subscription_plan',
-				'field' => 'subscription_plan_id'
 			],
 			[
 				'key'   => 'customer_group_id',
@@ -5594,39 +6040,6 @@ function oc_db_schema() {
 				'key'   => 'store_id',
 				'table' => 'store',
 				'field' => 'store_id'
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'product_to_tag',
-		'field' => [
-			[
-				'name' => 'product_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'tag_id',
-				'type' => 'int(11)'
-			]
-		],
-		'primary' => [
-			'product_id',
-			'tag_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'product_id',
-				'table' => 'product',
-				'field' => 'product_id'
-			],
-			[
-				'key'   => 'tag_id',
-				'table' => 'tag',
-				'field' => 'tag_id'
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -6018,6 +6431,70 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
+		'name'  => 'startup',
+		'field' => [
+			[
+				'name'           => 'startup_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'description',
+				'type' => 'text'
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'action',
+				'type' => 'text'
+			],
+			[
+				'name'    => 'status',
+				'type'    => 'tinyint(1)',
+				'default' => '0'
+			],
+			[
+				'name'    => 'sort_order',
+				'type'    => 'int(3)',
+				'default' => '0'
+			]
+		],
+		'primary' => [
+			'startup_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
+		'name'  => 'statistics',
+		'field' => [
+			[
+				'name'           => 'statistics_id',
+				'type'           => 'int(11)',
+				'auto_increment' => true
+			],
+			[
+				'name' => 'code',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'value',
+				'type' => 'decimal(15,4)'
+			]
+		],
+		'primary' => [
+			'statistics_id'
+		],
+		'engine'  => 'InnoDB',
+		'charset' => 'utf8mb4',
+		'collate' => 'utf8mb4_unicode_ci'
+	];
+
+	$tables[] = [
 		'name'  => 'session',
 		'field' => [
 			[
@@ -6026,7 +6503,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'data',
-				'type' => 'mediumtext'
+				'type' => 'text'
 			],
 			[
 				'name' => 'expire',
@@ -6072,7 +6549,7 @@ function oc_db_schema() {
 			],
 			[
 				'name' => 'value',
-				'type' => 'mediumtext'
+				'type' => 'text'
 			],
 			[
 				'name'    => 'serialized',
@@ -6089,108 +6566,6 @@ function oc_db_schema() {
 				'table' => 'store',
 				'field' => 'store_id'
 			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'ssr',
-		'field' => [
-			[
-				'name'           => 'ssr_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'description',
-				'type' => 'text'
-			],
-			[
-				'name' => 'action',
-				'type' => 'text'
-			],
-			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_modified',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'ssr_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'startup',
-		'field' => [
-			[
-				'name'           => 'startup_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'description',
-				'type' => 'text'
-			],
-			[
-				'name' => 'action',
-				'type' => 'text'
-			],
-			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
-				'default' => '0'
-			]
-		],
-		'primary' => [
-			'startup_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'statistics',
-		'field' => [
-			[
-				'name'           => 'statistics_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'value',
-				'type' => 'decimal(15,4)'
-			]
-		],
-		'primary' => [
-			'statistics_id'
 		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
@@ -6377,13 +6752,8 @@ function oc_db_schema() {
 				'type' => 'varchar(5)'
 			],
 			[
-				'name' => 'currency_code',
+				'name' => 'currency',
 				'type' => 'varchar(3)'
-			],
-			[
-				'name'    => 'currency_value',
-				'type'    => 'decimal(15,8)',
-				'default' => '1.00000000'
 			],
 			[
 				'name' => 'date_added',
@@ -6813,106 +7183,6 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'tag',
-		'field' => [
-			[
-				'name'           => 'tag_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'tag',
-				'type' => 'text'
-			]
-		],
-		'primary' => [
-			'tag_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'task',
-		'field' => [
-			[
-				'name'           => 'task_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(128)'
-			],
-			[
-				'name' => 'action',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'args',
-				'type' => 'text'
-			],
-			[
-				'name' => 'response',
-				'type' => 'text'
-			],
-			[
-				'name' => 'status',
-				'type' => 'enum(\'pending\',\'processing\',\'paused\',\'complete\',\'failed\')'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			],
-			[
-				'name' => 'date_modified',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'task_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'task_log',
-		'field' => [
-			[
-				'name'           => 'task_log_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'code',
-				'type' => 'varchar(128)'
-			],
-			[
-				'name' => 'comment',
-				'type' => 'text'
-			],
-			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
-			],
-			[
-				'name' => 'date_added',
-				'type' => 'datetime'
-			]
-		],
-		'primary' => [
-			'task_log_id'
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
 		'name'  => 'tax_class',
 		'field' => [
 			[
@@ -7059,10 +7329,10 @@ function oc_db_schema() {
 	];
 
 	$tables[] = [
-		'name'  => 'template',
+		'name'  => 'theme',
 		'field' => [
 			[
-				'name'           => 'template_id',
+				'name'           => 'theme_id',
 				'type'           => 'int(11)',
 				'auto_increment' => true
 			],
@@ -7090,7 +7360,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'template_id'
+			'theme_id'
 		],
 		'foreign' => [
 			[
@@ -7126,9 +7396,12 @@ function oc_db_schema() {
 				'type' => 'varchar(64)'
 			],
 			[
-				'name'    => 'status',
-				'type'    => 'tinyint(1)',
-				'default' => '0'
+				'name' => 'key',
+				'type' => 'varchar(64)'
+			],
+			[
+				'name' => 'value',
+				'type' => 'text'
 			],
 			[
 				'name' => 'date_added',
@@ -7136,9 +7409,7 @@ function oc_db_schema() {
 			]
 		],
 		'primary' => [
-			'translation_id',
-			'store_id',
-			'language_id'
+			'translation_id'
 		],
 		'foreign' => [
 			[
@@ -7150,70 +7421,6 @@ function oc_db_schema() {
 				'key'   => 'language_id',
 				'table' => 'language',
 				'field' => 'language_id'
-			]
-		],
-		'index' => [
-			[
-				'name' => 'store',
-				'key'  => [
-					'store_id'
-				]
-			],
-			[
-				'name' => 'language',
-				'key'  => [
-					'language_id'
-				]
-			],
-			[
-				'name' => 'route',
-				'key'  => [
-					'route'
-				]
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'translation_description',
-		'field' => [
-			[
-				'name'           => 'translation_description_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'translation_id',
-				'type' => 'int(11)'
-			],
-			[
-				'name' => 'key',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'value',
-				'type' => 'text'
-			]
-		],
-		'primary' => [
-			'translation_description_id'
-		],
-		'foreign' => [
-			[
-				'key'   => 'translation_id',
-				'table' => 'translation',
-				'field' => 'translation_id'
-			]
-		],
-		'index' => [
-			[
-				'name' => 'translation',
-				'key'  => [
-					'translation_id'
-				]
 			]
 		],
 		'engine'  => 'InnoDB',
@@ -7328,56 +7535,6 @@ function oc_db_schema() {
 				'key'  => [
 					'key',
 					'value'
-				]
-			]
-		],
-		'engine'  => 'InnoDB',
-		'charset' => 'utf8mb4',
-		'collate' => 'utf8mb4_unicode_ci'
-	];
-
-	$tables[] = [
-		'name'  => 'seo_regex',
-		'field' => [
-			[
-				'name'           => 'seo_regex_id',
-				'type'           => 'int(11)',
-				'auto_increment' => true
-			],
-			[
-				'name' => 'key',
-				'type' => 'varchar(64)'
-			],
-			[
-				'name' => 'match',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'replace',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'keyword',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name' => 'value',
-				'type' => 'varchar(255)'
-			],
-			[
-				'name'    => 'sort_order',
-				'type'    => 'int(3)',
-				'default' => '0'
-			]
-		],
-		'primary' => [
-			'seo_regex_id'
-		],
-		'index' => [
-			[
-				'name' => 'sort_order',
-				'key'  => [
-					'sort_order'
 				]
 			]
 		],

@@ -1,7 +1,0 @@
-<h1>{{ heading_title }}</h1>
-{% if products %}
-<product-list path="{{ path }}"></product-list>
-{% else %}
-<p>{{ text_no_results }}</p>
-<div class="text-end"><a href="catalog/special.js" :click="link" class="btn btn-primary">{{ button_continue }}</a></div>
-{% endif %}

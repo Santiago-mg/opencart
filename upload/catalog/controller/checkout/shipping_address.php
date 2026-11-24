@@ -7,6 +7,71 @@ namespace Opencart\Catalog\Controller\Checkout;
  */
 class ShippingAddress extends \Opencart\System\Engine\Controller {
 	/**
+	 * Index
+	 *
+	 * @return string
+	 */
+	public function index(): string {
+		$this->load->language('checkout/shipping_address');
+
+		$data['error_upload_size'] = sprintf($this->language->get('error_upload_size'), $this->config->get('config_file_max_size'));
+		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
+		$data['payment_address_required'] = $this->config->get('config_checkout_payment_address');
+
+		$this->session->data['upload_token'] = oc_token(32);
+
+		$data['upload'] = $this->url->link('tool/upload', 'language=' . $this->config->get('config_language') . '&upload_token=' . $this->session->data['upload_token']);
+
+		// Address
+		$this->load->model('account/address');
+
+		$data['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
+
+		if (isset($this->session->data['shipping_address']['address_id'])) {
+			$data['address_id'] = $this->session->data['shipping_address']['address_id'];
+		} else {
+			$data['address_id'] = 0;
+		}
+
+		if (isset($this->session->data['shipping_address'])) {
+			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
+			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
+			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
+		} else {
+			$data['postcode'] = '';
+			$data['country_id'] = (int)$this->config->get('config_country_id');
+			$data['zone_id'] = '';
+		}
+
+		// Country
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		// Zone
+		$this->load->model('localisation/zone');
+
+		$data['zones'] = $this->model_localisation_zone->getZonesByCountryId($data['country_id']);
+
+		// Custom Fields
+		$data['custom_fields'] = [];
+
+		$this->load->model('account/custom_field');
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['location'] == 'address') {
+				$data['custom_fields'][] = $custom_field;
+			}
+		}
+
+		$data['language'] = $this->config->get('config_language');
+
+		return $this->load->view('checkout/shipping_address', $data);
+	}
+
+	/**
 	 * Save
 	 *
 	 * @return void
@@ -25,7 +90,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			'city'         => '',
 			'postcode'     => '',
 			'country_id'   => 0,
-			'zone_id'      => 0
+			'zone_id'      => 0,
+			'custom_field' => []
 		];
 
 		$post_info = $this->request->post + $required;
@@ -75,14 +141,28 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$json['error']['country'] = $this->language->get('error_country');
 			}
 
-			// Zones
+			// Zone
 			$this->load->model('localisation/zone');
 
-			// Total Zones
 			$zone_total = $this->model_localisation_zone->getTotalZonesByCountryId((int)$post_info['country_id']);
 
 			if ($zone_total && !$post_info['zone_id']) {
 				$json['error']['zone'] = $this->language->get('error_zone');
+			}
+
+			// Custom field validation
+			$this->load->model('account/custom_field');
+
+			$custom_fields = $this->model_account_custom_field->getCustomFields($this->customer->getGroupId());
+
+			foreach ($custom_fields as $custom_field) {
+				if ($custom_field['location'] == 'address') {
+					if ($custom_field['required'] && empty($post_info['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !oc_validate_regex($post_info['custom_field'][$custom_field['custom_field_id']], $custom_field['validation'])) {
+						$json['error']['custom_field_' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_regex'), $custom_field['name']);
+					}
+				}
 			}
 		}
 
@@ -94,12 +174,10 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 				$post_info['default'] = 1;
 			}
 
-			// Address
 			$this->load->model('account/address');
 
 			$json['address_id'] = $this->model_account_address->addAddress($this->customer->getId(), $post_info);
 
-			// Addresses
 			$json['addresses'] = $this->model_account_address->getAddresses($this->customer->getId());
 
 			$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getId(), $json['address_id']);
@@ -107,7 +185,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			// Clear payment and shipping methods
-			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -157,6 +234,12 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 
 			if (!$address_info) {
 				$json['error'] = $this->language->get('error_address');
+
+				unset($this->session->data['shipping_address']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
 			}
 		}
 
@@ -166,7 +249,6 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 			$json['success'] = $this->language->get('text_success');
 
 			// Clear payment and shipping methods
-			unset($this->session->data['order_id']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

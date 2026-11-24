@@ -17,128 +17,56 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		$json = [];
 
 		try {
-			$ssrs = [];
+			// order
+			$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'payment_code'");
 
-			$ssrs[] = [
-				'code'   => 'article',
-				'action' => 'task/catalog/article'
-			];
+			if ($query->num_rows) {
+				$query = $this->db->query("SELECT `order_id`, `payment_code`, `payment_method`, `shipping_method`, `shipping_code` FROM `" . DB_PREFIX . "order`");
 
-			$ssrs[] = [
-				'code'   => 'banner',
-				'action' => 'task/catalog/banner'
-			];
+				foreach ($query->rows as $result) {
+					if (isset($result['payment_code'])) {
+						$payment_method = [
+							'name' => $result['payment_method'],
+							'code' => $result['payment_code']
+						];
 
-			$ssrs[] = [
-				'code'   => 'category',
-				'action' => 'task/catalog/category'
-			];
+						$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($payment_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+					}
 
-			$ssrs[] = [
-				'code'   => 'comment',
-				'action' => 'task/catalog/comment'
-			];
+					if (isset($result['shipping_code'])) {
+						$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$result['order_id'] . "' AND `code` = 'shipping'");
 
-			$ssrs[] = [
-				'code'   => 'country',
-				'action' => 'task/catalog/country'
-			];
+						if ($order_total_query->num_rows) {
+							$shipping_method = [
+								'name' => $result['shipping_method'],
+								'code' => $result['shipping_code'],
+								'cost' => $order_total_query->row['value'],
+								'text' => $result['shipping_method']
+							];
 
-			$ssrs[] = [
-				'code'   => 'currency',
-				'action' => 'task/catalog/currency'
-			];
+							$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_method` = '" . $this->db->escape(json_encode($shipping_method)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+						}
+					}
+				}
 
-			$ssrs[] = [
-				'code'   => 'customer_group',
-				'action' => 'task/catalog/customer_group'
-			];
+				// Drop Fields
+				$remove = [];
 
-			$ssrs[] = [
-				'code'   => 'filter',
-				'action' => 'task/catalog/filter'
-			];
+				$remove[] = [
+					'table' => 'order',
+					'field' => 'payment_code'
+				];
 
-			$ssrs[] = [
-				'code'   => 'information',
-				'action' => 'task/catalog/information'
-			];
+				// custom_field
+				$remove[] = [
+					'table' => 'order',
+					'field' => 'shipping_code'
+				];
 
-			$ssrs[] = [
-				'code'   => 'language',
-				'action' => 'task/catalog/language'
-			];
+				$this->load->model('upgrade/upgrade');
 
-			$ssrs[] = [
-				'code'   => 'location',
-				'action' => 'task/catalog/location'
-			];
-
-			$ssrs[] = [
-				'code'   => 'manufacturer',
-				'action' => 'task/catalog/manufacturer'
-			];
-
-			$ssrs[] = [
-				'code'   => 'product',
-				'action' => 'task/catalog/product'
-			];
-
-			$ssrs[] = [
-				'code'   => 'return_reason',
-				'action' => 'task/catalog/return_reasonn'
-			];
-
-			$ssrs[] = [
-				'code'   => 'review',
-				'action' => 'task/catalog/review'
-			];
-
-			$ssrs[] = [
-				'code'   => 'sass',
-				'action' => 'task/catalog/sass'
-			];
-
-			$ssrs[] = [
-				'code'   => 'setting',
-				'action' => 'task/catalog/setting'
-			];
-
-			$ssrs[] = [
-				'code'   => 'store',
-				'action' => 'task/catalog/store'
-			];
-
-			$ssrs[] = [
-				'code'   => 'tag',
-				'action' => 'task/catalog/tag'
-			];
-
-			$ssrs[] = [
-				'code'   => 'tax_rate',
-				'action' => 'task/catalog/tax_rate'
-			];
-
-			$ssrs[] = [
-				'code'   => 'template',
-				'action' => 'task/catalog/template'
-			];
-
-			$ssrs[] = [
-				'code'   => 'topic',
-				'action' => 'task/catalog/topic'
-			];
-
-			$ssrs[] = [
-				'code'   => 'translation',
-				'action' => 'task/catalog/translation'
-			];
-
-			foreach ($ssrs as $ssr) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ssr` WHERE `code` = '" . $this->db->escape($ssr['code']) . "'");
-
-				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "ssr` SET `code` = '" . $this->db->escape($ssr['code']) . "', `action` = '" . $this->db->escape($ssr['action']) . "', `status` = '1', date_modified = NOW()");
+				foreach ($remove as $result) {
+					$this->model_upgrade_upgrade->dropField($result['table'], $result['field']);
 				}
 			}
 		} catch (\ErrorException $exception) {
@@ -146,7 +74,7 @@ class Upgrade9 extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$json['text'] = sprintf($this->language->get('text_patch'), 9, count(glob(DIR_APPLICATION . 'controller/upgrade/upgrade_*.php')));
+			$json['text'] = sprintf($this->language->get('text_patch'), 9, 9, 11);
 
 			$url = '';
 

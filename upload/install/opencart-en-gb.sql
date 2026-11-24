@@ -597,6 +597,8 @@ VALUES (1, 'AF', 'AFG', 1, 0, 1),
 -- Dumping data for table `oc_country_description`
 --
 
+-----------------------------------------------------------
+
 INSERT INTO `oc_country_description` (`country_id`, `language_id`, `name`)
 VALUES (1, 1, 'Afghanistan'),
        (2, 1, 'Albania'),
@@ -859,9 +861,9 @@ VALUES (1, 1, 'Afghanistan'),
 --
 
 INSERT INTO `oc_coupon` (`name`, `code`, `type`, `discount`, `logged`, `shipping`, `total`, `date_start`, `date_end`, `uses_total`, `uses_customer`, `status`, `date_added`)
-VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '2020-01-01', 10, '10', 0, NOW()),
-       ('Free Shipping', '3333', 'P', '0.0000', 0, 1, '100.0000', '2014-01-01', '2014-02-01', 10, '10', 0, NOW()),
-       ('-10.00 Discount', '1111', 'F', '10.0000', 0, 0, '10.0000', '2014-01-01', '2020-01-01', 100000, '10000', 0, NOW());
+VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '2020-01-01', 10, '10', 0, '2009-01-27 13:55:03'),
+       ('Free Shipping', '3333', 'P', '0.0000', 0, 1, '100.0000', '2014-01-01', '2014-02-01', 10, '10', 0, '2009-03-14 21:13:53'),
+       ('-10.00 Discount', '1111', 'F', '10.0000', 0, 0, '10.0000', '2014-01-01', '2020-01-01', 100000, '10000', 0, '2009-03-14 21:15:18');
 
 -----------------------------------------------------------
 
@@ -870,12 +872,9 @@ VALUES ('-10% Discount', '2222', 'P', '10.0000', 0, 0, '0.0000', '2014-01-01', '
 --
 
 INSERT INTO `oc_cron` (`code`, `description`, `cycle`, `action`, `status`, `date_added`, `date_modified`)
-VALUES ('task', 'Processes tasks such as theme and static files generation, sending mails, etc..', 'minute', 'cron/task', 0, NOW(), NOW()),
-       ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, NOW(), NOW()),
-       ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, NOW(), NOW()),
-       ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, NOW(), NOW()),
-       ('backup', 'Starts the backup process.', 'day', 'cron/backup', 0, NOW(), NOW()),
-       ('notification', 'Contacts the OpenCart server to see if there are any notifications such as new release.', 'week', 'cron/notification', 0, NOW(), NOW());
+VALUES ('currency', 'Updates currency conversion values.', 'day', 'cron/currency', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
+       ('gdpr', 'Deletes and send emails to customers who have requested their GPDR data to be deleted.', 'day', 'cron/gdpr', 1, '2014-09-25 14:40:00', '2014-09-25 14:40:00'),
+       ('subscription', 'Processes subscriptions by creating new orders, charging customers and sending mails to customers telling them that their subscription has been processed.', 'day', 'cron/subscription', 0, '2014-09-25 14:40:00', '2014-09-25 14:40:00');
 
 -----------------------------------------------------------
 
@@ -884,14 +883,14 @@ VALUES ('task', 'Processes tasks such as theme and static files generation, send
 --
 
 INSERT INTO `oc_currency` (`title`, `code`, `symbol_left`, `symbol_right`, `decimal_place`, `value`, `status`, `date_modified`)
-VALUES ('Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, NOW()),
-       ('US Dollar', 'USD', '$', '', '2', 1.00000000, 1, NOW()),
-       ('Euro', 'EUR', '', '€', '2', 0.78460002, 1, NOW()),
-       ('Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, NOW()),
-       ('Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, NOW()),
-       ('Russian Ruble', 'RUB', '', '₽', '2', 56.40360000, 0, NOW()),
-       ('Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, NOW()),
-       ('Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, NOW());
+VALUES ('Pound Sterling', 'GBP', '£', '', '2', 0.61250001, 1, '2014-09-25 14:40:00'),
+       ('US Dollar', 'USD', '$', '', '2', 1.00000000, 1, '2014-09-25 14:40:00'),
+       ('Euro', 'EUR', '', '€', '2', 0.78460002, 1, '2014-09-25 14:40:00'),
+       ('Hong Kong Dollar', 'HKD', 'HK$', '', '2', 7.82224000, 0, '2018-02-16 12:00:00'),
+       ('Indian Rupee', 'INR', '₹', '', '2', 64.40000000, 0, '2018-02-16 12:00:00'),
+       ('Russian Ruble', 'RUB', '', '₽', '2', 56.40360000, 0, '2018-02-16 12:00:00'),
+       ('Chinese Yuan Renminbi', 'CNY', '¥', '', '2', 6.34510000, 0, '2018-02-16 12:00:00'),
+       ('Australian Dollar', 'AUD', '$', '', '2', 1.26544000, 0, '2018-02-16 12:00:00');
 
 -----------------------------------------------------------
 
@@ -918,166 +917,230 @@ VALUES (1, 1, 'Default', 'Default customer group'),
 -----------------------------------------------------------
 
 --
+-- Dumping data for table `oc_custom_field`
+--
+
+INSERT INTO `oc_custom_field` (`custom_field_id`, `type`, `value`, `validation`, `location`, `status`, `sort_order`)
+VALUES (1, 'select', '', '', 'account', 0, 1),
+       (2, 'radio', '', '', 'account', 0, 2),
+       (3, 'checkbox', '', '', 'account', 0, 3),
+       (4, 'text', '', '', 'account', 0, 4),
+       (5, 'textarea', '', '', 'account', 0, 5),
+       (6, 'file', '', '', 'account', 0, 6),
+       (7, 'date', '', '', 'account', 0, 7),
+       (8, 'time', '', '', 'account', 0, 8),
+       (9, 'datetime', '', '', 'account', 0, 9),
+       (11, 'checkbox', '', '', 'address', 0, 3),
+       (12, 'time', '', '', 'address', 0, 8),
+       (13, 'date', '', '', 'address', 0, 7),
+       (14, 'datetime', '', '', 'address', 0, 9),
+       (15, 'file', '', '', 'address', 0, 6),
+       (16, 'radio', '', '', 'address', 0, 2),
+       (17, 'select', '', '', 'address', 0, 1),
+       (18, 'text', '', '', 'address', 0, 4),
+       (19, 'textarea', '', '', 'address', 0, 5),
+       (20, 'checkbox', '', '', 'affiliate', 0, 3),
+       (21, 'date', '', '', 'affiliate', 0, 8),
+       (22, 'datetime', '', '', 'affiliate', 0, 9),
+       (23, 'file', '', '', 'affiliate', 0, 6),
+       (24, 'radio', '', '', 'affiliate', 0, 2),
+       (25, 'select', '', '', 'affiliate', 0, 1),
+       (26, 'text', '', '', 'affiliate', 0, 4),
+       (27, 'textarea', '', '', 'affiliate', 0, 5),
+       (28, 'time', '', '', 'affiliate', 0, 8);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_customer_group`
+--
+
+INSERT INTO `oc_custom_field_customer_group` (`custom_field_id`, `customer_group_id`, `required`)
+VALUES (1, 1, 1),
+       (2, 1, 1),
+       (3, 1, 1),
+       (4, 1, 1),
+       (5, 1, 1),
+       (6, 1, 1),
+       (7, 1, 1),
+       (8, 1, 1),
+       (9, 1, 1),
+       (11, 1, 1),
+       (12, 1, 1),
+       (13, 1, 1),
+       (14, 1, 1),
+       (15, 1, 1),
+       (16, 1, 1),
+       (17, 1, 1),
+       (18, 1, 1),
+       (19, 1, 1),
+       (20, 1, 1),
+       (21, 1, 1),
+       (22, 1, 1),
+       (23, 1, 1),
+       (24, 1, 1),
+       (25, 1, 1),
+       (26, 1, 1),
+       (27, 1, 1),
+       (28, 1, 1);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_description`
+--
+
+INSERT INTO `oc_custom_field_description` (`custom_field_id`, `language_id`, `name`)
+VALUES (1, 1, 'Select'),
+       (2, 1, 'Radio'),
+       (3, 1, 'Checkbox'),
+       (4, 1, 'Text'),
+       (5, 1, 'Textarea'),
+       (6, 1, 'File'),
+       (7, 1, 'Date'),
+       (8, 1, 'Time'),
+       (9, 1, 'Date &amp; Time'),
+       (11, 1, 'Checkbox'),
+       (12, 1, 'Time'),
+       (13, 1, 'Date'),
+       (14, 1, 'Date &amp; Time'),
+       (15, 1, 'File'),
+       (16, 1, 'Radio'),
+       (17, 1, 'Select'),
+       (18, 1, 'Text'),
+       (19, 1, 'Textarea'),
+       (20, 1, 'Checkbox'),
+       (21, 1, 'Date'),
+       (22, 1, 'Date &amp; Time'),
+       (23, 1, 'File'),
+       (24, 1, 'Radio'),
+       (25, 1, 'Select'),
+       (26, 1, 'Text'),
+       (27, 1, 'Textarea'),
+       (28, 1, 'Time');
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_value`
+--
+
+INSERT INTO `oc_custom_field_value` (`custom_field_value_id`, `custom_field_id`, `sort_order`)
+VALUES (1, 1, 1),
+       (2, 1, 2),
+       (3, 1, 3),
+       (4, 2, 1),
+       (5, 2, 2),
+       (6, 2, 3),
+       (7, 3, 1),
+       (8, 3, 2),
+       (9, 3, 3),
+       (20, 11, 1),
+       (21, 11, 2),
+       (22, 11, 3),
+       (32, 16, 1),
+       (33, 16, 2),
+       (34, 16, 3),
+       (35, 17, 1),
+       (36, 17, 2),
+       (37, 17, 3),
+       (38, 20, 1),
+       (39, 20, 2),
+       (40, 20, 3),
+       (41, 24, 1),
+       (42, 24, 2),
+       (43, 24, 3),
+       (44, 25, 0),
+       (45, 25, 0),
+       (46, 25, 0);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_custom_field_value_description`
+--
+
+INSERT INTO `oc_custom_field_value_description` (`custom_field_value_id`, `language_id`, `custom_field_id`, `name`)
+VALUES (1, 1, 1, 'Test 1'),
+       (2, 1, 1, 'test 2'),
+       (3, 1, 1, 'Test 3'),
+       (4, 1, 2, 'Test 1'),
+       (5, 1, 2, 'Test 2'),
+       (6, 1, 2, 'Test 3'),
+       (7, 1, 3, 'Test 1'),
+       (8, 1, 3, 'Test 2'),
+       (9, 1, 3, 'Test 3'),
+       (20, 1, 11, 'Test 1'),
+       (21, 1, 11, 'Test 2'),
+       (22, 1, 11, 'Test 3'),
+       (32, 1, 16, 'Test 1'),
+       (33, 1, 16, 'Test 2'),
+       (34, 1, 16, 'Test 3'),
+       (35, 1, 17, 'Test 1'),
+       (36, 1, 17, 'Test 2'),
+       (37, 1, 17, 'Test 3'),
+       (38, 1, 20, 'Test 1'),
+       (39, 1, 20, 'Test 2'),
+       (40, 1, 20, 'Test 3'),
+       (41, 1, 24, 'Test 1'),
+       (42, 1, 24, 'Test 2'),
+       (43, 1, 24, 'Test 3'),
+       (44, 1, 25, 'Test 1'),
+       (45, 1, 25, 'Test 2'),
+       (46, 1, 25, 'Test 3');
+
+-----------------------------------------------------------
+
+--
 -- Dumping data for table `oc_event`
 --
 
 INSERT INTO `oc_event` (`code`, `description`, `trigger`, `action`, `status`)
-VALUES ('activity.customer.add', 'Adds new customer entry in the activity log.', 'catalog/model/account/customer.addCustomer/after', 'event/activity.addCustomer', 1),
-       ('activity.customer.edit', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.editCustomer/after', 'event/activity.editCustomer', 1),
-       ('activity.customer.password', 'Adds edit password entry in the activity log.', 'catalog/model/account/customer.editPassword/after', 'event/activity.editPassword', 1),
-       ('activity.customer.forgotten', 'Adds forgotten password entry in the activity log.', 'catalog/model/account/customer.addToken/after', 'event/activity.forgotten', 1),
-       ('activity.customer.login', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.deleteLoginAttempts/after', 'event/activity.login', 1),
-       ('activity.customer.transaction', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.addTransaction/after', 'event/activity.addTransaction', 1),
-       ('activity.address.add', 'Adds new address entry in the activity log.', 'catalog/model/account/address.addAddress/after', 'event/activity.addAddress', 1),
-       ('activity.address.edit', 'Adds edit address entry in the activity log.', 'catalog/model/account/address.editAddress/after', 'event/activity.editAddress', 1),
-       ('activity.address.delete', 'Adds delete address entry in the activity log.', 'catalog/model/account/address.deleteAddress/after', 'event/activity.deleteAddress', 1),
-       ('activity.order.add', 'Adds new order entry in the activity log.', 'catalog/model/checkout/order.addHistory/before', 'event/activity.addHistory', 1),
-       ('activity.return.add', 'Adds new return entry in the activity log.', 'catalog/model/account/returns.addReturn/after', 'event/activity.addReturn', 1),
-
-       ('mail.customer.add', 'Sends mail to newly registered customers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register', 1),
-       ('mail.customer.alert', 'Sends alert mail to store owner when a new customer registers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register.alert', 1),
-       ('mail.customer.transaction', 'Sends mail to the customer when their transaction balance is updated.', 'catalog/model/account/customer.addTransaction/after', 'mail/transaction', 1),
-       ('mail.customer.forgotten', 'Sends mail to customers who have forgotten their password.', 'catalog/model/account/customer.addToken/after', 'mail/forgotten', 1),
-       ('mail.customer.authorize', 'Sends mail login code to customers email to authorize login from a new device.', 'catalog/controller/account/authorize.send/after', 'mail/authorize', 1),
-       ('mail.customer.authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'catalog/model/account/customer.addToken/after', 'mail/authorize.reset', 1),
-       ('mail.order', 'Sends mail to customer when they make an order.', 'catalog/model/checkout/order.addHistory/before', 'mail/order', 1),
-       ('mail.order.alert', 'Sends alert mail to new store owner when a new order is made.', 'catalog/model/checkout/order.addHistory/before', 'mail/order.alert', 1),
-       ('mail.gdpr', 'Sends mail to customers who have requested their data exported or deleted.', 'catalog/model/account/gdpr.addGdpr/after', 'mail/gdpr', 1),
-       ('mail.gdpr.delete', 'Sends mail to customers to let them know their GDPR data has been deleted.', 'catalog/model/account/gdpr.editStatus/after', 'mail/gdpr.remove', 1),
-       ('mail.review', 'Sends mail to store owner that a new review has been submitted.', 'catalog/model/catalog/review.addReview/after', 'mail/review', 1),
-       ('mail.subscription', 'Sends mail to store owner that a new subscription has been created.', 'catalog/model/checkout/subscription.addSubscription/after', 'mail/subscription', 1),
-       ('mail.admin.gdpr', 'Sends approval or denial mail to customer who requested GDPR data export or deletion.', 'admin/model/customer/gdpr.editStatus/after', 'mail/gdpr', 1),
-       ('mail.admin.customer.approve', 'Sends mail to the customer when their account is approved.', 'admin/model/customer/customer_approval.approveCustomer/after', 'mail/customer.approve', 1),
-       ('mail.admin.customer.deny', 'Sends mail to the customer when their account is denied.', 'admin/model/customer/customer_approval.denyCustomer/after', 'mail/customer.deny', 1),
-       ('mail.admin.customer.transaction', 'Sends mail to the customer when their transaction balance is updated.', 'admin/model/customer/customer.addTransaction/after', 'mail/transaction', 1),
-       ('mail.admin.return', 'Sends mail to customer when their return status is changed.', 'admin/model/sale/returns.addHistory/after', 'mail/returns', 1),
-       ('mail.admin.user.forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.addToken/after', 'mail/forgotten', 1),
-       ('mail.admin.user.authorize', 'Sends mail login code to users email to authorize login from a new device.', 'admin/controller/common/authorize.send/after', 'mail/authorize', 1),
-       ('mail.admin.user.authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1),
-
-       ('ssr.address_format.edit', 'Triggers address format data creation.', 'admin/model/localisation/address_format.editAddressFormat/before', 'event/address_format.editAddressFormat', 1),
-
-       ('ssr.article.add', 'Triggers article data creation.', 'admin/model/cms/article.addArticle/after', 'event/article.addArticle', 1),
-       ('ssr.article.edit', 'Triggers article data creation.', 'admin/model/cms/article.editArticle/before', 'event/article.editArticle', 1),
-       ('ssr.article.delete', 'Triggers article data creation.', 'admin/model/cms/article.deleteArticle/before', 'event/article.deleteArticle', 1),
-
-       ('ssr.attribute.edit', 'Triggers attribute data creation.', 'admin/model/catalog/attribute.editAttribute/before', 'event/attribute.editAttribute', 1),
-
-       ('ssr.banner.add', 'Triggers banner data creation.', 'admin/model/design/banner.addBanner/after', 'event/banner.addBanner', 1),
-       ('ssr.banner.edit', 'Triggers banner data creation.', 'admin/model/design/banner.editBanner/before', 'event/banner.editBanner', 1),
-       ('ssr.banner.delete', 'Triggers banner data creation.', 'admin/model/design/banner.deleteBanner/before', 'event/banner.deleteBanner', 1),
-
-       ('ssr.category.add', 'Triggers category data creation.', 'admin/model/catalog/category.addCategory/after', 'event/category.addCategory', 1),
-       ('ssr.category.edit', 'Triggers category data creation.', 'admin/model/catalog/category.editCategory/before', 'event/category.editCategory', 1),
-       ('ssr.category.delete', 'Triggers category data creation.', 'admin/model/catalog/category.deleteCategory/before', 'event/category.deleteCategory', 1),
-
-       ('ssr.comment.add', 'Triggers comment data creation.', 'catalog/model/cms/comment.addComment/after', 'event/comment.addComment', 1),
-       ('ssr.comment.edit', 'Triggers comment data creation.', 'admin/model/cms/comment.editComment/after', 'event/comment.editComment', 1),
-       ('ssr.comment.delete', 'Triggers comment data creation.', 'admin/model/cms/comment.deleteComment/after', 'event/comment.deleteComment', 1),
-
-       ('ssr.country.add', 'Triggers country data creation.', 'admin/model/localisation/country.addCountry/after', 'event/country.addCountry', 1),
-       ('ssr.country.edit', 'Triggers country data creation.', 'admin/model/localisation/country.editCountry/before', 'event/country.editCountry', 1),
-       ('ssr.country.delete', 'Triggers country data creation.', 'admin/model/localisation/country.deleteCountry/before', 'event/country.deleteCountry', 1),
-
-       ('ssr.currency.add', 'Triggers currency data creation.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
-       ('ssr.currency.edit', 'Triggers currency data creation.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),
-       ('ssr.currency.delete', 'Triggers currency data creation.', 'admin/model/localisation/currency.deleteCurrency/after', 'event/currency', 1),
-
-       ('ssr.customer_group.add', 'Triggers customer group data creation.', 'admin/model/customer/customer_group.addCustomerGroup/after', 'event/customer_group.addCustomerGroup', 1),
-       ('ssr.customer_group.edit', 'Triggers customer group data creation.', 'admin/model/customer/customer_group.editCustomerGroup/before', 'event/customer_group.editCustomerGroup', 1),
-       ('ssr.customer_group.delete', 'Triggers customer group data creation.', 'admin/model/customer/customer_group.deleteCustomerGroup/before', 'event/customer_group.deleteCustomerGroup', 1),
-
-       ('ssr.filter.add', 'Triggers filter group data creation.', 'admin/model/catalog/filter.addFilterGroup/after', 'event/filter.addFilter', 1),
-       ('ssr.filter.edit', 'Triggers filter group data creation.', 'admin/model/catalog/filter.editFilterGroup/before', 'event/filter.editFilter', 1),
-       ('ssr.filter.delete', 'Triggers filter group data creation.', 'admin/model/catalog/filter.deleteFilterGroup/before', 'event/filter.deleteFilter', 1),
-
-       ('ssr.geo_zone.add', 'Triggers geo zone data creation.', 'admin/model/localisation/geo_zone.addGeoZone/after', 'event/geo_zone.addGeoZone', 1),
-       ('ssr.geo_zone.edit', 'Triggers geo zone data creation.', 'admin/model/localisation/geo_zone.editGeoZone/before', 'event/geo_zone.editGeoZone', 1),
-       ('ssr.geo_zone.delete', 'Triggers geo zone data creation.', 'admin/model/localisation/geo_zone.deleteGeoZone/before', 'event/geo_zone.deleteGeoZone', 1),
-
-       ('ssr.information.add', 'Triggers information data creation.', 'admin/model/catalog/information.addInformation/after', 'event/information.addInformation', 1),
-       ('ssr.information.edit', 'Triggers information data creation.', 'admin/model/catalog/information.editInformation/before', 'event/information.editInformation', 1),
-       ('ssr.information.delete', 'Triggers information data creation.', 'admin/model/catalog/information.deleteInformation/before', 'event/information.deleteInformation', 1),
-
-       ('ssr.language.add', 'Triggers language data creation.', 'admin/model/localisation/language.addLanguage/after', 'event/language', 1),
-       ('ssr.language.edit', 'Triggers language data creation.', 'admin/model/localisation/language.editLanguage/before', 'event/language', 1),
-       ('ssr.language.delete', 'Triggers language data creation.', 'admin/model/localisation/language.deleteLanguage/before', 'event/language', 1),
-
-       ('ssr.length_class.add', 'Triggers length data creation.', 'admin/model/localisation/length_class.addLengthClass/before', 'event/length_class', 1),
-       ('ssr.length_class.edit', 'Triggers length data creation.', 'admin/model/localisation/length_class.editLengthClass/before', 'event/length_class', 1),
-       ('ssr.length_class.delete', 'Triggers length data creation.', 'admin/model/localisation/length_class.deleteLengthClass/before', 'event/length_class', 1),
-
-       ('ssr.location.add', 'Triggers location data creation.', 'admin/model/localisation/location.addLocation/after', 'event/location', 1),
-       ('ssr.location.edit', 'Triggers locationdata creation.', 'admin/model/localisation/location.editLocation/before', 'event/location', 1),
-       ('ssr.location.delete', 'Triggers locatio data creation.', 'admin/model/localisation/location.deleteLocation/before', 'event/location', 1),
-
-       ('ssr.manufacturer.add', 'Triggers manufacturer data creation.', 'admin/model/catalog/manufacturer.addManufacturer/after', 'event/manufacturer.addManufacturer', 1),
-       ('ssr.manufacturer.edit', 'Triggers manufacturer data creation.', 'admin/model/catalog/manufacturer.editManufacturer/before', 'event/manufacturer.editManufacturer', 1),
-       ('ssr.manufacturer.delete', 'Triggers manufacturerdata creation.', 'admin/model/catalog/manufacturer.deleteManufacturer/before', 'event/manufacturer.deleteManufacturer', 1),
-
-       ('ssr.option.edit', 'Triggers option data creation.', 'admin/model/catalog/option.editOption/before', 'event/option.editOption', 1),
-
-       ('ssr.product.add', 'Triggers product data creation.', 'admin/model/catalog/product.addProduct/after', 'event/product.addProduct', 1),
-       ('ssr.product.edit', 'Triggers product data creation.', 'admin/model/catalog/product.editProduct/before', 'event/product.editProduct', 1),
-       ('ssr.product.delete', 'Triggers product data creation.', 'admin/model/catalog/product.deleteProduct/before', 'event/product.deleteProduct', 1),
-
-       ('ssr.return_reason.add', 'Triggers return reason data creation.', 'admin/model/localisation/return_reason.addReturnReason/before', 'event/return_reason', 1),
-       ('ssr.return_reason.edit', 'Triggers return reason data creation.', 'admin/model/localisation/return_reason.editReturnReason/before', 'event/return_reason', 1),
-       ('ssr.return_reason.delete', 'Triggers return reason data creation.', 'admin/model/localisation/return_reason.deleteReturnReason/before', 'event/return_reason', 1),
-
-       ('ssr.review.add', 'Triggers review data creation.', 'catalog/model/catalog/review.addReview/after', 'event/review.addReview', 1),
-       ('ssr.review.edit', 'Triggers review data creation.', 'catalog/model/catalog/review.editReview/before', 'event/review.editReview', 1),
-       ('ssr.review.delete', 'Triggers review data creation.', 'catalog/model/catalog/review.deleteReview/before', 'event/review.deleteReview', 1),
-
-       ('ssr.setting', 'Triggers setting data creation.', 'admin/model/setting/setting.editSetting/after', 'event/setting', 1),
-
-       ('ssr.stock_status.add', 'Triggers stock status data creation.', 'admin/model/localisation/stock_status.addStockStatus/before', 'event/stock_status', 1),
-       ('ssr.stock_status.edit', 'Triggers stock status data creation.', 'admin/model/localisation/stock_status.editStockStatus/before', 'event/stock_status', 1),
-       ('ssr.stock_status.delete', 'Triggers stock status data creation.', 'admin/model/localisation/stock_status.deleteStockStatus/before', 'event/stock_status', 1),
-
-       ('ssr.store.add', 'Triggers store data creation.', 'admin/model/setting/store.addStore/after', 'event/store.addStore', 1),
-       ('ssr.store.edit', 'Triggers store data creation.', 'admin/model/setting/store.editStore/before', 'event/store.editStore', 1),
-       ('ssr.store.delete', 'Triggers store data creation.', 'admin/model/setting/store.deleteStore/before', 'event/store.deleteStore', 1),
-
-       ('ssr.tag.add', 'Triggers tag data creation.', 'admin/model/catalog/tag.addTag/after', 'event/tag.addTag', 1),
-       ('ssr.tag.edit', 'Triggers tag data creation.', 'admin/model/catalog/tag.editTag/before', 'event/tag.editTag', 1),
-       ('ssr.tag.delete', 'Triggers tag data creation.', 'admin/model/catalog/tag.deleteTag/before', 'event/tag.deleteTag', 1),
-
-       ('ssr.tax_class.add', 'Triggers tax class data creation.', 'admin/model/localisation/tax_class.addTaxClass/after', 'event/tax_class.addTaxClass', 1),
-       ('ssr.tax_class.edit', 'Triggers tax class data creation.', 'admin/model/localisation/tax_class.editTaxClass/before', 'event/tax_class.editTaxClass', 1),
-       ('ssr.tax_class.delete', 'Triggers tax class data creation.', 'admin/model/localisation/tax_class.deleteTaxClass/before', 'event/tax_class.deleteTaxClass', 1),
-
-       ('ssr.tax_rate.add', 'Triggers tax rate data creation.', 'admin/model/localisation/tax_rate.addTaxRate/after', 'event/tax_rate.addTaxRate', 1),
-       ('ssr.tax_rate.edit', 'Triggers tax rate data creation.', 'admin/model/localisation/tax_rate.editTaxRate/before', 'event/tax_rate.editTaxRate', 1),
-       ('ssr.tax_rate.delete', 'Triggers tax rate data creation.', 'admin/model/localisation/tax_rate.deleteTaxRate/before', 'event/tax_rate.deleteTaxRate', 1),
-
-       ('ssr.template.add', 'Triggers template data creation.', 'admin/model/design/template.addTemplate/after', 'event/template.addTemplate', 1),
-       ('ssr.template.edit', 'Triggers template data creation.', 'admin/model/design/template.editTemplate/before', 'event/template.editTemplate', 1),
-       ('ssr.template.delete', 'Triggers template data creation.', 'admin/model/design/template.deleteTemplate/before', 'event/template.deleteTemplate', 1),
-
-       ('ssr.topic.add', 'Triggers topic data creation.', 'admin/model/cms/topic.addTopic/after', 'event/topic.addTopic', 1),
-       ('ssr.topic.edit', 'Triggers topic data creation.', 'admin/model/cms/topic.editTopic/before', 'event/topic.editTopic', 1),
-       ('ssr.topic.delete', 'Triggers topic data creation.', 'admin/model/cms/topic.deleteTopic/before', 'event/topic.deleteTopic', 1),
-
-       ('ssr.translation.add', 'Triggers translation data creation.', 'admin/model/design/translation.addTranslation/after', 'event/translation.addTranslation', 1),
-       ('ssr.translation.edit', 'Triggers translation data creation.', 'admin/model/design/translation.editTranslation/after', 'event/translation.editTranslation', 1),
-       ('ssr.translation.delete', 'Triggers translation data creation.', 'admin/model/design/translation.deleteTranslation/before', 'event/translation.deleteTranslation', 1),
-
-       ('ssr.weight_class.add', 'Triggers weight class data creation.', 'admin/model/localisation/weight_class.addWeightClass/before', 'event/weight_class', 1),
-       ('ssr.weight_class.edit', 'Triggers weight class data creation.', 'admin/model/localisation/weight_class.editWeightClass/before', 'event/weight_class', 1),
-       ('ssr.weight_class.delete', 'Triggers weight class data creation.', 'admin/model/localisation/weight_class.deleteWeightClass/before', 'event/weight_class', 1),
-
-       ('ssr.zone.add', 'Triggers zone data creation.', 'admin/model/localisation/zone.addZone/after', 'event/zone.addZone', 1),
-       ('ssr.zone.edit', 'Triggers zone data creation.', 'admin/model/localisation/zone.editZone/before', 'event/zone.editZone', 1),
-       ('ssr.zone.delete', 'Triggers zone data creation.', 'admin/model/localisation/zone.deleteZone/before', 'event/zone.deleteZone', 1),
-
-       ('statistics.review.add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
-       ('statistics.review.add', 'Updates review statistics when a new review is added.', 'admin/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
-       ('statistics.review.edit', 'Updates review statistics when a new review is added.', 'admin/model/catalog/review.editReview/after', 'event/statistics.editReview', 1),
-       ('statistics.review.delete', 'Updates review statistics when a new review is added.', 'admin/model/catalog/review.deleteReview/after', 'event/statistics.deleteReview', 1),
-       ('statistics.return.add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),
-       ('statistics.return.delete', 'Updates return statistics when a return is deleted.', 'catalog/model/sale/returns.deleteReturn/after', 'event/statistics.deleteReturn', 1),
-       ('statistics.order_history', 'Updates order status statistics when a order has been updated.', 'catalog/model/checkout/order.addHistory/before', 'event/statistics.addHistory', 1);
+VALUES ('activity_customer_add', 'Adds new customer entry in the activity log.', 'catalog/model/account/customer.addCustomer/after', 'event/activity.addCustomer', 1),
+       ('activity_customer_edit', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.editCustomer/after', 'event/activity.editCustomer', 1),
+       ('activity_customer_password', 'Adds edit password entry in the activity log.', 'catalog/model/account/customer.editPassword/after', 'event/activity.editPassword', 1),
+       ('activity_customer_forgotten', 'Adds forgotten password entry in the activity log.', 'catalog/model/account/customer.addToken/after', 'event/activity.forgotten', 1),
+       ('activity_customer_login', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.deleteLoginAttempts/after', 'event/activity.login', 1),
+       ('activity_customer_transaction', 'Adds edit customer entry in the activity log.', 'catalog/model/account/customer.addTransaction/after', 'event/activity.addTransaction', 1),
+       ('activity_address_add', 'Adds new address entry in the activity log.', 'catalog/model/account/address.addAddress/after', 'event/activity.addAddress', 1),
+       ('activity_address_edit', 'Adds edit address entry in the activity log.', 'catalog/model/account/address.editAddress/after', 'event/activity.editAddress', 1),
+       ('activity_address_delete', 'Adds delete address entry in the activity log.', 'catalog/model/account/address.deleteAddress/after', 'event/activity.deleteAddress', 1),
+       ('activity_affiliate_add', 'Adds new affiliate entry in the activity log.', 'catalog/model/account/affiliate.addAffiliate/after', 'event/activity.addAffiliate', 1),
+       ('activity_affiliate_edit', 'Adds edit affiliate entry in the activity log.', 'catalog/model/account/affiliate.editAffiliate/after', 'event/activity.editAffiliate', 1),
+       ('activity_order_add', 'Adds new order entry in the activity log.', 'catalog/model/checkout/order.addHistory/before', 'event/activity.addHistory', 1),
+       ('activity_return_add', 'Adds new return entry in the activity log.', 'catalog/model/account/returns.addReturn/after', 'event/activity.addReturn', 1),
+       ('mail_customer_add', 'Sends mail to newly registered customers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register', 1),
+       ('mail_customer_alert', 'Sends alert mail to store owner when a new customer registers.', 'catalog/model/account/customer.addCustomer/after', 'mail/register.alert', 1),
+       ('mail_customer_transaction', 'Sends mail to the customer when their transaction balance is updated.', 'catalog/model/account/customer.addTransaction/after', 'mail/transaction', 1),
+       ('mail_customer_forgotten', 'Sends mail to customers who have forgotten their password.', 'catalog/model/account/customer.addToken/after', 'mail/forgotten', 1),
+       ('mail_customer_authorize', 'Sends mail login code to customers email to authorize login from a new device.', 'catalog/controller/account/authorize.send/after', 'mail/authorize', 1),
+       ('mail_customer_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'catalog/model/account/customer.addToken/after', 'mail/authorize.reset', 1),
+       ('mail_affiliate_add', 'Sends mail to newly registered affiliates.', 'catalog/model/account/affiliate.addAffiliate/after', 'mail/affiliate', 1),
+       ('mail_affiliate_alert', 'Sends mail to new customers.', 'catalog/model/account/affiliate.addAffiliate/after', 'mail/affiliate.alert', 1),
+       ('mail_order', 'Sends mail to customer when they make an order.', 'catalog/model/checkout/order.addHistory/before', 'mail/order', 1),
+       ('mail_order_alert', 'Sends alert mail to new store owner when a new order is made.', 'catalog/model/checkout/order.addHistory/before', 'mail/order.alert', 1),
+       ('mail_gdpr', 'Sends mail to customers who have requested their data exported or deleted.', 'catalog/model/account/gdpr.addGdpr/after', 'mail/gdpr', 1),
+       ('mail_gdpr_delete', 'Sends mail to customers to let them know their GDPR data has been deleted.', 'catalog/model/account/gdpr.editStatus/after', 'mail/gdpr.remove', 1),
+       ('mail_review', 'Sends mail to store owner that a new review has been submitted.', 'catalog/model/catalog/review.addReview/after', 'mail/review', 1),
+       ('mail_subscription', 'Sends mail to store owner that a new subscription has been created.', 'catalog/model/checkout/subscription.addSubscription/after', 'mail/subscription', 1),
+       ('statistics_review_add', 'Updates review statistics when a new review is added.', 'catalog/model/catalog/review.addReview/after', 'event/statistics.addReview', 1),
+       ('statistics_return_add', 'Updates return statistics when a new return is added.', 'catalog/model/account/returns.addReturn/after', 'event/statistics.addReturn', 1),
+       ('statistics_return_delete', 'Updates return statistics when a return is deleted.', 'admin/model/sale/returns.deleteReturn/after', 'event/statistics.deleteReturn', 1),
+       ('statistics_order_history', 'Updates order status statistics when a order has been updated.', 'catalog/model/checkout/order.addHistory/before', 'event/statistics.addHistory', 1),
+       ('admin_currency_add', 'Updates currencies when a new currency is added.', 'admin/model/localisation/currency.addCurrency/after', 'event/currency', 1),
+       ('admin_currency_edit', 'Updates currencies when a currency is edited.', 'admin/model/localisation/currency.editCurrency/after', 'event/currency', 1),
+       ('admin_currency_setting', 'Updates currencies when settings are saved.', 'admin/model/setting/setting.editSetting/after', 'event/currency', 1),
+       ('admin_mail_gdpr', 'Sends approval or denial mail to customer who requested GDPR data export or deletion.', 'admin/model/customer/gdpr.editStatus/after', 'mail/gdpr', 1),
+       ('admin_mail_affiliate_approve', 'Sends mail to the affiliate when their account is approved.', 'admin/model/customer/customer_approval.approveAffiliate/after', 'mail/affiliate.approve', 1),
+       ('admin_mail_affiliate_deny', 'Sends mail to the affiliate when their account is denied.', 'admin/model/customer/customer_approval.denyAffiliate/after', 'mail/affiliate.deny', 1),
+       ('admin_mail_customer_approve', 'Sends mail to the customer when their account is approved.', 'admin/model/customer/customer_approval.approveCustomer/after', 'mail/customer.approve', 1),
+       ('admin_mail_customer_deny', 'Sends mail to the customer when their account is denied.', 'admin/model/customer/customer_approval.denyCustomer/after', 'mail/customer.deny', 1),
+       ('admin_mail_customer_transaction', 'Sends mail to the customer when their transaction balance is updated.', 'admin/model/customer/customer.addTransaction/after', 'mail/transaction', 1),
+       ('admin_mail_reward', 'Sends mail to the customer when their reward balance is updated.', 'admin/model/customer/customer.addReward/after', 'mail/reward', 1),
+       ('admin_mail_return', 'Sends mail to customer when their return status is changed.', 'admin/model/sale/returns.addHistory/after', 'mail/returns', 1),
+       ('admin_mail_user_forgotten', 'Sends mail to users who have forgotten their password.', 'admin/model/user/user.addToken/after', 'mail/forgotten', 1),
+       ('admin_mail_user_authorize', 'Sends mail login code to users email to authorize login from a new device.', 'admin/controller/common/authorize.send/after', 'mail/authorize', 1),
+       ('admin_mail_user_authorize_reset', 'Sends reset link to user who`s account is locked out after 3 wrong authorize code login attempts.', 'admin/model/user/user.addToken/after', 'mail/authorize.reset', 1);
 
 -----------------------------------------------------------
 
@@ -1089,11 +1152,11 @@ INSERT INTO `oc_extension` (`extension`, `type`, `code`)
 VALUES ('opencart', 'currency', 'ecb'),
        ('opencart', 'module', 'featured'),
        ('opencart', 'module', 'banner'),
+       ('opencart', 'payment', 'cod'),
+       ('opencart', 'payment', 'free_checkout'),
        ('opencart', 'module', 'category'),
        ('opencart', 'module', 'account'),
        ('opencart', 'module', 'topic'),
-       ('opencart', 'payment', 'cod'),
-       ('opencart', 'payment', 'free_checkout'),
        ('opencart', 'shipping', 'flat'),
        ('opencart', 'theme', 'basic'),
        ('opencart', 'total', 'credit'),
@@ -1104,6 +1167,7 @@ VALUES ('opencart', 'currency', 'ecb'),
        ('opencart', 'total', 'handling'),
        ('opencart', 'total', 'low_order_fee'),
        ('opencart', 'total', 'coupon'),
+       ('opencart', 'total', 'reward'),
        ('opencart', 'dashboard', 'activity'),
        ('opencart', 'dashboard', 'sale'),
        ('opencart', 'dashboard', 'recent'),
@@ -1123,6 +1187,7 @@ VALUES ('opencart', 'currency', 'ecb'),
        ('opencart', 'report', 'sale_tax'),
        ('opencart', 'report', 'customer_activity'),
        ('opencart', 'report', 'customer_order'),
+       ('opencart', 'report', 'customer_reward'),
        ('opencart', 'report', 'marketing'),
        ('opencart', 'report', 'subscription'),
        ('opencart', 'report', 'customer');
@@ -1134,7 +1199,7 @@ VALUES ('opencart', 'currency', 'ecb'),
 --
 
 INSERT INTO `oc_extension_install` (`extension_install_id`, `extension_id`, `extension_download_id`, `name`, `description`, `code`, `version`, `author`, `link`, `status`, `date_added`)
-VALUES (1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '1.0', 'OpenCart Ltd', 'https://www.opencart.com', 1, NOW());
+VALUES (1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '1.0', 'OpenCart Ltd', 'http://www.opencart.com', 1, '2020-08-29 15:35:39');
 
 -----------------------------------------------------------
 
@@ -1187,6 +1252,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/controller/report/customer.php'),
        (1, 'opencart/admin/controller/report/customer_activity.php'),
        (1, 'opencart/admin/controller/report/customer_order.php'),
+       (1, 'opencart/admin/controller/report/customer_reward.php'),
        (1, 'opencart/admin/controller/report/customer_search.php'),
        (1, 'opencart/admin/controller/report/subscription.php'),
        (1, 'opencart/admin/controller/report/customer_transaction.php'),
@@ -1211,6 +1277,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/controller/total/credit.php'),
        (1, 'opencart/admin/controller/total/handling.php'),
        (1, 'opencart/admin/controller/total/low_order_fee.php'),
+       (1, 'opencart/admin/controller/total/reward.php'),
        (1, 'opencart/admin/controller/total/shipping.php'),
        (1, 'opencart/admin/controller/total/sub_total.php'),
        (1, 'opencart/admin/controller/total/tax.php'),
@@ -1254,6 +1321,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/language/en-gb/report/customer.php'),
        (1, 'opencart/admin/language/en-gb/report/customer_activity.php'),
        (1, 'opencart/admin/language/en-gb/report/customer_order.php'),
+       (1, 'opencart/admin/language/en-gb/report/customer_reward.php'),
        (1, 'opencart/admin/language/en-gb/report/customer_search.php'),
        (1, 'opencart/admin/language/en-gb/report/subscription.php'),
        (1, 'opencart/admin/language/en-gb/report/customer_transaction.php'),
@@ -1278,6 +1346,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/language/en-gb/total/credit.php'),
        (1, 'opencart/admin/language/en-gb/total/handling.php'),
        (1, 'opencart/admin/language/en-gb/total/low_order_fee.php'),
+       (1, 'opencart/admin/language/en-gb/total/reward.php'),
        (1, 'opencart/admin/language/en-gb/total/shipping.php'),
        (1, 'opencart/admin/language/en-gb/total/sub_total.php'),
        (1, 'opencart/admin/language/en-gb/total/tax.php'),
@@ -1349,6 +1418,8 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/view/template/payment/free_checkout.twig'),
        (1, 'opencart/admin/view/template/payment/order.twig'),
        (1, 'opencart/admin/view/template/report'),
+       (1, 'opencart/admin/view/template/report/affiliate.twig'),
+       (1, 'opencart/admin/view/template/report/affiliate_form.twig'),
        (1, 'opencart/admin/view/template/report/customer.twig'),
        (1, 'opencart/admin/view/template/report/customer_activity.twig'),
        (1, 'opencart/admin/view/template/report/customer_activity_form.twig'),
@@ -1358,6 +1429,9 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/view/template/report/customer_order.twig'),
        (1, 'opencart/admin/view/template/report/customer_order_form.twig'),
        (1, 'opencart/admin/view/template/report/customer_order_list.twig'),
+       (1, 'opencart/admin/view/template/report/customer_reward.twig'),
+       (1, 'opencart/admin/view/template/report/customer_reward_form.twig'),
+       (1, 'opencart/admin/view/template/report/customer_reward_list.twig'),
        (1, 'opencart/admin/view/template/report/customer_search.twig'),
        (1, 'opencart/admin/view/template/report/customer_search_form.twig'),
        (1, 'opencart/admin/view/template/report/customer_search_list.twig'),
@@ -1404,6 +1478,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/admin/view/template/total/credit.twig'),
        (1, 'opencart/admin/view/template/total/handling.twig'),
        (1, 'opencart/admin/view/template/total/low_order_fee.twig'),
+       (1, 'opencart/admin/view/template/total/reward.twig'),
        (1, 'opencart/admin/view/template/total/shipping.twig'),
        (1, 'opencart/admin/view/template/total/sub_total.twig'),
        (1, 'opencart/admin/view/template/total/tax.twig'),
@@ -1434,6 +1509,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/catalog/controller/payment/free_checkout.php'),
        (1, 'opencart/catalog/controller/total'),
        (1, 'opencart/catalog/controller/total/coupon.php'),
+       (1, 'opencart/catalog/controller/total/reward.php'),
        (1, 'opencart/catalog/controller/total/shipping.php'),
        (1, 'opencart/catalog/language'),
        (1, 'opencart/catalog/language/de-de'),
@@ -1470,6 +1546,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/catalog/language/en-gb/total/credit.php'),
        (1, 'opencart/catalog/language/en-gb/total/handling.php'),
        (1, 'opencart/catalog/language/en-gb/total/low_order_fee.php'),
+       (1, 'opencart/catalog/language/en-gb/total/reward.php'),
        (1, 'opencart/catalog/language/en-gb/total/shipping.php'),
        (1, 'opencart/catalog/language/en-gb/total/sub_total.php'),
        (1, 'opencart/catalog/language/en-gb/total/total.php'),
@@ -1495,6 +1572,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/catalog/model/total/credit.php'),
        (1, 'opencart/catalog/model/total/handling.php'),
        (1, 'opencart/catalog/model/total/low_order_fee.php'),
+       (1, 'opencart/catalog/model/total/reward.php'),
        (1, 'opencart/catalog/model/total/shipping.php'),
        (1, 'opencart/catalog/model/total/sub_total.php'),
        (1, 'opencart/catalog/model/total/tax.php'),
@@ -1522,6 +1600,7 @@ VALUES (1, 'opencart'),
        (1, 'opencart/catalog/view/template/payment/free_checkout.twig'),
        (1, 'opencart/catalog/view/template/total'),
        (1, 'opencart/catalog/view/template/total/coupon.twig'),
+       (1, 'opencart/catalog/view/template/total/reward.twig'),
        (1, 'opencart/catalog/view/template/total/shipping.twig'),
        (1, 'opencart/install.json');
 
@@ -1610,6 +1689,7 @@ VALUES (1, 'Home'),
        (7, 'Checkout'),
        (8, 'Contact'),
        (9, 'Sitemap'),
+       (10, 'Affiliate'),
        (11, 'Information'),
        (12, 'Compare'),
        (13, 'Search'),
@@ -1640,6 +1720,7 @@ VALUES (1, 10, 'opencart.account', 'column_right', 1),
 INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`)
 VALUES (1, 6, 0, 'account/%'),
        (2, 6, 0, 'information/gdpr'),
+       (3, 10, 0, 'affiliate/%'),
        (4, 3, 0, 'product/category'),
        (5, 1, 0, 'common/home'),
        (6, 2, 0, 'product/product'),
@@ -1651,8 +1732,8 @@ VALUES (1, 6, 0, 'account/%'),
        (12, 5, 0, 'product/manufacturer'),
        (13, 12, 0, 'product/compare'),
        (14, 13, 0, 'product/search'),
-       (15, 14, 0, 'cms/topic'),
-       (16, 14, 0, 'cms/article');
+       (15, 14, 0, 'cms/blog'),
+       (16, 14, 0, 'cms/blog.info');
 
 -----------------------------------------------------------
 
@@ -1682,27 +1763,13 @@ VALUES (1, 1, 'Centimeter', 'cm'),
 -- Dumping data for table `oc_manufacturer`
 --
 
-INSERT INTO `oc_manufacturer` (`manufacturer_id`, `image`, `sort_order`)
-VALUES (5, 'catalog/demo/htc_logo.jpg', 0),
-       (6, 'catalog/demo/palm_logo.jpg', 0),
-       (7, 'catalog/demo/hp_logo.jpg', 0),
-       (8, 'catalog/demo/apple_logo.jpg', 0),
-       (9, 'catalog/demo/canon_logo.jpg', 0),
-       (10, 'catalog/demo/sony_logo.jpg', 0);
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_manufacturer_description`
---
-
-INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `name`, `meta_title`, `meta_description`, `meta_keyword`)
-VALUES (5, 1, 'HTC', NULL, NULL, NULL),
-       (6, 1, 'Palm', NULL, NULL, NULL),
-       (7, 1, 'Hewlett-Packard', NULL, NULL, NULL),
-       (8, 1, 'Apple', NULL, NULL, NULL),
-       (9, 1, 'Canon', NULL, NULL, NULL),
-       (10, 1, 'Sony', NULL, NULL, NULL);
+INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`)
+VALUES (5, 'HTC', 'catalog/demo/htc_logo.jpg', 0),
+       (6, 'Palm', 'catalog/demo/palm_logo.jpg', 0),
+       (7, 'Hewlett-Packard', 'catalog/demo/hp_logo.jpg', 0),
+       (8, 'Apple', 'catalog/demo/apple_logo.jpg', 0),
+       (9, 'Canon', 'catalog/demo/canon_logo.jpg', 0),
+       (10, 'Sony', 'catalog/demo/sony_logo.jpg', 0);
 
 -----------------------------------------------------------
 
@@ -1721,175 +1788,14 @@ VALUES (5, 0),
 -----------------------------------------------------------
 
 --
--- Dumping data for table `oc_menu`
---
-
-INSERT INTO `oc_menu` (`menu_id`, `code`, `type`, `route`, `parent`, `sort_order`)
-VALUES (1, 'category', 'link', 'catalog/category', 'catalog', 1),
-       (2, 'product', 'link', 'catalog/product', 'catalog', 2),
-       (3, 'attribute', 'link', 'catalog/attribute', 'catalog', 3),
-       (4, 'option', 'link', 'catalog/option', 'catalog', 4),
-       (5, 'filter', 'link', 'catalog/filter', 'catalog', 5),
-       (6, 'manufacturer', 'link', 'catalog/manufacturer', 'catalog', 6),
-       (7, 'download', 'link', 'catalog/download', 'catalog', 7),
-       (8, 'subscription_plan', 'link', 'catalog/subscription_plan', 'catalog', 8),
-       (9, 'review', 'link', 'catalog/review', 'catalog', 9),
-       (10, 'information', 'link', 'catalog/information', 'catalog', 10),
-       (11, 'topic', 'link', 'cms/topic', 'cms', 1),
-       (12, 'article', 'link', 'cms/article', 'cms', 2),
-       (13, 'comment', 'link', 'cms/comment', 'cms', 3),
-       (14, 'antispam', 'link', 'cms/antispam', 'cms', 4),
-       (15, 'marketplace', 'link', 'marketplace/marketplace', 'extension', 1),
-       (16, 'installer', 'link', 'marketplace/installer', 'extension', 2),
-       (17, 'extension_2', 'link', 'marketplace/extension', 'extension', 3),
-       (18, 'task', 'link', 'marketplace/task', 'extension', 4),
-       (19, 'ssr', 'link', 'marketplace/ssr', 'extension', 5),
-       (20, 'event', 'link', 'marketplace/event', 'extension', 6),
-       (21, 'startup', 'link', 'marketplace/startup', 'extension', 7),
-       (22, 'cron', 'link', 'marketplace/cron', 'extension', 8),
-       (23, 'layout', 'link', 'design/layout', 'design', 1),
-       (24, 'template', 'link', 'design/template', 'design', 2),
-       (25, 'translation', 'link', 'design/translation', 'design', 3),
-       (26, 'banner', 'link', 'design/banner', 'design', 4),
-       (27, 'seo_url', 'link', 'design/seo_url', 'design', 5),
-       (28, 'seo_regex', 'link', 'design/seo_regex', 'design', 6),
-       (29, 'order', 'link', 'sale/order', 'sale', 1),
-       (30, 'subscription', 'link', 'sale/subscription', 'sale', 2),
-       (31, 'return', 'link', 'sale/returns', 'sale', 3),
-       (32, 'customer_2', 'link', 'customer/customer', 'customer', 1),
-       (33, 'customer_group', 'link', 'customer/customer_group', 'customer', 2),
-       (34, 'customer_approval', 'link', 'customer/customer_approval', 'customer', 3),
-       (35, 'gdpr', 'link', 'customer/gdpr', 'customer', 4),
-       (38, 'marketing_2', 'link', 'marketing/marketing', 'marketing', 2),
-       (39, 'coupon', 'link', 'marketing/coupon', 'marketing', 3),
-       (40, 'contact', 'link', 'marketing/contact', 'marketing', 4),
-       (41, 'setting', 'link', 'setting/store', 'system', 1),
-       (42, 'user', 'dropdown', '', 'system', 2),
-       (43, 'user_2', 'link', 'user/user', 'user', 1),
-       (44, 'user_permission', 'link', 'user/user_permission', 'user', 2),
-       (45, 'api', 'link', 'user/api', 'user', 3),
-       (46, 'localisation', 'dropdown', '', 'system', 3),
-       (47, 'location', 'link', 'localisation/location', 'localisation', 1),
-       (48, 'language', 'link', 'localisation/language', 'localisation', 2),
-       (49, 'currency', 'link', 'localisation/currency', 'localisation', 3),
-       (50, 'identifier', 'link', 'localisation/identifier', 'localisation', 4),
-       (51, 'stock_status', 'link', 'localisation/stock_status', 'localisation', 5),
-       (52, 'order_status', 'link', 'localisation/order_status', 'localisation', 6),
-       (53, 'subscription_status', 'link', 'localisation/subscription_status', 'localisation', 7),
-       (54, 'return_2', 'dropdown', '', 'localisation', 8),
-       (55, 'return_status', 'link', 'localisation/return_status', 'return_2', 2),
-       (56, 'return_action', 'link', 'localisation/return_action', 'return_2', 1),
-       (57, 'return_reason', 'link', 'localisation/return_reason', 'return_2', 3),
-       (58, 'country', 'link', 'localisation/country', 'localisation', 9),
-       (59, 'zone', 'link', 'localisation/zone', 'localisation', 10),
-       (60, 'geo_zone', 'link', 'localisation/geo_zone', 'localisation', 11),
-       (61, 'tax', 'dropdown', '', 'localisation', 12),
-       (62, 'tax_class', 'link', 'localisation/tax_class', 'tax', 1),
-       (63, 'tax_rate', 'link', 'localisation/tax_rate', 'tax', 2),
-       (64, 'length_class', 'link', 'localisation/length_class', 'localisation', 13),
-       (65, 'weight_class', 'link', 'localisation/weight_class', 'localisation', 14),
-       (66, 'address_format', 'link', 'localisation/address_format', 'localisation', 15),
-       (67, 'maintenance', 'dropdown', '', 'system', 4),
-       (68, 'menu', 'link', 'tool/menu', 'maintenance', 1),
-       (69, 'upgrade', 'link', 'tool/upgrade', 'maintenance', 2),
-       (70, 'backup', 'link', 'tool/backup', 'maintenance', 3),
-       (71, 'upload', 'link', 'tool/upload', 'maintenance', 4),
-       (72, 'log', 'link', 'tool/log', 'maintenance', 5),
-       (73, 'report_2', 'link', 'report/report', 'report', 1),
-       (74, 'online', 'link', 'report/online', 'report', 2);
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_menu_description`
---
-
-INSERT INTO `oc_menu_description` (`menu_id`, `language_id`, `name`)
-VALUES (1, 1, 'Categories'),
-       (2, 1, 'Products'),
-       (3, 1, 'Attributes'),
-       (4, 1, 'Options'),
-       (5, 1, 'Filters'),
-       (6, 1, 'Manufacturers'),
-       (7, 1, 'Downloads'),
-       (8, 1, 'Subscription Plans'),
-       (9, 1, 'Reviews'),
-       (10, 1, 'Information'),
-       (11, 1, 'Topics'),
-       (12, 1, 'Article'),
-       (13, 1, 'Comments'),
-       (14, 1, 'Anti-Spam'),
-       (15, 1, 'Marketplace'),
-       (16, 1, 'Installer'),
-       (17, 1, 'Extensions'),
-       (18, 1, 'Tasks'),
-       (19, 1, 'SSR'),
-       (20, 1, 'Events'),
-       (21, 1, 'Startup'),
-       (22, 1, 'CRON Jobs'),
-       (23, 1, 'Layouts'),
-       (24, 1, 'Template Editor'),
-       (25, 1, 'Translation Editor'),
-       (26, 1, 'Banner'),
-       (27, 1, 'SEO URL'),
-       (28, 1, 'SEO Regex'),
-       (29, 1, 'Orders'),
-       (30, 1, 'Subscription'),
-       (31, 1, 'Returns'),
-       (32, 1, 'Customers'),
-       (33, 1, 'Customer Groups'),
-       (34, 1, 'Customer Approvals'),
-       (35, 1, 'GDPR'),
-       (36, 1, 'Custom Field'),
-       (38, 1, 'Marketing'),
-       (39, 1, 'Coupons'),
-       (40, 1, 'Mail'),
-       (41, 1, 'Settings'),
-       (42, 1, 'Users'),
-       (43, 1, 'Users'),
-       (44, 1, 'User Groups'),
-       (45, 1, 'API'),
-       (46, 1, 'Localisation'),
-       (47, 1, 'Store Locations'),
-       (48, 1, 'Language'),
-       (49, 1, 'Currencies'),
-       (50, 1, 'Identifier'),
-       (51, 1, 'Stock Status'),
-       (52, 1, 'Order Status'),
-       (53, 1, 'Subscription Status'),
-       (54, 1, 'Returns'),
-       (55, 1, 'Return Statuses'),
-       (56, 1, 'Return Actions'),
-       (57, 1, 'Return Reasons'),
-       (58, 1, 'Countries'),
-       (59, 1, 'Zones'),
-       (60, 1, 'Geo Zones'),
-       (61, 1, 'Taxes'),
-       (62, 1, 'Tax Classes'),
-       (63, 1, 'Tax Rates'),
-       (64, 1, 'Length Classes'),
-       (65, 1, 'Weight Classes'),
-       (66, 1, 'Address Format'),
-       (67, 1, 'Maintenance'),
-       (68, 1, 'Admin Menu'),
-       (69, 1, 'Upgrade'),
-       (70, 1, 'Backup &amp; Restore'),
-       (71, 1, 'Uploads'),
-       (72, 1, 'Error Log'),
-       (73, 1, 'Reports'),
-       (74, 1, 'Who\'s Online');
-
------------------------------------------------------------
-
---
 -- Dumping data for table `oc_module`
 --
 
 INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`)
-VALUES (1, 'Category Banner', 'opencart.banner', '{"name":"Category Banner", "banner_id":"6", "effect":"fade", "items":"1", "controls":"0", "indicators":"0", "interval":"5000", "width":"200", "height":"180", "status":"1"}'),
-       (2, 'Featured', 'opencart.featured', '{"name":"Featured", "product_name":"", "product":["43", "40", "42", "30"], "axis":"horizontal", "limit":"4", "width":"200", "height":"200", "status":"1"}'),
-       (3, 'Homepage Slideshow', 'opencart.banner', '{"name":"Homepage Slideshow", "banner_id":"7", "effect":"slide", "items":"1", "controls":"1", "indicators":"1", "interval":"5000", "width":"1140", "height":"380", "status":"1"}'),
-       (4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers", "banner_id":"8", "effect":"slide", "items":"5", "controls":"1", "indicators":"1", "interval":"5000", "width":"130", "height":"100", "status":"1"}');
+VALUES (1, 'Category Banner', 'opencart.banner', '{"name":"Category Banner","banner_id":"6","effect":"fade","items":"1","controls":"0","indicators":"0","interval":"5000","width":"200","height":"180","status":"1"}'),
+       (2, 'Featured', 'opencart.featured', '{"name":"Featured","product_name":"","product":["43","40","42","30"],"axis":"horizontal","limit":"4","width":"200","height":"200","status":"1"}'),
+       (3, 'Homepage Slideshow', 'opencart.banner', '{"name":"Homepage Slideshow","banner_id":"7","effect":"slide","items":"1","controls":"1","indicators":"1","interval":"5000","width":"1140","height":"380","status":"1"}'),
+       (4, 'Homepage Manufacturers', 'opencart.banner', '{"name":"Homepage Manufacturers","banner_id":"8","effect":"slide","items":"5","controls":"1","indicators":"1","interval":"5000","width":"130","height":"100","status":"1"}');
 
 -----------------------------------------------------------
 
@@ -1925,8 +1831,7 @@ VALUES (1, 1, 'Radio'),
        (7, 1, 'File'),
        (5, 1, 'Select'),
        (9, 1, 'Time'),
-       (10, 1, 'Date &amp;
-Time'),
+       (10, 1, 'Date &amp; Time'),
        (12, 1, 'Delivery Date'),
        (11, 1, 'Size');
 
@@ -1961,19 +1866,15 @@ VALUES (43, 1, '', 3),
 INSERT INTO `oc_option_value_description` (`option_value_id`, `language_id`, `option_id`, `name`)
 VALUES (43, 1, 1, 'Large'),
        (32, 1, 1, 'Small'),
-       (45, 1, 2, 'Checkbox 4
-'),
-       (44, 1, 2, 'Checkbox 3
-'),
+       (45, 1, 2, 'Checkbox 4'),
+       (44, 1, 2, 'Checkbox 3'),
        (31, 1, 1, 'Medium'),
        (42, 1, 5, 'Yellow'),
        (41, 1, 5, 'Green'),
        (39, 1, 5, 'Red'),
        (40, 1, 5, 'Blue'),
-       (23, 1, 2, 'Checkbox 1
-'),
-       (24, 1, 2, 'Checkbox 2
-'),
+       (23, 1, 2, 'Checkbox 1'),
+       (24, 1, 2, 'Checkbox 2'),
        (48, 1, 11, 'Large'),
        (47, 1, 11, 'Medium'),
        (46, 1, 11, 'Small');
@@ -2006,86 +1907,26 @@ VALUES (2, 1, 'Processing'),
 -- Dumping data for table `oc_product`
 --
 
-INSERT INTO `oc_product` (`product_id`, `master_id`, `model`, `location`, `variant`, `override`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `rating`, `sort_order`, `status`, `date_added`, `date_modified`)
-VALUES (28, 0, 'Product 1
-', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, 100.0000, 200, 9, '
-2009-02-03
-', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (29, 0, 'Product 2
-', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, 279.9900, 0, 9, '
-2009-02-03
-', 133.00000000, 2, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (30, 0, 'Product 3
-', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, 100.0000, 0, 9, '
-2009-02-03
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (31, 0, 'Product 4
-', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, 80.0000, 0, 9, '
-2009-02-03
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 3, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (32, 0, 'Product 5
-', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, 100.0000, 0, 9, '
-2009-02-03
-', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (33, 0, 'Product 6
-', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, 200.0000, 0, 9, '
-2009-02-03
-', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (34, 0, 'Product 7
-', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, 100.0000, 0, 9, '
-2009-02-03
-', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (35, 0, 'Product 8
-', '', '', '', 1000, 5, '', 0, 0, 100.0000, 0, 9, '
-2009-02-03
-', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (36, 0, 'Product 9
-', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, 100.0000, 100, 9, '
-2009-02-03
-', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (40, 0, 'product 11
-', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, 100.0000, 0, 9, '
-2009-02-03
-', 10.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (41, 0, 'Product 14
-', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, 100.0000, 0, 9, '
-2009-02-03
-', 5.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (42, 0, 'Product 15
-', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '
-2009-02-04
-', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 1, NOW(), NOW()),
-       (43, 0, 'Product 16
-', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, 100.0000, 0, 9, '
-2009-02-03
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (44, 0, 'Product 17
-', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, 1000.0000, 0, 9, '
-2009-02-03
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (45, 0, 'Product 18
-', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, 2000.0000, 0, 100, '
-2009-02-03
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (46, 0, 'Product 19
-', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, 1000.0000, 0, 9, '
-2009-02-03
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (47, 0, 'Product 21
-', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, 100.0000, 400, 9, '
-2009-02-03
-', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 0, 1, 0, 0, 1, NOW(), NOW()),
-       (48, 0, 'product 20
-', 'test 2
-', '', '', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, 100.0000, 0, 9, '
-2009-02-08
-', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 0, 1, NOW(), NOW()),
-       (49, 0, 'SAM1', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, 199.9900, 0, 9, '
-2011-04-25
-', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 1, 1, NOW(), NOW()),
-       (50, 42, 'Product 15
-', '', '{
-\"208\":\"\",\"217\":\"\",\"209\":\"\",\"222\":\"\",\"219\":\"\",\"221\":\"\",\"220\":\"\"}', '{\"status\":\"1\"}', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, 100.0000, 400, 9, '2009-02-04', 12.50000000, 1, 1.00000000, 2.00000000, 3.00000000, 1, 1, 2, 0, 0, 0, NOW(), NOW());
+INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `variant`, `override`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `date_added`, `date_modified`)
+VALUES (28, 'Product 1', '', '', '', '', '', '', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, '100.0000', 200, 9, '2009-02-03', '146.40000000', 2, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-09-30 01:05:39'),
+       (29, 'Product 2', '', '', '', '', '', '', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, 9, '2009-02-03', '133.00000000', 2, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-09-30 01:06:08'),
+       (30, 'Product 3', '', '', '', '', '', '', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-09-30 01:05:23'),
+       (31, 'Product 4', '', '', '', '', '', '', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, '80.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-09-30 01:06:00'),
+       (32, 'Product 5', '', '', '', '', '', '', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-09-30 01:07:22'),
+       (33, 'Product 6', '', '', '', '', '', '', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-09-30 01:06:29'),
+       (34, 'Product 7', '', '', '', '', '', '', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-09-30 01:07:17'),
+       (35, 'Product 8', '', '', '', '', '', '', '', '', '', 1000, 5, '', 0, 0, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 18:08:31', '2011-09-30 01:06:17'),
+       (36, 'Product 9', '', '', '', '', '', '', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, '100.0000', 100, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-09-30 01:07:12'),
+       (40, 'product 11', '', '', '', '', '', '', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, '101.0000', 0, 9, '2009-02-03', '10.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-09-30 01:06:53'),
+       (41, 'Product 14', '', '', '', '', '', '', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-09-30 01:06:44'),
+       (42, 'Product 15', '', '', '', '', '', '', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, '100.0000', 400, 9, '2009-02-04', '12.50000000', 1, '1.00000000', '2.00000000', '3.00000000', 1, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-09-30 00:46:19'),
+       (43, 'Product 16', '', '', '', '', '', '', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-09-30 01:05:46'),
+       (44, 'Product 17', '', '', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, '1000.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-09-30 01:05:53'),
+       (45, 'Product 18', '', '', '', '', '', '', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, 100, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-09-15 22:22:01'),
+       (46, 'Product 19', '', '', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, 9, '2009-02-03', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-09-30 01:06:39'),
+       (47, 'Product 21', '', '', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, '100.0000', 400, 9, '2009-02-03', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-09-30 01:05:28'),
+       (48, 'product 20', 'test 1', '', '', '', '', '', 'test 2', '', '', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-08', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06'),
+       (49, 'SAM1', '', '', '', '', '', '', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, '199.9900', 0, 9, '2011-04-25', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23');
 
 -----------------------------------------------------------
 
@@ -2106,48 +1947,48 @@ VALUES (43, 2, 1, '1'),
 -- Dumping data for table `oc_product_description`
 --
 
-INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`)
-VALUES (35, 1, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', 'Product 8', '', ''),
+INSERT INTO `oc_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`)
+VALUES (35, 1, 'Product 8', '&lt;p&gt;\r\n	Product 8&lt;/p&gt;\r\n', '', 'Product 8', '', ''),
        (48, 1, 'iPod Classic',
         '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;More room to move.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;strong&gt;Sleeker design.&lt;/strong&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polished stainless steel enclosure with rounded edges.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;',
-        'iPod Classic', '', ''),
-       (40, 1, 'iPhone', '&lt;p class=&quot;intro&quot;&gt;\r\n	iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.&lt;/p&gt;\r\n', 'iPhone', '', ''),
+        '', 'iPod Classic', '', ''),
+       (40, 1, 'iPhone', '&lt;p class=&quot;intro&quot;&gt;\r\n	iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.&lt;/p&gt;\r\n', '', 'iPhone', '', ''),
        (28, 1, 'HTC Touch HD',
         '&lt;p&gt;\r\n	HTC Touch - in High Definition. Watch music videos and streaming content in awe-inspiring high definition clarity for a mobile experience you never thought possible. Seductively sleek, the HTC Touch HD provides the next generation of mobile functionality, all at a simple touch. Fully integrated with Windows Mobile Professional 6.1, ultrafast 3.5G, GPS, 5MP camera, plus lots more - all delivered on a breathtakingly crisp 3.8&amp;quot; WVGA touchscreen - you can take control of your mobile world with the HTC Touch HD.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Processor Qualcomm&amp;reg; MSM 7201A&amp;trade; 528 MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Operating System&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Memory: 512 MB ROM, 288 MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Dimensions: 115 mm x 62.8 mm x 12 mm / 146.4 grams&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.8-inch TFT-LCD flat touch-sensitive screen with 480 x 800 WVGA resolution&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/WCDMA: Europe/Asia: 900/2100 MHz; Up to 2 Mbps up-link and 7.2 Mbps down-link speeds&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM/GPRS/EDGE: Europe/Asia: 850/900/1800/1900 MHz (Band frequency, HSUPA availability, and data speed are operator dependent.)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Device Control via HTC TouchFLO&amp;trade; 3D &amp;amp; Touch-sensitive front panel buttons&lt;/li&gt;\r\n	&lt;li&gt;\r\n		GPS and A-GPS ready&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth&amp;reg; 2.0 with Enhanced Data Rate and A2DP for wireless stereo headsets&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wi-Fi&amp;reg;: IEEE 802.11 b/g&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HTC ExtUSB&amp;trade; (11-pin mini-USB 2.0)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		5 megapixel color camera with auto focus&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VGA CMOS color camera&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in 3.5 mm audio jack, microphone, speaker, and FM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Ring tone formats: AAC, AAC+, eAAC+, AMR-NB, AMR-WB, QCP, MP3, WMA, WAV&lt;/li&gt;\r\n	&lt;li&gt;\r\n		40 polyphonic and standard MIDI format 0 and 1 (SMF)/SP MIDI&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Rechargeable Lithium-ion or Lithium-ion polymer 1350 mAh battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Expansion Slot: microSD&amp;trade; memory card (SD 2.0 compatible)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AC Adapter Voltage range/frequency: 100 ~ 240V AC, 50/60 Hz DC output: 5V and 1A&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Special Features: FM Radio, G-Sensor&lt;/li&gt;\r\n&lt;/ul&gt;\r\n',
-        '	 HTC Touch HD', '', ''),
-       (44, 1, 'MacBook Air', '&lt;div&gt;\r\n	MacBook Air is ultrathin, ultraportable, and ultra unlike anything else. But you don&amp;rsquo;t lose inches and pounds overnight. It&amp;rsquo;s the result of rethinking conventions. Of multiple wireless innovations. And of breakthrough design. With MacBook Air, mobile computing suddenly has a new standard.&lt;/div&gt;\r\n', 'MacBook Air', '', ''),
+        '', '	 HTC Touch HD', '', ''),
+       (44, 1, 'MacBook Air', '&lt;div&gt;\r\n	MacBook Air is ultrathin, ultraportable, and ultra unlike anything else. But you don&amp;rsquo;t lose inches and pounds overnight. It&amp;rsquo;s the result of rethinking conventions. Of multiple wireless innovations. And of breakthrough design. With MacBook Air, mobile computing suddenly has a new standard.&lt;/div&gt;\r\n', '', 'MacBook Air', '', ''),
        (45, 1, 'MacBook Pro',
         '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Latest Intel mobile architecture&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Powered by the most advanced mobile processors from Intel, the new Core 2 Duo MacBook Pro is over 50% faster than the original Core Duo MacBook Pro and now supports up to 4GB of RAM.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Leading-edge graphics&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			The NVIDIA GeForce 8600M GT delivers exceptional graphics processing power. For the ultimate creative canvas, you can even configure the 17-inch model with a 1920-by-1200 resolution display.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Designed for life on the road&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Innovations such as a magnetic power connection and an illuminated keyboard with ambient light sensor put the MacBook Pro in a class by itself.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Connect. Create. Communicate.&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Quickly set up a video conference with the built-in iSight camera. Control presentations and media from up to 30 feet away with the included Apple Remote. Connect to high-bandwidth peripherals with FireWire 800 and DVI.&lt;/p&gt;\r\n		&lt;p&gt;\r\n			&lt;b&gt;Next-generation wireless&lt;/b&gt;&lt;/p&gt;\r\n		&lt;p&gt;\r\n			Featuring 802.11n wireless technology, the MacBook Pro delivers up to five times the performance and up to twice the range of previous-generation technologies.&lt;/p&gt;\r\n	&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;',
-        'MacBook Pro', '', ''),
+        '', 'MacBook Pro', '', ''),
        (29, 1, 'Palm Treo Pro',
         '&lt;p&gt;\r\n	Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to business and personal email, stay on top of appointments and contacts, and use Wi-Fi or GPS when you&amp;rsquo;re out and about. Then watch a video on YouTube, catch up with news and sports on the web, or listen to a few songs. Balance your work and play the way you like it, with the Palm Treo Pro.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Features&lt;/strong&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Windows Mobile&amp;reg; 6.1 Professional Edition&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Qualcomm&amp;reg; MSM7201 400MHz Processor&lt;/li&gt;\r\n	&lt;li&gt;\r\n		320x320 transflective colour TFT touchscreen&lt;/li&gt;\r\n	&lt;li&gt;\r\n		HSDPA/UMTS/EDGE/GPRS/GSM radio&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Tri-band UMTS &amp;mdash; 850MHz, 1900MHz, 2100MHz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Quad-band GSM &amp;mdash; 850/900/1800/1900&lt;/li&gt;\r\n	&lt;li&gt;\r\n		802.11b/g with WPA, WPA2, and 801.1x authentication&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in GPS&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Bluetooth Version: 2.0 + Enhanced Data Rate&lt;/li&gt;\r\n	&lt;li&gt;\r\n		256MB storage (100MB user available), 128MB RAM&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2.0 megapixel camera, up to 8x digital zoom and video capture&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Removable, rechargeable 1500mAh lithium-ion battery&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Up to 5.0 hours talk time and up to 250 hours standby&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroSDHC card expansion (up to 32GB supported)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MicroUSB 2.0 for synchronization and charging&lt;/li&gt;\r\n	&lt;li&gt;\r\n		3.5mm stereo headset jack&lt;/li&gt;\r\n	&lt;li&gt;\r\n		60mm (W) x 114mm (L) x 13.5mm (D) / 133g&lt;/li&gt;\r\n&lt;/ul&gt;\r\n',
-        'Palm Treo Pro', '', ''),
+        '', 'Palm Treo Pro', '', ''),
        (36, 1, 'iPod Nano',
         '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Video in your pocket.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Its the small iPod with one very big idea: video. The worlds most popular music player now lets you enjoy movies, TV shows, and more on a two-inch display thats 65% brighter than before.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Cover Flow.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Enhanced interface.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Experience a whole new way to browse and view your music and video.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Sleek and colorful.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With an anodized aluminum and polished stainless steel enclosure and a choice of five colors, iPod nano is dressed to impress.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;iTunes.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Available as a free download, iTunes makes it easy to browse and buy millions of songs, movies, TV shows, audiobooks, and games and download free podcasts all at the iTunes Store. And you can import your own music, manage your whole media library, and sync your iPod or iPhone with ease.&lt;/p&gt;\r\n&lt;/div&gt;\r\n',
-        'iPod Nano', '', ''),
-       (46, 1, 'Sony VAIO', '&lt;div&gt;\r\n	Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel&amp;#39;s latest, most powerful innovation yet: Intel&amp;reg; Centrino&amp;reg; 2 processor technology. Boasting incredible speed, expanded wireless connectivity, enhanced multimedia support and greater energy efficiency, all the high-performance essentials are seamlessly combined into a single chip.&lt;/div&gt;\r\n', 'Sony VAIO', '', ''),
-       (47, 1, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', 'HP LP3065', '', ''),
+        '', 'iPod Nano', '', ''),
+       (46, 1, 'Sony VAIO', '&lt;div&gt;\r\n	Unprecedented power. The next generation of processing technology has arrived. Built into the newest VAIO notebooks lies Intel&amp;#39;s latest, most powerful innovation yet: Intel&amp;reg; Centrino&amp;reg; 2 processor technology. Boasting incredible speed, expanded wireless connectivity, enhanced multimedia support and greater energy efficiency, all the high-performance essentials are seamlessly combined into a single chip.&lt;/div&gt;\r\n', '', 'Sony VAIO', '', ''),
+       (47, 1, 'HP LP3065', '&lt;p&gt;\r\n	Stop your co-workers in their tracks with the stunning new 30-inch diagonal HP LP3065 Flat Panel Monitor. This flagship monitor features best-in-class performance and presentation features on a huge wide-aspect screen while letting you work as comfortably as possible - you might even forget you&amp;#39;re at the office&lt;/p&gt;\r\n', '', 'HP LP3065', '', ''),
        (32, 1, 'iPod Touch',
         '&lt;p&gt;\r\n	&lt;strong&gt;Revolutionary multi-touch interface.&lt;/strong&gt;&lt;br /&gt;\r\n	iPod touch features the same multi-touch screen technology as iPhone. Pinch to zoom in on a photo. Scroll through your songs and videos with a flick. Flip through your library by album artwork with Cover Flow.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Gorgeous 3.5-inch widescreen display.&lt;/strong&gt;&lt;br /&gt;\r\n	Watch your movies, TV shows, and photos come alive with bright, vivid color on the 320-by-480-pixel display.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Music downloads straight from iTunes.&lt;/strong&gt;&lt;br /&gt;\r\n	Shop the iTunes Wi-Fi Music Store from anywhere with Wi-Fi.1 Browse or search to find the music youre looking for, preview it, and buy it with just a tap.&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;strong&gt;Surf the web with Wi-Fi.&lt;/strong&gt;&lt;br /&gt;\r\n	Browse the web using Safari and watch YouTube videos on the first iPod with Wi-Fi built in&lt;br /&gt;\r\n	&amp;nbsp;&lt;/p&gt;\r\n',
-        '	 iPod Touch', '', ''),
-       (41, 1, 'iMac', '&lt;div&gt;\r\n	Just when you thought iMac had everything, now there&acute;s even more. More powerful Intel Core 2 Duo processors. And more memory standard. Combine this with Mac OS X Leopard and iLife &acute;08, and it&acute;s more all-in-one than ever. iMac packs amazing performance into a stunningly slim space.&lt;/div&gt;\r\n', 'iMac', '', ''),
-       (33, 1, 'Samsung SyncMaster 941BW', '&lt;div&gt;\r\n	Imagine the advantages of going big without slowing down. The big 19&amp;quot; 941BW monitor combines wide aspect ratio with fast pixel response time, for bigger images, more room to work and crisp motion. In addition, the exclusive MagicBright 2, MagicColor and MagicTune technologies help deliver the ideal image in every situation, while sleek, narrow bezels and adjustable stands deliver style just the way you want it. With the Samsung 941BW widescreen analog/digital LCD monitor, it&amp;#39;s not hard to imagine.&lt;/div&gt;\r\n', 'Samsung SyncMaster 941BW', '', ''),
-       (34, 1, 'iPod Shuffle', '&lt;div&gt;\r\n	&lt;strong&gt;Born to be worn.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Clip on the worlds most wearable music player and take up to 240 songs with you anywhere. Choose from five colors including four new hues to make your musical fashion statement.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Random meets rhythm.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With iTunes autofill, iPod shuffle can deliver a new musical experience every time you sync. For more randomness, you can shuffle songs during playback with the slide of a switch.&lt;/p&gt;\r\n	&lt;strong&gt;Everything is easy.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Charge and sync with the included USB dock. Operate the iPod shuffle controls with one hand. Enjoy up to 12 hours straight of skip-free music playback.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', 'iPod Shuffle', '', ''),
+        '', '	 iPod Touch', '', ''),
+       (41, 1, 'iMac', '&lt;div&gt;\r\n	Just when you thought iMac had everything, now there&acute;s even more. More powerful Intel Core 2 Duo processors. And more memory standard. Combine this with Mac OS X Leopard and iLife &acute;08, and it&acute;s more all-in-one than ever. iMac packs amazing performance into a stunningly slim space.&lt;/div&gt;\r\n', '', 'iMac', '', ''),
+       (33, 1, 'Samsung SyncMaster 941BW', '&lt;div&gt;\r\n	Imagine the advantages of going big without slowing down. The big 19&amp;quot; 941BW monitor combines wide aspect ratio with fast pixel response time, for bigger images, more room to work and crisp motion. In addition, the exclusive MagicBright 2, MagicColor and MagicTune technologies help deliver the ideal image in every situation, while sleek, narrow bezels and adjustable stands deliver style just the way you want it. With the Samsung 941BW widescreen analog/digital LCD monitor, it&amp;#39;s not hard to imagine.&lt;/div&gt;\r\n', '', 'Samsung SyncMaster 941BW', '', ''),
+       (34, 1, 'iPod Shuffle', '&lt;div&gt;\r\n	&lt;strong&gt;Born to be worn.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Clip on the worlds most wearable music player and take up to 240 songs with you anywhere. Choose from five colors including four new hues to make your musical fashion statement.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;strong&gt;Random meets rhythm.&lt;/strong&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		With iTunes autofill, iPod shuffle can deliver a new musical experience every time you sync. For more randomness, you can shuffle songs during playback with the slide of a switch.&lt;/p&gt;\r\n	&lt;strong&gt;Everything is easy.&lt;/strong&gt;\r\n	&lt;p&gt;\r\n		Charge and sync with the included USB dock. Operate the iPod shuffle controls with one hand. Enjoy up to 12 hours straight of skip-free music playback.&lt;/p&gt;\r\n&lt;/div&gt;\r\n', '', 'iPod Shuffle', '', ''),
        (43, 1, 'MacBook',
         '&lt;div&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Intel Core 2 Duo processor&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Powered by an Intel Core 2 Duo processor at speeds up to 2.16GHz, the new MacBook is the fastest ever.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;1GB memory, larger hard drives&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		The new MacBook now comes with 1GB of memory standard and larger hard drives for the entire line perfect for running more of your favorite applications and storing growing media collections.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Sleek, 1.08-inch-thin design&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		MacBook makes it easy to hit the road thanks to its tough polycarbonate case, built-in wireless technologies, and innovative MagSafe Power Adapter that releases automatically if someone accidentally trips on the cord.&lt;/p&gt;\r\n	&lt;p&gt;\r\n		&lt;b&gt;Built-in iSight camera&lt;/b&gt;&lt;/p&gt;\r\n	&lt;p&gt;\r\n		Right out of the box, you can have a video chat with friends or family,2 record a video at your desk, or take fun pictures with Photo Booth&lt;/p&gt;\r\n&lt;/div&gt;\r\n',
-        'MacBook', '', ''),
+        '', 'MacBook', '', ''),
        (31, 1, 'Nikon D300',
         '&lt;div class=&quot;cpt_product_description &quot;&gt;\r\n	&lt;div&gt;\r\n		Engineered with pro-level features and performance, the 12.3-effective-megapixel D300 combines brand new technologies with advanced features inherited from Nikon&amp;#39;s newly announced D3 professional digital SLR camera to offer serious photographers remarkable performance combined with agility.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		Similar to the D3, the D300 features Nikon&amp;#39;s exclusive EXPEED Image Processing System that is central to driving the speed and processing power needed for many of the camera&amp;#39;s new features. The D300 features a new 51-point autofocus system with Nikon&amp;#39;s 3D Focus Tracking feature and two new LiveView shooting modes that allow users to frame a photograph using the camera&amp;#39;s high-resolution LCD monitor. The D300 shares a similar Scene Recognition System as is found in the D3; it promises to greatly enhance the accuracy of autofocus, autoexposure, and auto white balance by recognizing the subject or scene being photographed and applying this information to the calculations for the three functions.&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 reacts with lightning speed, powering up in a mere 0.13 seconds and shooting with an imperceptible 45-millisecond shutter release lag time. The D300 is capable of shooting at a rapid six frames per second and can go as fast as eight frames per second when using the optional MB-D10 multi-power battery pack. In continuous bursts, the D300 can shoot up to 100 shots at full 12.3-megapixel resolution. (NORMAL-LARGE image setting, using a SanDisk Extreme IV 1GB CompactFlash card.)&lt;br /&gt;\r\n		&lt;br /&gt;\r\n		The D300 incorporates a range of innovative technologies and features that will significantly improve the accuracy, control, and performance photographers can get from their equipment. Its new Scene Recognition System advances the use of Nikon&amp;#39;s acclaimed 1,005-segment sensor to recognize colors and light patterns that help the camera determine the subject and the type of scene being photographed before a picture is taken. This information is used to improve the accuracy of autofocus, autoexposure, and auto white balance functions in the D300. For example, the camera can track moving subjects better and by identifying them, it can also automatically select focus points faster and with greater accuracy. It can also analyze highlights and more accurately determine exposure, as well as infer light sources to deliver more accurate white balance detection.&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!-- cpt_container_end --&gt;',
-        'Nikon D300', '', ''),
+        '', 'Nikon D300', '', ''),
        (49, 1, 'Samsung Galaxy Tab 10.1',
         '&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1, is the world&amp;rsquo;s thinnest tablet, measuring 8.6 mm thickness, running with Android 3.0 Honeycomb OS on a 1GHz dual-core Tegra 2 processor, similar to its younger brother Samsung Galaxy Tab 8.9.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 gives pure Android 3.0 experience, adding its new TouchWiz UX or TouchWiz 4.0 &amp;ndash; includes a live panel, which lets you to customize with different content, such as your pictures, bookmarks, and social feeds, sporting a 10.1 inches WXGA capacitive touch screen with 1280 x 800 pixels of resolution, equipped with 3 megapixel rear camera with LED flash and a 2 megapixel front camera, HSPA+ connectivity up to 21Mbps, 720p HD video recording capability, 1080p HD playback, DLNA support, Bluetooth 2.1, USB 2.0, gyroscope, Wi-Fi 802.11 a/b/g/n, micro-SD slot, 3.5mm headphone jack, and SIM slot, including the Samsung Stick &amp;ndash; a Bluetooth microphone that can be carried in a pocket like a pen and sound dock with powered subwoofer.&lt;/p&gt;\r\n&lt;p&gt;\r\n	Samsung Galaxy Tab 10.1 will come in 16GB / 32GB / 64GB verities and pre-loaded with Social Hub, Reader&amp;rsquo;s Hub, Music Hub and Samsung Mini Apps Tray &amp;ndash; which gives you access to more commonly used apps to help ease multitasking and it is capable of Adobe Flash Player 10.2, powered by 6860mAh battery that gives you 10hours of video-playback time.&amp;nbsp;&amp;auml;&amp;ouml;&lt;/p&gt;\r\n',
-        'Samsung Galaxy Tab 10.1', '', ''),
+        '', 'Samsung Galaxy Tab 10.1', '', ''),
        (42, 1, 'Apple Cinema 30&quot;',
         '&lt;p&gt;\r\n	&lt;font face=&quot;helvetica,geneva,arial&quot; size=&quot;2&quot;&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The 30-inch Apple Cinema HD Display delivers an amazing 2560 x 1600 pixel resolution. Designed specifically for the creative professional, this display provides more space for easier access to all the tools and palettes needed to edit, format and composite your work. Combine this display with a Mac Pro, MacBook Pro, or PowerMac G5 and there''s no limit to what you can achieve. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features an active-matrix liquid crystal display that produces flicker-free images that deliver twice the brightness, twice the sharpness and twice the contrast ratio of a typical CRT display. Unlike other flat panels, it''s designed with a pure digital interface to deliver distortion-free images that never need adjusting. With over 4 million digital pixels, the display is uniquely suited for scientific and technical applications such as visualizing molecular structures or analyzing geological data. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Offering accurate, brilliant color performance, the Cinema HD delivers up to 16.7 million colors across a wide gamut allowing you to see subtle nuances between colors from soft pastels to rich jewel tones. A wide viewing angle ensures uniform color from edge to edge. Apple''s ColorSync technology allows you to create custom profiles to maintain consistent color onscreen and in print. The result: You can confidently use this display in all your color-critical applications. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;Housed in a new aluminum design, the display has a very thin bezel that enhances visual accuracy. Each display features two FireWire 400 ports and two USB 2.0 ports, making attachment of desktop peripherals, such as iSight, iPod, digital and still cameras, hard drives, printers and scanners, even more accessible and convenient. Taking advantage of the much thinner and lighter footprint of an LCD, the new displays support the VESA (Video Electronics Standards Association) mounting interface standard. Customers with the optional Cinema Display VESA Mount Adapter kit gain the flexibility to mount their display in locations most appropriate for their work environment. &lt;br&gt;\r\n	&lt;br&gt;\r\n	&lt;/font&gt;&lt;font face=&quot;Helvetica&quot; size=&quot;2&quot;&gt;The Cinema HD features a single cable design with elegant breakout for the USB 2.0, FireWire 400 and a pure digital connection using the industry standard Digital Video Interface (DVI) interface. The DVI connection allows for a direct pure-digital connection.&lt;br&gt;\r\n	&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;\r\n&lt;h3&gt;\r\n	Features:&lt;/h3&gt;\r\n&lt;p&gt;\r\n	Unrivaled display performance&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch (viewable) active-matrix liquid crystal display provides breathtaking image quality and vivid, richly saturated color.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 2560-by-1600 pixel resolution for display of high definition still and video imagery.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Wide-format design for simultaneous display of two full pages of text and graphics.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Industry standard DVI connector for direct attachment to Mac- and Windows-based desktops and notebooks&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Incredibly wide (170 degree) horizontal and vertical viewing angle for maximum visibility and color performance.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Lightning-fast pixel response for full-motion digital video playback.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for 16.7 million saturated colors, for use in all graphics-intensive applications.&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Simple setup and operation&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Single cable with elegant breakout for connection to DVI, USB and FireWire ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Built-in two-port USB 2.0 hub for easy connection of desktop peripheral devices.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports to support iSight and other desktop peripherals&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Sleek, elegant design&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Huge virtual workspace, very small footprint.&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Narrow Bezel design to minimize visual impact of using dual displays&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Unique hinge design for effortless adjustment&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Support for VESA mounting solutions (Apple Cinema Display VESA Mount Adapter sold separately)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;h3&gt;\r\n	Technical specifications&lt;/h3&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen size (diagonal viewable image size)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Apple Cinema HD Display: 30 inches (29.7-inch viewable)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen type&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Thin film transistor (TFT) active-matrix liquid crystal display (AMLCD)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Resolutions&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		2560 x 1600 pixels (optimum resolution)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		2048 x 1280&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1920 x 1200&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1280 x 800&lt;/li&gt;\r\n	&lt;li&gt;\r\n		1024 x 640&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Display colors (maximum)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16.7 million&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Viewing angle (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		170° horizontal; 170° vertical&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Brightness (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 400 cd/m2&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Contrast ratio (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		700:1&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Response time (typical)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		16 ms&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Pixel pitch&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		30-inch Cinema HD Display: 0.250 mm&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Screen treatment&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Antiglare hardcoat&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;User controls (hardware and software)&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Display Power,&lt;/li&gt;\r\n	&lt;li&gt;\r\n		System sleep, wake&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Brightness&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Monitor tilt&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Connectors and cables&lt;/b&gt;&lt;br&gt;\r\n	Cable&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		DVI (Digital Visual Interface)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		FireWire 400&lt;/li&gt;\r\n	&lt;li&gt;\r\n		USB 2.0&lt;/li&gt;\r\n	&lt;li&gt;\r\n		DC power (24 V)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	Connectors&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Two-port, self-powered USB 2.0 hub&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Two FireWire 400 ports&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Kensington security port&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;VESA mount adapter&lt;/b&gt;&lt;br&gt;\r\n	Requires optional Cinema Display VESA Mount Adapter (M9649G/A)&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Compatible with VESA FDMI (MIS-D, 100, C) compliant mounting solutions&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Electrical requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Input voltage: 100-240 VAC 50-60Hz&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum power when operating: 150W&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Energy saver mode: 3W or less&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Environmental requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Operating temperature: 50° to 95° F (10° to 35° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Storage temperature: -40° to 116° F (-40° to 47° C)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Operating humidity: 20% to 80% noncondensing&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Maximum operating altitude: 10,000 feet&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Agency approvals&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		FCC Part 15 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55022 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN55024&lt;/li&gt;\r\n	&lt;li&gt;\r\n		VCCI Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		AS/NZS 3548 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CNS 13438 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ICES-003 Class B&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ISO 13406 part 2&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MPR II&lt;/li&gt;\r\n	&lt;li&gt;\r\n		IEC 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		UL 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		CSA 60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		EN60950&lt;/li&gt;\r\n	&lt;li&gt;\r\n		ENERGY STAR&lt;/li&gt;\r\n	&lt;li&gt;\r\n		TCO ''03&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;Size and weight&lt;/b&gt;&lt;br&gt;\r\n	30-inch Apple Cinema HD Display&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Height: 21.3 inches (54.3 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Width: 27.2 inches (68.8 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Depth: 8.46 inches (21.5 cm)&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Weight: 27.5 pounds (12.5 kg)&lt;/li&gt;\r\n&lt;/ul&gt;\r\n&lt;p&gt;\r\n	&lt;b&gt;System Requirements&lt;/b&gt;&lt;/p&gt;\r\n&lt;ul&gt;\r\n	&lt;li&gt;\r\n		Mac Pro, all graphic options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		MacBook Pro&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI-X) with ATI Radeon 9650 or better or NVIDIA GeForce 6800 GT DDL or better&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Power Mac G5 (PCI Express), all graphics options&lt;/li&gt;\r\n	&lt;li&gt;\r\n		PowerBook G4 with dual-link DVI support&lt;/li&gt;\r\n	&lt;li&gt;\r\n		Windows PC and graphics card that supports DVI ports with dual-link digital bandwidth and VESA DDC standard for plug-and-play setup&lt;/li&gt;\r\n&lt;/ul&gt;\r\n',
-        'Apple Cinema 30', '', ''),
+        '', 'Apple Cinema 30', '', ''),
        (30, 1, 'Canon EOS 5D',
         '&lt;p&gt;\r\n	Canon''s press material for the EOS 5D states that it ''defines (a) new D-SLR category'', while we''re not typically too concerned with marketing talk this particular statement is clearly pretty accurate. The EOS 5D is unlike any previous digital SLR in that it combines a full-frame (35 mm sized) high resolution sensor (12.8 megapixels) with a relatively compact body (slightly larger than the EOS 20D, although in your hand it feels noticeably ''chunkier''). The EOS 5D is aimed to slot in between the EOS 20D and the EOS-1D professional digital SLR''s, an important difference when compared to the latter is that the EOS 5D doesn''t have any environmental seals. While Canon don''t specifically refer to the EOS 5D as a ''professional'' digital SLR it will have obvious appeal to professionals who want a high quality digital SLR in a body lighter than the EOS-1D. It will also no doubt appeal to current EOS 20D owners (although lets hope they''ve not bought too many EF-S lenses...) äë&lt;/p&gt;\r\n',
-        'Canon EOS 5D', '', '');
+        '', 'Canon EOS 5D', '', '');
 
 -----------------------------------------------------------
 
@@ -2255,23 +2096,23 @@ VALUES (224, 35, 11, '', 1),
 -- Dumping data for table `oc_product_option_value`
 --
 
-INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `points`, `weight`)
-VALUES (1, 217, 42, 5, 41, 100, 0, '1.0000', 0, '1.00000000'),
-       (6, 218, 42, 1, 31, 146, 1, '20.0000', 2, '20.00000000'),
-       (7, 218, 42, 1, 43, 300, 1, '30.0000', 3, '30.00000000'),
-       (5, 218, 42, 1, 32, 96, 1, '10.0000', 1, '10.00000000'),
-       (4, 217, 42, 5, 39, 92, 1, '4.0000', 0, '4.00000000'),
-       (2, 217, 42, 5, 42, 200, 1, '2.0000', 0, '2.00000000'),
-       (3, 217, 42, 5, 40, 300, 0, '3.0000', 0, '3.00000000'),
-       (8, 223, 42, 2, 23, 48, 1, '10.0000', 0, '10.00000000'),
-       (10, 223, 42, 2, 44, 2696, 1, '30.0000', 0, '30.00000000'),
-       (9, 223, 42, 2, 24, 194, 1, '20.0000', 0, '20.00000000'),
-       (11, 223, 42, 2, 45, 3998, 1, '40.0000', 0, '40.00000000'),
-       (12, 224, 35, 11, 46, 0, 1, '5.0000', 0, '0.00000000'),
-       (13, 224, 35, 11, 47, 10, 1, '10.0000', 0, '0.00000000'),
-       (14, 224, 35, 11, 48, 15, 1, '15.0000', 0, '0.00000000'),
-       (16, 226, 30, 5, 40, 5, 1, '0.0000', 0, '0.00000000'),
-       (15, 226, 30, 5, 39, 2, 1, '0.0000', 0, '0.00000000');
+INSERT INTO `oc_product_option_value` (`product_option_value_id`, `product_option_id`, `product_id`, `option_id`, `option_value_id`, `quantity`, `subtract`, `price`, `price_prefix`, `points`, `points_prefix`, `weight`, `weight_prefix`)
+VALUES (1, 217, 42, 5, 41, 100, 0, '1.0000', '+', 0, '+', '1.00000000', '+'),
+       (6, 218, 42, 1, 31, 146, 1, '20.0000', '+', 2, '-', '20.00000000', '+'),
+       (7, 218, 42, 1, 43, 300, 1, '30.0000', '+', 3, '+', '30.00000000', '+'),
+       (5, 218, 42, 1, 32, 96, 1, '10.0000', '+', 1, '+', '10.00000000', '+'),
+       (4, 217, 42, 5, 39, 92, 1, '4.0000', '+', 0, '+', '4.00000000', '+'),
+       (2, 217, 42, 5, 42, 200, 1, '2.0000', '+', 0, '+', '2.00000000', '+'),
+       (3, 217, 42, 5, 40, 300, 0, '3.0000', '+', 0, '+', '3.00000000', '+'),
+       (8, 223, 42, 2, 23, 48, 1, '10.0000', '+', 0, '+', '10.00000000', '+'),
+       (10, 223, 42, 2, 44, 2696, 1, '30.0000', '+', 0, '+', '30.00000000', '+'),
+       (9, 223, 42, 2, 24, 194, 1, '20.0000', '+', 0, '+', '20.00000000', '+'),
+       (11, 223, 42, 2, 45, 3998, 1, '40.0000', '+', 0, '+', '40.00000000', '+'),
+       (12, 224, 35, 11, 46, 0, 1, '5.0000', '+', 0, '+', '0.00000000', '+'),
+       (13, 224, 35, 11, 47, 10, 1, '10.0000', '+', 0, '+', '0.00000000', '+'),
+       (14, 224, 35, 11, 48, 15, 1, '15.0000', '+', 0, '+', '0.00000000', '+'),
+       (16, 226, 30, 5, 40, 5, 1, '0.0000', '+', 0, '+', '0.00000000', '+'),
+       (15, 226, 30, 5, 39, 2, 1, '0.0000', '+', 0, '+', '0.00000000', '+');
 
 -----------------------------------------------------------
 
@@ -2284,6 +2125,33 @@ VALUES (40, 42),
        (41, 42),
        (42, 40),
        (42, 41);
+
+-----------------------------------------------------------
+
+--
+-- Dumping data for table `oc_product_reward`
+--
+
+INSERT INTO `oc_product_reward` (`product_reward_id`, `product_id`, `customer_group_id`, `points`)
+VALUES (515, 42, 1, 100),
+       (519, 47, 1, 300),
+       (379, 28, 1, 400),
+       (329, 43, 1, 600),
+       (339, 29, 1, 0),
+       (343, 48, 1, 0),
+       (335, 40, 1, 0),
+       (539, 30, 1, 200),
+       (331, 44, 1, 700),
+       (333, 45, 1, 800),
+       (337, 31, 1, 0),
+       (425, 35, 1, 0),
+       (345, 33, 1, 0),
+       (347, 46, 1, 0),
+       (545, 41, 1, 0),
+       (351, 36, 1, 0),
+       (353, 34, 1, 0),
+       (355, 32, 1, 0),
+       (521, 49, 1, 1000);
 
 -----------------------------------------------------------
 
@@ -2393,52 +2261,31 @@ VALUES (1, 1, 'Pending'),
 --
 
 INSERT INTO `oc_setting` (`store_id`, `code`, `key`, `value`, `serialized`)
-VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\",\"meta_description\":\"\",\"meta_keyword\":\"\"}}', 1),
-       (0, 'config', 'config_logo', 'catalog/opencart-logo.png', 0),
-       (0, 'config', 'config_icon', 'catalog/opencart.ico', 0),
+VALUES (0, 'config', 'config_shared', '0', 0),
+       (0, 'config', 'config_fraud_detection', '0', 0),
+       (0, 'config', 'config_description', '{"1":{"meta_title":"Your Store","meta_description":"","meta_keyword":""}}', 1),
+       (0, 'config', 'config_session_expire', '86400', 0),
+       (0, 'config', 'config_session_samesite', 'Strict', 0),
        (0, 'config', 'config_theme', 'basic', 0),
        (0, 'config', 'config_layout_id', '4', 0),
-       (0, 'config', 'config_layout_id', '4', 0),
-       (0, 'config', 'config_name', 'Your Store', 0),
-       (0, 'config', 'config_owner', 'Your Name', 0),
-       (0, 'config', 'config_address', 'Address 1', 0),
-       (0, 'config', 'config_email', '', 0),
-       (0, 'config', 'config_telephone', '123456789', 0),
-       (0, 'config', 'config_image', '', 0),
-       (0, 'config', 'config_open', '', 0),
-       (0, 'config', 'config_comment', '', 0),
        (0, 'config', 'config_country_id', '222', 0),
-       (0, 'config', 'config_country_list', '[\"244\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"252\",\"13\",\"14\",\"15\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"245\",\"27\",\"28\",\"29\",\"30\",\"31\",\"32\",\"33\",\"34\",\"35\",\"36\",\"37\",\"38\",\"251\",\"39\",\"40\",\"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\"47\",\"48\",\"49\",\"50\",\"51\",\"52\",\"53\",\"54\",\"246\",\"55\",\"56\",\"237\",\"57\",\"58\",\"59\",\"60\",\"62\",\"63\",\"64\",\"65\",\"66\",\"67\",\"202\",\"68\",\"69\",\"70\",\"71\",\"72\",\"74\",\"75\",\"76\",\"77\",\"78\",\"80\",\"81\",\"82\",\"83\",\"84\",\"85\",\"86\",\"87\",\"88\",\"89\",\"256\",\"90\",\"91\",\"92\",\"93\",\"94\",\"95\",\"96\",\"97\",\"98\",\"99\",\"100\",\"101\",\"102\",\"103\",\"254\",\"104\",\"105\",\"106\",\"107\",\"257\",\"108\",\"109\",\"110\",\"111\",\"253\",\"114\",\"115\",\"116\",\"117\",\"118\",\"119\",\"120\",\"121\",\"122\",\"123\",\"124\",\"125\",\"127\",\"128\",\"129\",\"130\",\"131\",\"132\",\"133\",\"134\",\"135\",\"136\",\"137\",\"138\",\"139\",\"140\",\"141\",\"142\",\"242\",\"143\",\"144\",\"145\",\"146\",\"147\",\"148\",\"149\",\"150\",\"151\",\"152\",\"153\",\"154\",\"155\",\"156\",\"157\",\"158\",\"112\",\"126\",\"159\",\"160\",\"247\",\"161\",\"162\",\"163\",\"164\",\"165\",\"166\",\"167\",\"168\",\"169\",\"170\",\"171\",\"172\",\"173\",\"215\",\"174\",\"175\",\"176\",\"177\",\"178\",\"179\",\"180\",\"181\",\"182\",\"183\",\"184\",\"185\",\"243\",\"186\",\"187\",\"188\",\"189\",\"190\",\"191\",\"192\",\"193\",\"194\",\"113\",\"248\",\"195\",\"196\",\"249\",\"197\",\"250\",\"198\",\"199\",\"200\",\"201\",\"203\",\"204\",\"205\",\"206\",\"207\",\"208\",\"209\",\"16\",\"79\",\"61\",\"210\",\"211\",\"212\",\"213\",\"255\",\"214\",\"216\",\"217\",\"218\",\"219\",\"220\",\"221\",\"222\",\"223\",\"224\",\"225\",\"226\",\"227\",\"228\",\"229\",\"230\",\"231\",\"232\",\"233\",\"234\",\"235\",\"238\",\"239\"]', 1),
        (0, 'config', 'config_zone_id', '3563', 0),
        (0, 'config', 'config_timezone', 'UTC', 0),
        (0, 'config', 'config_language_catalog', 'en-gb', 0),
-       (0, 'config', 'config_language_list', '[\"en-gb\"]', 1),
        (0, 'config', 'config_language_admin', 'en-gb', 0),
        (0, 'config', 'config_currency', 'USD', 0),
-       (0, 'config', 'config_currency_list', '[\"AUD\",\"CNY\",\"EUR\",\"HKD\",\"INR\",\"GBP\",\"RUB\",\"USD\"]', 1),
        (0, 'config', 'config_currency_auto', '1', 0),
        (0, 'config', 'config_currency_engine', 'ecb', 0),
        (0, 'config', 'config_length_class_id', '1', 0),
        (0, 'config', 'config_weight_class_id', '1', 0),
        (0, 'config', 'config_product_description_length', '100', 0),
+       (0, 'config', 'config_article_description_length', '600', 0),
        (0, 'config', 'config_pagination', '10', 0),
-       (0, 'config', 'config_product_count', '1', 0),
        (0, 'config', 'config_pagination_admin', '10', 0),
        (0, 'config', 'config_autocomplete_limit', '5', 0),
-       (0, 'config', 'config_product_report_status', '5', 0),
+       (0, 'config', 'config_product_count', '1', 0),
        (0, 'config', 'config_review_status', '1', 0),
-       (0, 'config', 'config_review_purchased', '1', 0),
        (0, 'config', 'config_review_guest', '1', 0),
-       (0, 'config', 'config_article_description_length', '600', 0),
-       (0, 'config', 'config_comment_status', '1', 0),
-       (0, 'config', 'config_comment_approve', '1', 0),
-       (0, 'config', 'config_comment_interval', '1', 0),
-       (0, 'config', 'config_image_default_width', '300', 0),
-       (0, 'config', 'config_image_default_height', '300', 0),
-       (0, 'config', 'config_image_thumb_width', '500', 0),
-       (0, 'config', 'config_image_thumb_height', '500', 0),
-       (0, 'config', 'config_image_popup_width', '800', 0),
-       (0, 'config', 'config_image_popup_height', '800', 0),
        (0, 'config', 'config_cookie_id', '0', 0),
        (0, 'config', 'config_gdpr_id', '0', 0),
        (0, 'config', 'config_gdpr_limit', '180', 0),
@@ -2450,31 +2297,20 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
        (0, 'config', 'config_customer_activity', '0', 0),
        (0, 'config', 'config_customer_search', '0', 0),
        (0, 'config', 'config_customer_group_id', '1', 0),
-       (0, 'config', 'config_customer_group_list', '[\"1\"]', 1),
+       (0, 'config', 'config_customer_group_display', '["1"]', 1),
        (0, 'config', 'config_customer_price', '0', 0),
-       (0, 'config', 'config_telephone_status', '0', 0),
-       (0, 'config', 'config_telephone_required', '0', 0),
+       (0, 'config', 'config_address_format_id', '1', 0),
        (0, 'config', 'config_account_id', '3', 0),
-       (0, 'config', 'config_login_attempts', '5', 0),
-       (0, 'config', 'config_password_uppercase', '6', 0),
-       (0, 'config', 'config_password_lowercase', '6', 0),
-       (0, 'config', 'config_password_number', '6', 0),
-       (0, 'config', 'config_password_symbol', '6', 0),
-       (0, 'config', 'config_password_length', '6', 0),
        (0, 'config', 'config_invoice_prefix', CONCAT('INV-', YEAR(CURDATE()), '-00'), 0),
-       (0, 'config', 'config_shared', '0', 0),
+       (0, 'config', 'config_api_id', '1', 0),
        (0, 'config', 'config_cart_weight', '1', 0),
        (0, 'config', 'config_checkout_guest', '1', 0),
-       (0, 'config', 'config_checkout_payment_address', '0', 0),
-       (0, 'config', 'config_checkout_shipping_address', '0', 0),
        (0, 'config', 'config_checkout_id', '0', 0),
        (0, 'config', 'config_order_status_id', '1', 0),
-       (0, 'config', 'config_processing_status', '[\"5\",\"1\",\"2\",\"12\",\"3\"]', 1),
-       (0, 'config', 'config_complete_status', '[\"5\",\"3\"]', 1),
-       (0, 'config', 'config_failed_status_id', '7', 0),
+       (0, 'config', 'config_processing_status', '["5","1","2","12","3"]', 1),
+       (0, 'config', 'config_complete_status', '["5","3"]', 1),
        (0, 'config', 'config_void_status_id', '16', 0),
        (0, 'config', 'config_fraud_status_id', '8', 0),
-       (0, 'config', 'config_api_id', '1', 0),
        (0, 'config', 'config_subscription_status_id', '1', 0),
        (0, 'config', 'config_subscription_active_status_id', '2', 0),
        (0, 'config', 'config_subscription_expired_status_id', '3', 0),
@@ -2486,10 +2322,60 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
        (0, 'config', 'config_stock_warning', '0', 0),
        (0, 'config', 'config_stock_checkout', '0', 0),
        (0, 'config', 'config_stock_status_id', '7', 0),
-       (0, 'config', 'config_return_status_id', '2', 0),
+       (0, 'config', 'config_affiliate_status', '1', 0),
+       (0, 'config', 'config_affiliate_approval', '0', 0),
+       (0, 'config', 'config_affiliate_auto', '0', 0),
+       (0, 'config', 'config_affiliate_commission', '5', 0),
+       (0, 'config', 'config_affiliate_id', '4', 0),
        (0, 'config', 'config_return_id', '0', 0),
-       (0, 'config', 'config_captcha', 'basic', 0),
-       (0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
+       (0, 'config', 'config_return_status_id', '2', 0),
+       (0, 'config', 'config_logo', 'catalog/opencart-logo.png', 0),
+       (0, 'config', 'config_icon', 'catalog/opencart.ico', 0),
+       (0, 'config', 'config_image_default_width', '300', 0),
+       (0, 'config', 'config_image_default_height', '300', 0),
+       (0, 'config', 'config_image_thumb_width', '500', 0),
+       (0, 'config', 'config_image_thumb_height', '500', 0),
+       (0, 'config', 'config_image_popup_width', '800', 0),
+       (0, 'config', 'config_image_popup_height', '800', 0),
+       (0, 'config', 'config_image_category_width', '300', 0),
+       (0, 'config', 'config_image_category_height', '300', 0),
+       (0, 'config', 'config_image_article_width', '1140', 0),
+       (0, 'config', 'config_image_article_height', '380', 0),
+       (0, 'config', 'config_image_topic_width', '1140', 0),
+       (0, 'config', 'config_image_topic_height', '380', 0),
+       (0, 'config', 'config_image_product_width', '250', 0),
+       (0, 'config', 'config_image_product_height', '250', 0),
+       (0, 'config', 'config_image_additional_width', '74', 0),
+       (0, 'config', 'config_image_additional_height', '74', 0),
+       (0, 'config', 'config_image_related_width', '250', 0),
+       (0, 'config', 'config_image_related_height', '250', 0),
+       (0, 'config', 'config_image_compare_width', '90', 0),
+       (0, 'config', 'config_image_compare_height', '90', 0),
+       (0, 'config', 'config_image_wishlist_width', '47', 0),
+       (0, 'config', 'config_image_wishlist_height', '47', 0),
+       (0, 'config', 'config_image_cart_height', '47', 0),
+       (0, 'config', 'config_image_cart_width', '47', 0),
+       (0, 'config', 'config_image_location_height', '268', 0),
+       (0, 'config', 'config_image_location_width', '268', 0),
+       (0, 'config', 'config_open', '', 0),
+       (0, 'config', 'config_image', '', 0),
+       (0, 'config', 'config_fax', '', 0),
+       (0, 'config', 'config_telephone', '123456789', 0),
+       (0, 'config', 'config_email', 'demo@opencart.com', 0),
+       (0, 'config', 'config_geocode', '', 0),
+       (0, 'config', 'config_owner', 'Your Name', 0),
+       (0, 'config', 'config_address', 'Address 1', 0),
+       (0, 'config', 'config_name', 'Your Store', 0),
+       (0, 'config', 'config_seo_url', '0', 0),
+       (0, 'config', 'config_file_max_size', '20', 0),
+       (0, 'config', 'config_file_ext_allowed', 'zip\r\ntxt\r\npng\r\njpe\r\njpeg\r\nwebp\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nmp4\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc', 0),
+       (0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/webp\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\napplication/x-zip\r\napplication/x-zip-compressed\r\napplication/rar\r\napplication/x-rar\r\napplication/x-rar-compressed\r\napplication/octet-stream\r\naudio/mpeg\r\nvideo/mp4\r\nvideo/quicktime\r\napplication/pdf', 0),
+       (0, 'config', 'config_maintenance', '0', 0),
+       (0, 'config', 'config_encryption', '', 0),
+       (0, 'config', 'config_compression', '0', 0),
+       (0, 'config', 'config_error_display', '1', 0),
+       (0, 'config', 'config_error_log', '1', 0),
+       (0, 'config', 'config_error_filename', 'error.log', 0),
        (0, 'config', 'config_mail_engine', '', 0),
        (0, 'config', 'config_mail_parameter', '', 0),
        (0, 'config', 'config_mail_smtp_hostname', '', 0),
@@ -2499,16 +2385,11 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
        (0, 'config', 'config_mail_smtp_timeout', '5', 0),
        (0, 'config', 'config_mail_alert_email', '', 0),
        (0, 'config', 'config_mail_alert', '["order"]', 1),
-       (0, 'config', 'config_maintenance', '0', 0),
-       (0, 'config', 'config_seo_url', '0', 0),
+       (0, 'config', 'config_captcha', 'basic', 0),
+       (0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
        (0, 'config', 'config_2fa_expire', '90', 0),
-       (0, 'config', 'config_user_password_uppercase', '6', 0),
-       (0, 'config', 'config_user_password_lowercase', '6', 0),
-       (0, 'config', 'config_user_password_number', '6', 0),
-       (0, 'config', 'config_user_password_symbol', '6', 0),
-       (0, 'config', 'config_user_password_length', '5', 0),
-       (0, 'config', 'config_error_display', '1', 0),
-       (0, 'config', 'config_error_log', '1', 0),
+       (0, 'config', 'config_login_attempts', '5', 0),
+       (0, 'config', 'config_password_length', '6', 0),
        (0, 'currency_ecb', 'currency_ecb_status', '1', 0),
        (0, 'dashboard_activity', 'dashboard_activity_status', '1', 0),
        (0, 'dashboard_activity', 'dashboard_activity_sort_order', '7', 0),
@@ -2534,6 +2415,7 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
        (0, 'dashboard_recent', 'dashboard_recent_sort_order', '8', 0),
        (0, 'dashboard_activity', 'dashboard_activity_width', '4', 0),
        (0, 'dashboard_recent', 'dashboard_recent_width', '8', 0),
+       (0, 'developer', 'developer_sass', '1', 0),
        (0, 'module_category', 'module_category_status', '1', 0),
        (0, 'module_account', 'module_account_status', '1', 0),
        (0, 'module_topic', 'module_topic_status', '1', 0),
@@ -2549,6 +2431,8 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
        (0, 'report_customer_activity', 'report_customer_activity_sort_order', '1', 0),
        (0, 'report_customer_order', 'report_customer_order_status', '1', 0),
        (0, 'report_customer_order', 'report_customer_order_sort_order', '2', 0),
+       (0, 'report_customer_reward', 'report_customer_reward_status', '1', 0),
+       (0, 'report_customer_reward', 'report_customer_reward_sort_order', '3', 0),
        (0, 'report_customer_search', 'report_customer_search_status', '1', 0),
        (0, 'report_customer_search', 'report_customer_search_sort_order', '4', 0),
        (0, 'report_customer_transaction', 'report_customer_transaction_status', '1', 0),
@@ -2588,6 +2472,8 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
        (0, 'total_total', 'total_total_status', '1', 0),
        (0, 'total_credit', 'total_credit_sort_order', '7', 0),
        (0, 'total_credit', 'total_credit_status', '1', 0),
+       (0, 'total_reward', 'total_reward_sort_order', '2', 0),
+       (0, 'total_reward', 'total_reward_status', '1', 0),
        (0, 'total_shipping', 'total_shipping_status', '1', 0),
        (0, 'total_shipping', 'total_shipping_estimator', '1', 0),
        (0, 'total_coupon', 'total_coupon_sort_order', '4', 0),
@@ -2600,28 +2486,26 @@ VALUES (0, 'config', 'config_description', '{\"1\":{\"meta_title\":\"Your Store\
 --
 
 INSERT INTO `oc_seo_url` (`store_id`, `language_id`, `key`, `value`, `keyword`, `sort_order`)
-VALUES (0, 1, 'language', 'en-gb', 'en-gb', -2),
-       (0, 1, 'route', 'information/information', 'information', -1),
-       (0, 1, 'route', 'information/sitemap', 'sitemap', -1),
-       (0, 1, 'route', 'information/contact', 'contact', -1),
-       (0, 1, 'route', 'cms/topic', 'cms', -1),
-       (0, 1, 'route', 'product/product', 'product', -1),
-       (0, 1, 'route', 'product/category', 'catalog', -1),
-       (0, 1, 'route', 'product/manufacturer', 'brands', -1),
-       (0, 1, 'route', 'product/special', 'special', -1),
-       (0, 1, 'route', 'product/search', 'search', -1),
-       (0, 1, 'route', 'account/returns.add', 'returns', -1),
-       (0, 1, 'route', 'account/newsletter', 'newsletter', -1),
-       (0, 1, 'route', 'account/password', 'password', -1),
-       (0, 1, 'route', 'account/forgotten', 'forgotten', -1),
-       (0, 1, 'route', 'account/address', 'address', -1),
-       (0, 1, 'route', 'account/address.form', 'address_edit', -1),
-       (0, 1, 'route', 'account/download', 'download', -1),
-       (0, 1, 'route', 'product/compare', 'compare', -1),
-       (0, 1, 'information_id', '1', 'about-us', 0),
-       (0, 1, 'information_id', '2', 'terms', 0),
-       (0, 1, 'information_id', '4', 'delivery', 0),
-       (0, 1, 'information_id', '3', 'privacy', 0),
+VALUES (0, 1, 'product_id', '47', 'hp-lp3065', 1),
+       (0, 1, 'product_id', '48', 'ipod-classic', 1),
+       (0, 1, 'product_id', '28', 'htc-touch-hd', 1),
+       (0, 1, 'product_id', '43', 'macbook', 1),
+       (0, 1, 'product_id', '44', 'macbook-air', 1),
+       (0, 1, 'product_id', '45', 'macbook-pro', 1),
+       (0, 1, 'product_id', '30', 'canon-eos-5d', 1),
+       (0, 1, 'product_id', '31', 'nikon-d300', 1),
+       (0, 1, 'product_id', '29', 'palm-treo-pro', 1),
+       (0, 1, 'product_id', '35', 'product-8', 1),
+       (0, 1, 'product_id', '49', 'samsung-galaxy-tab-10-1', 1),
+       (0, 1, 'product_id', '33', 'samsung-syncmaster-941bw', 1),
+       (0, 1, 'product_id', '46', 'sony-vaio', 1),
+       (0, 1, 'product_id', '41', 'imac', 1),
+       (0, 1, 'product_id', '40', 'iphone', 1),
+       (0, 1, 'product_id', '36', 'ipod-nano', 1),
+       (0, 1, 'product_id', '34', 'ipod-shuffle', 1),
+       (0, 1, 'product_id', '32', 'ipod-touch', 1),
+       (0, 1, 'product_id', '50', 'apple-4', 1),
+       (0, 1, 'product_id', '42', 'apple-cinema', 1),
        (0, 1, 'manufacturer_id', '5', 'htc', 0),
        (0, 1, 'manufacturer_id', '7', 'hewlett-packard', 0),
        (0, 1, 'manufacturer_id', '6', 'palm', 0),
@@ -2629,14 +2513,18 @@ VALUES (0, 1, 'language', 'en-gb', 'en-gb', -2),
        (0, 1, 'manufacturer_id', '9', 'canon', 0),
        (0, 1, 'manufacturer_id', '8', 'apple', 0),
        (0, 1, 'path', '30', 'printer', 0),
+       (0, 1, 'path', '20_27', 'desktops/mac', 0),
+       (0, 1, 'path', '20_26', 'desktops/pc', 0),
        (0, 1, 'path', '25', 'component', 0),
        (0, 1, 'path', '25_29', 'component/mouse', 0),
+       (0, 1, 'path', '33', 'cameras', 0),
        (0, 1, 'path', '25_28', 'component/monitor', 0),
        (0, 1, 'path', '25_28_35', 'component/monitor/test-1', 0),
        (0, 1, 'path', '25_28_36', 'component/monitor/test-2', 0),
        (0, 1, 'path', '25_30', 'component/printers', 0),
        (0, 1, 'path', '25_31', 'component/scanner', 0),
        (0, 1, 'path', '25_32', 'component/web-camera', 0),
+       (0, 1, 'path', '20', 'desktops', 0),
        (0, 1, 'path', '18', 'laptop-notebook', 0),
        (0, 1, 'path', '18_46', 'laptop-notebook/macs', 0),
        (0, 1, 'path', '18_45', 'laptop-notebook/windows', 0),
@@ -2663,49 +2551,16 @@ VALUES (0, 1, 'language', 'en-gb', 'en-gb', -2),
        (0, 1, 'path', '24', 'smartphone', 0),
        (0, 1, 'path', '17', 'software', 0),
        (0, 1, 'path', '57', 'tablet', 0),
-       (0, 1, 'path', '20', 'desktops', 0),
-       (0, 1, 'path', '20_27', 'desktops/mac', 0),
-       (0, 1, 'path', '20_26', 'desktops/pc', 0),
-       (0, 1, 'path', '33', 'cameras', 0),
-       (0, 1, 'product_id', '48', 'ipod-classic', 1),
-       (0, 1, 'product_id', '28', 'htc-touch-hd', 1),
-       (0, 1, 'product_id', '43', 'macbook', 1),
-       (0, 1, 'product_id', '44', 'macbook-air', 1),
-       (0, 1, 'product_id', '45', 'macbook-pro', 1),
-       (0, 1, 'product_id', '30', 'canon-eos-5d', 1),
-       (0, 1, 'product_id', '31', 'nikon-d300', 1),
-       (0, 1, 'product_id', '29', 'palm-treo-pro', 1),
-       (0, 1, 'product_id', '35', 'product-8', 1),
-       (0, 1, 'product_id', '49', 'samsung-galaxy-tab-10-1', 1),
-       (0, 1, 'product_id', '33', 'samsung-syncmaster-941bw', 1),
-       (0, 1, 'product_id', '46', 'sony-vaio', 1),
-       (0, 1, 'product_id', '41', 'imac', 1),
-       (0, 1, 'product_id', '40', 'iphone', 1),
-       (0, 1, 'product_id', '36', 'ipod-nano', 1),
-       (0, 1, 'product_id', '34', 'ipod-shuffle', 1),
-       (0, 1, 'product_id', '32', 'ipod-touch', 1),
-       (0, 1, 'product_id', '50', 'apple-4', 1),
-       (0, 1, 'product_id', '42', 'apple-cinema', 1),
-       (0, 1, 'product_id', '47', 'hp-lp3065', 1),
-       (0, 1, 'sort', 'name', 'name', 9),
-       (0, 1, 'sort', 'price', 'price', 9),
-       (0, 1, 'sort', 'rating', 'rating', 9),
-       (0, 1, 'sort', 'model', 'model', 9),
-       (0, 1, 'order', 'asc', 'asc', 10),
-       (0, 1, 'order', 'desc', 'desc', 10);
-
------------------------------------------------------------
-
---
--- Dumping data for table `oc_seo_regex`
---
-
-INSERT INTO `oc_seo_regex` (`seo_regex_id`, `key`, `match`, `replace`, `keyword`, `value`, `sort_order`)
-VALUES ('1', 'page', '/^(\\d+)$/', 'page-$1', '/^page-(\\d+)$/', '$1', '10'),
-       ('2', 'limit', '/^(\\d+)$/', 'limit-$1', '/^limit-(\\d+)$/', '$1', '11'),
-       ('3', 'filter', '/^(\\d+)$/', 'filter-$1', '/^filter-(\\d+)$/', '$1', '0'),
-       ('4', 'filter', '^/(\\d+),(\\d+)$/', 'filter-$1-$2', '/^filter-(\\d+)-(\\d+)$/', '$1,$2', '0'),
-       ('5', 'customer_token', '/^(\\s+)$/', 'customer-token-$1', '/^customer-token-(\\s+)$/', '$1', '0');
+       (0, 1, 'information_id', '1', 'about-us', 0),
+       (0, 1, 'information_id', '2', 'terms', 0),
+       (0, 1, 'information_id', '4', 'delivery', 0),
+       (0, 1, 'information_id', '3', 'privacy', 0),
+       (0, 1, 'language', 'en-gb', 'en-gb', -2),
+       (0, 1, 'route', 'information/information.info', 'info', 0),
+       (0, 1, 'route', 'information/information', 'information', -1),
+       (0, 1, 'route', 'product/product', 'product', -1),
+       (0, 1, 'route', 'product/category', 'catalog', -1),
+       (0, 1, 'route', 'product/manufacturer', 'brands', -1);
 
 -----------------------------------------------------------
 
@@ -2725,45 +2580,14 @@ VALUES (1, 'order_sale', 0),
 -----------------------------------------------------------
 
 --
--- Dumping data for table `oc_ssr`
---
-
-INSERT INTO `oc_ssr` (`code`, `description`, `action`, `status`, `date_modified`)
-VALUES ('article', 'Generates article data.', 'task/catalog/article', 1, NOW()),
-       ('banner', 'Generates banner data.', 'task/catalog/banner', 1, NOW()),
-       ('category', 'Generates category data.', 'task/catalog/category', 1, NOW()),
-       ('comment', 'Generates comment data.', 'task/catalog/comment', 1, NOW()),
-       ('country', 'Generates country data.', 'task/catalog/country', 1, NOW()),
-       ('currency', 'Generates currency data.', 'task/catalog/currency', 1, NOW()),
-       ('customer_group', 'Generates customer_group data.', 'task/catalog/customer_group', 1, NOW()),
-       ('filter', 'Generates filter data.', 'task/catalog/filter', 1, NOW()),
-       ('information', 'Generates information data.', 'task/catalog/information', 1, NOW()),
-       ('language', 'Generates language data.', 'task/catalog/language', 1, NOW()),
-       ('location', 'Generates location data.', 'task/catalog/location', 1, NOW()),
-       ('manufacturer', 'Generates article data.', 'task/catalog/manufacturer', 1, NOW()),
-       ('product', 'Generates product data.', 'task/catalog/product', 1, NOW()),
-       ('return_reason', 'Generates return_reason data.', 'task/catalog/return_reason', 1, NOW()),
-       ('review', 'Generates review data.', 'task/catalog/review', 1, NOW()),
-       ('stylesheet', 'Generates stylesheet data.', 'task/catalog/stylesheet', 1, NOW()),
-       ('setting', 'Generates setting data.', 'task/catalog/setting', 1, NOW()),
-       ('stock_status', 'Generates stock status data.', 'task/catalog/stock_status', 1, NOW()),
-       ('tag', 'Generates tag data.', 'task/catalog/tag', 1, NOW()),
-       ('tax_rate', 'Generates tax rate data.', 'task/catalog/tax_rate', 1, NOW()),
-       ('template', 'Generates template data.', 'task/catalog/template', 1, NOW()),
-       ('topic', 'Generates topic data.', 'task/catalog/topic', 1, NOW()),
-       ('translation', 'Generates translation data.', 'task/catalog/translation', 1, NOW());
-
------------------------------------------------------------
-
---
 -- Dumping data for table `oc_stock_status`
 --
 
 INSERT INTO `oc_stock_status` (`stock_status_id`, `language_id`, `name`)
-VALUES (1, 1, 'In Stock'),
-       (2, 1, 'Pre-Order'),
-       (3, 1, 'Out Of Stock'),
-       (4, 1, '2-3 Days');
+VALUES (7, 1, 'In Stock'),
+       (8, 1, 'Pre-Order'),
+       (5, 1, 'Out Of Stock'),
+       (6, 1, '2-3 Days');
 
 -----------------------------------------------------------
 
@@ -2851,7 +2675,7 @@ VALUES (121, 10, 86, 'payment', 1),
 --
 
 INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`)
-VALUES (1, 'Administrator', '{\"access\":[\"catalog\\/attribute\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"cms\\/antispam\",\"cms\\/article\",\"cms\\/comment\",\"cms\\/topic\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/security\",\"cron\\/backup\",\"cron\\/cron\",\"cron\\/currency\",\"cron\\/gdpr\",\"cron\\/notification\",\"cron\\/subscription\",\"cron\\/task\",\"customer\\/address\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_regex\",\"design\\/seo_url\",\"design\\/template\",\"design\\/translation\",\"error\\/exception\",\"event\\/article\",\"event\\/attribute\",\"event\\/banner\",\"event\\/category\",\"event\\/comment\",\"event\\/country\",\"event\\/customer_group\",\"event\\/filter\",\"event\\/geo_zone\",\"event\\/information\",\"event\\/location\",\"event\\/manufacturer\",\"event\\/option\",\"event\\/product\",\"event\\/return_reason\",\"event\\/review\",\"event\\/setting\",\"event\\/store\",\"event\\/tax_class\",\"event\\/tax_rate\",\"event\\/template\",\"event\\/topic\",\"event\\/translation\",\"event\\/zone\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/language\",\"extension\\/marketplace\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/identifier\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/authorize\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/subscription\",\"mail\\/transaction\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"marketplace\\/task\",\"report\\/online\",\"report\\/report\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/cli\",\"startup\\/task\",\"task\\/admin\\/country\",\"task\\/admin\\/currency\",\"task\\/admin\\/customer_group\",\"task\\/admin\\/language\",\"task\\/admin\\/stylesheet\",\"task\\/admin\\/store\",\"task\\/admin\\/subscription\",\"task\\/catalog\\/Information\",\"task\\/catalog\\/article\",\"task\\/catalog\\/banner\",\"task\\/catalog\\/category\",\"task\\/catalog\\/comment\",\"task\\/catalog\\/country\",\"task\\/catalog\\/currency\",\"task\\/catalog\\/customer_group\",\"task\\/catalog\\/filter\",\"task\\/catalog\\/language\",\"task\\/catalog\\/location\",\"task\\/catalog\\/manufacturer\",\"task\\/catalog\\/product\",\"task\\/catalog\\/return_reason\",\"task\\/catalog\\/review\",\"task\\/catalog\\/stylesheet\",\"task\\/catalog\\/setting\",\"task\\/catalog\\/tax_rate\",\"task\\/catalog\\/template\",\"task\\/catalog\\/topic\",\"task\\/catalog\\/translation\",\"task\\/report\\/order\",\"task\\/report\\/rating\",\"task\\/report\\/returns\",\"task\\/report\\/review\",\"task\\/report\\/sale\",\"task\\/report\\/stock\",\"task\\/system\\/backup\",\"task\\/system\\/mail\",\"task\\/system\\/notification\",\"task\\/system\\/restore\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/menu\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/api\\/coupon\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ddos\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/blog\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/module\\/topic\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/report\\/subscription\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/task\\/product_viewed\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\"],\"modify\":[\"catalog\\/attribute\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"cms\\/antispam\",\"cms\\/article\",\"cms\\/comment\",\"cms\\/topic\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/security\",\"cron\\/backup\",\"cron\\/cron\",\"cron\\/currency\",\"cron\\/gdpr\",\"cron\\/notification\",\"cron\\/subscription\",\"cron\\/task\",\"customer\\/address\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_regex\",\"design\\/seo_url\",\"design\\/template\",\"design\\/translation\",\"error\\/exception\",\"event\\/article\",\"event\\/attribute\",\"event\\/banner\",\"event\\/category\",\"event\\/comment\",\"event\\/country\",\"event\\/customer_group\",\"event\\/filter\",\"event\\/geo_zone\",\"event\\/information\",\"event\\/location\",\"event\\/manufacturer\",\"event\\/option\",\"event\\/product\",\"event\\/return_reason\",\"event\\/review\",\"event\\/setting\",\"event\\/store\",\"event\\/tax_class\",\"event\\/tax_rate\",\"event\\/template\",\"event\\/topic\",\"event\\/translation\",\"event\\/zone\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/language\",\"extension\\/marketplace\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/identifier\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/authorize\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/subscription\",\"mail\\/transaction\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"marketplace\\/task\",\"report\\/online\",\"report\\/report\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"setting\\/setting\",\"setting\\/store\",\"startup\\/cli\",\"startup\\/task\",\"task\\/admin\\/country\",\"task\\/admin\\/currency\",\"task\\/admin\\/customer_group\",\"task\\/admin\\/language\",\"task\\/admin\\/stylesheet\",\"task\\/admin\\/store\",\"task\\/admin\\/subscription\",\"task\\/catalog\\/Information\",\"task\\/catalog\\/article\",\"task\\/catalog\\/banner\",\"task\\/catalog\\/category\",\"task\\/catalog\\/comment\",\"task\\/catalog\\/country\",\"task\\/catalog\\/currency\",\"task\\/catalog\\/customer_group\",\"task\\/catalog\\/filter\",\"task\\/catalog\\/language\",\"task\\/catalog\\/location\",\"task\\/catalog\\/manufacturer\",\"task\\/catalog\\/product\",\"task\\/catalog\\/return_reason\",\"task\\/catalog\\/review\",\"task\\/catalog\\/stylesheet\",\"task\\/catalog\\/setting\",\"task\\/catalog\\/tax_rate\",\"task\\/catalog\\/template\",\"task\\/catalog\\/topic\",\"task\\/catalog\\/translation\",\"task\\/report\\/order\",\"task\\/report\\/rating\",\"task\\/report\\/returns\",\"task\\/report\\/review\",\"task\\/report\\/sale\",\"task\\/report\\/stock\",\"task\\/system\\/backup\",\"task\\/system\\/mail\",\"task\\/system\\/notification\",\"task\\/system\\/restore\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/menu\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/api\\/coupon\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ddos\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/blog\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/module\\/topic\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/report\\/subscription\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/task\\/product_viewed\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\"]}'),
+VALUES (1, 'Administrator', '{\"access\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/filter_group\",\"catalog\\/identifier\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"cms\\/antispam\",\"cms\\/article\",\"cms\\/comment\",\"cms\\/topic\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/security\",\"customer\\/address\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"error\\/exception\",\"event\\/modification\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/language\",\"extension\\/marketplace\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/authorize\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/reward\",\"mail\\/subscription\",\"mail\\/transaction\",\"marketing\\/affiliate\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/modification\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"setting\\/setting\",\"setting\\/store\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/api\\/coupon\",\"extension\\/opencart\\/api\\/reward\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ddos\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/blog\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/module\\/topic\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_reward\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/report\\/subscription\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/reward\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\"],\"modify\":[\"catalog\\/attribute\",\"catalog\\/attribute_group\",\"catalog\\/category\",\"catalog\\/download\",\"catalog\\/filter\",\"catalog\\/filter_group\",\"catalog\\/identifier\",\"catalog\\/information\",\"catalog\\/manufacturer\",\"catalog\\/option\",\"catalog\\/product\",\"catalog\\/review\",\"catalog\\/subscription_plan\",\"cms\\/antispam\",\"cms\\/article\",\"cms\\/comment\",\"cms\\/topic\",\"common\\/developer\",\"common\\/filemanager\",\"common\\/security\",\"customer\\/address\",\"customer\\/custom_field\",\"customer\\/customer\",\"customer\\/customer_approval\",\"customer\\/customer_group\",\"customer\\/gdpr\",\"design\\/banner\",\"design\\/layout\",\"design\\/seo_url\",\"design\\/theme\",\"design\\/translation\",\"error\\/exception\",\"event\\/modification\",\"extension\\/analytics\",\"extension\\/captcha\",\"extension\\/currency\",\"extension\\/dashboard\",\"extension\\/feed\",\"extension\\/fraud\",\"extension\\/language\",\"extension\\/marketplace\",\"extension\\/module\",\"extension\\/other\",\"extension\\/payment\",\"extension\\/report\",\"extension\\/shipping\",\"extension\\/theme\",\"extension\\/total\",\"localisation\\/address_format\",\"localisation\\/country\",\"localisation\\/currency\",\"localisation\\/geo_zone\",\"localisation\\/language\",\"localisation\\/length_class\",\"localisation\\/location\",\"localisation\\/order_status\",\"localisation\\/return_action\",\"localisation\\/return_reason\",\"localisation\\/return_status\",\"localisation\\/stock_status\",\"localisation\\/subscription_status\",\"localisation\\/tax_class\",\"localisation\\/tax_rate\",\"localisation\\/weight_class\",\"localisation\\/zone\",\"mail\\/affiliate\",\"mail\\/authorize\",\"mail\\/customer\",\"mail\\/forgotten\",\"mail\\/gdpr\",\"mail\\/returns\",\"mail\\/reward\",\"mail\\/subscription\",\"mail\\/transaction\",\"marketing\\/affiliate\",\"marketing\\/contact\",\"marketing\\/coupon\",\"marketing\\/marketing\",\"marketplace\\/api\",\"marketplace\\/cron\",\"marketplace\\/event\",\"marketplace\\/extension\",\"marketplace\\/installer\",\"marketplace\\/marketplace\",\"marketplace\\/modification\",\"marketplace\\/promotion\",\"marketplace\\/startup\",\"report\\/online\",\"report\\/report\",\"report\\/statistics\",\"sale\\/order\",\"sale\\/returns\",\"sale\\/subscription\",\"setting\\/setting\",\"setting\\/store\",\"tool\\/backup\",\"tool\\/log\",\"tool\\/notification\",\"tool\\/upgrade\",\"tool\\/upload\",\"user\\/api\",\"user\\/profile\",\"user\\/user\",\"user\\/user_permission\",\"extension\\/opencart\\/api\\/coupon\",\"extension\\/opencart\\/api\\/reward\",\"extension\\/opencart\\/captcha\\/basic\",\"extension\\/opencart\\/currency\\/ecb\",\"extension\\/opencart\\/currency\\/fixer\",\"extension\\/opencart\\/dashboard\\/activity\",\"extension\\/opencart\\/dashboard\\/chart\",\"extension\\/opencart\\/dashboard\\/customer\",\"extension\\/opencart\\/dashboard\\/map\",\"extension\\/opencart\\/dashboard\\/online\",\"extension\\/opencart\\/dashboard\\/order\",\"extension\\/opencart\\/dashboard\\/recent\",\"extension\\/opencart\\/dashboard\\/sale\",\"extension\\/opencart\\/fraud\\/ddos\",\"extension\\/opencart\\/fraud\\/ip\",\"extension\\/opencart\\/module\\/account\",\"extension\\/opencart\\/module\\/banner\",\"extension\\/opencart\\/module\\/bestseller\",\"extension\\/opencart\\/module\\/blog\",\"extension\\/opencart\\/module\\/category\",\"extension\\/opencart\\/module\\/featured\",\"extension\\/opencart\\/module\\/filter\",\"extension\\/opencart\\/module\\/html\",\"extension\\/opencart\\/module\\/information\",\"extension\\/opencart\\/module\\/latest\",\"extension\\/opencart\\/module\\/special\",\"extension\\/opencart\\/module\\/store\",\"extension\\/opencart\\/module\\/topic\",\"extension\\/opencart\\/payment\\/bank_transfer\",\"extension\\/opencart\\/payment\\/cheque\",\"extension\\/opencart\\/payment\\/cod\",\"extension\\/opencart\\/payment\\/free_checkout\",\"extension\\/opencart\\/report\\/customer\",\"extension\\/opencart\\/report\\/customer_activity\",\"extension\\/opencart\\/report\\/customer_order\",\"extension\\/opencart\\/report\\/customer_reward\",\"extension\\/opencart\\/report\\/customer_search\",\"extension\\/opencart\\/report\\/customer_transaction\",\"extension\\/opencart\\/report\\/marketing\",\"extension\\/opencart\\/report\\/product_purchased\",\"extension\\/opencart\\/report\\/product_viewed\",\"extension\\/opencart\\/report\\/sale_coupon\",\"extension\\/opencart\\/report\\/sale_order\",\"extension\\/opencart\\/report\\/sale_return\",\"extension\\/opencart\\/report\\/sale_shipping\",\"extension\\/opencart\\/report\\/sale_tax\",\"extension\\/opencart\\/report\\/subscription\",\"extension\\/opencart\\/shipping\\/flat\",\"extension\\/opencart\\/shipping\\/free\",\"extension\\/opencart\\/shipping\\/item\",\"extension\\/opencart\\/shipping\\/pickup\",\"extension\\/opencart\\/shipping\\/weight\",\"extension\\/opencart\\/theme\\/basic\",\"extension\\/opencart\\/total\\/coupon\",\"extension\\/opencart\\/total\\/credit\",\"extension\\/opencart\\/total\\/handling\",\"extension\\/opencart\\/total\\/low_order_fee\",\"extension\\/opencart\\/total\\/reward\",\"extension\\/opencart\\/total\\/shipping\",\"extension\\/opencart\\/total\\/sub_total\",\"extension\\/opencart\\/total\\/tax\",\"extension\\/opencart\\/total\\/total\"]}'),
        (2, 'Demonstration', ''),
        (3, 'Marketing', ''),
        (4, 'Product Data Entry', ''),

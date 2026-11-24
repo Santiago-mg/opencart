@@ -16,41 +16,7 @@ class Developer extends \Opencart\System\Engine\Controller {
 	public function index(): void {
 		$this->load->language('common/developer');
 
-		$data['run'] = $this->url->link('common/developer.run', 'user_token=' . $this->session->data['user_token']);
-		$data['clear'] = $this->url->link('common/developer.clear', 'user_token=' . $this->session->data['user_token']);
-
-		// Stores
-		$data['stores'] = [];
-
-		$data['stores'][] = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		// Stores
-		$this->load->model('setting/store');
-
-		$stores = $this->model_setting_store->getStores();
-
-		foreach ($stores as $store) {
-			$data['stores'][] = [
-				'store_id' => $store['store_id'],
-				'name'     => $store['name']
-			];
-		}
-
-		$data['ssrs'] = [];
-
-		$this->load->model('setting/ssr');
-
-		$results = $this->model_setting_ssr->getSsrs();
-
-		foreach ($results as $result) {
-			$data['ssrs'][] = [
-				'ssr_id' => $result['ssr_id'],
-				'name'   => $this->language->get('text_' . $result['code'])
-			];
-		}
+		$data['developer_sass'] = $this->config->get('developer_sass');
 
 		$data['user_token'] = $this->session->data['user_token'];
 
@@ -58,17 +24,11 @@ class Developer extends \Opencart\System\Engine\Controller {
 	}
 
 	/**
-	 * List
+	 * Edit
 	 *
 	 * @return void
 	 */
-	public function list(): void {
-		$this->load->language('common/developer');
-
-		$this->response->setOutput($this->getList());
-	}
-
-	public function run(): void {
+	public function edit(): void {
 		$this->load->language('common/developer');
 
 		$json = [];
@@ -77,87 +37,13 @@ class Developer extends \Opencart\System\Engine\Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['store_id'])) {
-			$store_id = (int)$this->request->post['store_id'];
-		} else {
-			$store_id = 0;
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$selected = (array)$this->request->post['selected'];
-		} else {
-			$selected = [];
-		}
-
-		// Store
-		$store_info = [
-			'store_id' => 0,
-			'name'     => $this->config->get('config_name')
-		];
-
-		if ($store_id) {
-			$this->load->model('setting/store');
-
-			$store_info = $this->model_setting_store->getStore($store_id);
-
-			if (!$store_info) {
-				$json['error'] = $this->language->get('error_store');
-			}
-		}
-
 		if (!$json) {
-			$this->load->model('setting/task');
-			$this->load->model('setting/ssr');
+			// Setting
+			$this->load->model('setting/setting');
 
-			foreach ($selected as $ssr_id) {
-				$ssr_info = $this->model_setting_ssr->getSsr((int)$ssr_id);
+			$this->model_setting_setting->editSetting('developer', $this->request->post, 0);
 
-				if ($ssr_info) {
-					$task_data = [
-						'code'   => $ssr_info['code'] . '.' . $store_info['store_id'],
-						'action' => $ssr_info['action'],
-						'args'   => ['store_id' => $store_info['store_id']]
-					];
-
-					$this->model_setting_task->addTask($task_data);
-
-					$this->model_setting_ssr->editSsr($ssr_info['ssr_id']);
-				}
-			}
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	/**
-	 * Clear
-	 *
-	 * @return void
-	 */
-	public function clear(): void {
-		$this->load->language('common/developer');
-
-		$json = [];
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-
-
-
-
-		if (!$json) {
-			$files = oc_directory_read(DIR_CATALOG . 'view/html/');
-
-			foreach ($files as $file) {
-				oc_directory_delete($file);
-			}
-
-			$json['success'] = $this->language->get('text_clear_success');
+			$json['success'] = $this->language->get('text_developer_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -179,15 +65,106 @@ class Developer extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$files = oc_directory_read(DIR_CACHE);
+			$files = glob(DIR_CACHE . 'cache.*');
 
-			foreach ($files as $file) {
-				if (str_starts_with(basename($file), 'cache.') && is_file($file)) {
-					oc_file_delete($file);
+			if ($files) {
+				foreach ($files as $file) {
+					if (is_file($file)) {
+						unlink($file);
+					}
 				}
 			}
 
 			$json['success'] = $this->language->get('text_cache_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Theme
+	 *
+	 * @return void
+	 */
+	public function theme(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$directories = glob(DIR_CACHE . 'template/*', GLOB_ONLYDIR);
+
+			if ($directories) {
+				foreach ($directories as $directory) {
+					$files = glob($directory . '/*');
+
+					foreach ($files as $file) {
+						if (is_file($file)) {
+							unlink($file);
+						}
+					}
+
+					if (is_dir($directory)) {
+						rmdir($directory);
+					}
+				}
+			}
+
+			$json['success'] = $this->language->get('text_theme_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	/**
+	 * Sass
+	 *
+	 * @return void
+	 */
+	public function sass(): void {
+		$this->load->language('common/developer');
+
+		$json = [];
+
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			// Before we delete we need to make sure there is a sass file to regenerate the css
+			$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
+
+			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/scss/bootstrap.scss')) {
+				unlink($file);
+			}
+
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/scss/bootstrap.scss');
+
+			foreach ($files as $file) {
+				$file = substr($file, 0, -20) . '/bootstrap.css';
+
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
+
+			$files = glob(DIR_CATALOG . 'view/theme/*/stylesheet/stylesheet.scss');
+
+			foreach ($files as $file) {
+				$file = substr($file, 0, -16) . '/stylesheet.css';
+
+				if (is_file($file)) {
+					unlink($file);
+				}
+			}
+
+			$json['success'] = $this->language->get('text_sass_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -26,12 +26,11 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 
-		if ($coupon_info && ($coupon_info['date_start'] == '0000-00-00' || strtotime($coupon_info['date_start']) < strtotime(date('Y-m-d H:i:s'))) && ($coupon_info['date_end'] == '0000-00-00' || strtotime($coupon_info['date_end']) > strtotime(date('Y-m-d H:i:s')))) {
+		if ($coupon_info && ($coupon_info['date_start'] == '0000-00-00' || strtotime($coupon_info['date_start']) < strtotime(date('Y-m-d H:i:s'))) && ($coupon_info['date_end'] == '0000-00-00' || strtotime($coupon_info['date_end'] . ' 23:59:59') >= strtotime(date('Y-m-d H:i:s')))) {
 			if ($coupon_info['total'] > $this->cart->getSubTotal()) {
 				$status = false;
 			}
 
-			// Total Coupons
 			$coupon_total = $this->model_marketing_coupon->getTotalHistories($coupon_info['coupon_id']);
 
 			if ($coupon_info['uses_total'] > 0 && ($coupon_total >= $coupon_info['uses_total'])) {
@@ -43,7 +42,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 			}
 
 			if ($this->customer->getId()) {
-				// Total Customers
 				$customer_total = $this->model_marketing_coupon->getTotalHistoriesByCustomerId($coupon_info['coupon_id'], $this->customer->getId());
 
 				if ($coupon_info['uses_customer'] > 0 && ($customer_total >= $coupon_info['uses_customer'])) {
@@ -70,7 +68,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 					}
 
 					foreach ($coupon_category_data as $category_id) {
-						// Total Products
 						$product_total = $this->model_catalog_product->getTotalCategoriesByCategoryId($product['product_id'], $category_id);
 
 						if ($product_total) {

@@ -1,0 +1,54 @@
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Random Seed:   11
+
+EEEEEEE                                                             7 / 7 (100%)
+
+Time: 00:00.015, Memory: 8.00 MB
+
+There were 7 errors:
+
+1) Tests\Rf09\ReviewControllerTest::test_DEF_09_01_sin_calificacion_responde_el_error_sin_avisos_de_php
+Undefined array key "rating"
+
+opencart/tests/unit/rf-09/ReviewControllerTest.php:67
+opencart/tests/unit/rf-09/ReviewControllerTest.php:206
+
+2) Tests\Rf09\ReviewControllerTest::test_DEF_09_02_despues_de_guardar_la_resena_el_token_ya_no_sirve
+Hamcrest\AssertionError: Expected: not array with key "review_token"
+     but: was ["token-de-la-ficha"]
+
+opencart/tests/unit/rf-09/ReviewControllerTest.php:222
+
+3) Tests\Rf06\ProductSearchTest::test_DEF_06_03_los_comodines_que_escribe_el_cliente_se_buscan_como_texto with data set "porcentaje" ('%')
+Hamcrest\AssertionError: Expected: a string containing "\%"
+     but: was "SELECT DISTINCT *, `pd`.`name`, `p`.`image`, (SELECT (CASE WHEN `pd2`.`type` = 'P' THEN (`p`.`price` - (`p`.`price` * (`pd2`.`price` / 100))) WHEN `pd2`.`type` = 'S' THEN (`p`.`price` - `pd2`.`price`) ELSE `pd2`.`price` END) FROM `oc_product_discount` `pd2` WHERE `pd2`.`product_id` = `p`.`product_id` AND `pd2`.`customer_group_id` = '1' AND `pd2`.`quantity` = '1' AND `pd2`.`special` = '0' AND ((`pd2`.`date_start` = '0000-00-00' OR `pd2`.`date_start` < NOW()) AND (`pd2`.`date_end` = '0000-00-00' OR `pd2`.`date_end` > NOW())) ORDER BY `pd2`.`priority` ASC, `pd2`.`price` ASC LIMIT 1) AS `discount`, (SELECT (CASE WHEN `ps`.`type` = 'P' THEN (`p`.`price` - (`p`.`price` * (`ps`.`price` / 100))) WHEN `ps`.`type` = 'S' THEN (`p`.`price` - `ps`.`price`) ELSE `ps`.`price` END) FROM `oc_product_discount` `ps` WHERE `ps`.`product_id` = `p`.`product_id` AND `ps`.`customer_group_id` = '1' AND `ps`.`quantity` = '1' AND `ps`.`special` = '1' AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW())) ORDER BY `ps`.`priority` ASC, `ps`.`price` ASC LIMIT 1) AS `special`, (SELECT `pr`.`points` FROM `oc_product_reward` `pr` WHERE `pr`.`product_id` = `p`.`product_id` AND `pr`.`customer_group_id` = '1') AS `reward`, (SELECT COUNT(*) FROM `oc_review` `r` WHERE `r`.`product_id` = `p`.`product_id` AND `r`.`status` = '1' GROUP BY `r`.`product_id`) AS `reviews` FROM `oc_product_to_store` `p2s` LEFT JOIN `oc_product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p2s`.`store_id` = '0' AND `p`.`date_available` <= NOW()) LEFT JOIN `oc_product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`) LEFT JOIN `oc_product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '1' AND ( (`pd`.`name` LIKE '%%%') OR LCASE(`p`.`model`) = '%' OR pc.`value` LIKE '%%') GROUP BY `p`.`product_id` ORDER BY `p`.`sort_order` ASC, LCASE(`pd`.`name`) ASC"
+
+opencart/tests/unit/rf-06/ProductSearchTest.php:244
+
+4) Tests\Rf06\ProductSearchTest::test_DEF_06_03_los_comodines_que_escribe_el_cliente_se_buscan_como_texto with data set "guion bajo" ('_')
+Hamcrest\AssertionError: Expected: a string containing "\_"
+     but: was "SELECT DISTINCT *, `pd`.`name`, `p`.`image`, (SELECT (CASE WHEN `pd2`.`type` = 'P' THEN (`p`.`price` - (`p`.`price` * (`pd2`.`price` / 100))) WHEN `pd2`.`type` = 'S' THEN (`p`.`price` - `pd2`.`price`) ELSE `pd2`.`price` END) FROM `oc_product_discount` `pd2` WHERE `pd2`.`product_id` = `p`.`product_id` AND `pd2`.`customer_group_id` = '1' AND `pd2`.`quantity` = '1' AND `pd2`.`special` = '0' AND ((`pd2`.`date_start` = '0000-00-00' OR `pd2`.`date_start` < NOW()) AND (`pd2`.`date_end` = '0000-00-00' OR `pd2`.`date_end` > NOW())) ORDER BY `pd2`.`priority` ASC, `pd2`.`price` ASC LIMIT 1) AS `discount`, (SELECT (CASE WHEN `ps`.`type` = 'P' THEN (`p`.`price` - (`p`.`price` * (`ps`.`price` / 100))) WHEN `ps`.`type` = 'S' THEN (`p`.`price` - `ps`.`price`) ELSE `ps`.`price` END) FROM `oc_product_discount` `ps` WHERE `ps`.`product_id` = `p`.`product_id` AND `ps`.`customer_group_id` = '1' AND `ps`.`quantity` = '1' AND `ps`.`special` = '1' AND ((`ps`.`date_start` = '0000-00-00' OR `ps`.`date_start` < NOW()) AND (`ps`.`date_end` = '0000-00-00' OR `ps`.`date_end` > NOW())) ORDER BY `ps`.`priority` ASC, `ps`.`price` ASC LIMIT 1) AS `special`, (SELECT `pr`.`points` FROM `oc_product_reward` `pr` WHERE `pr`.`product_id` = `p`.`product_id` AND `pr`.`customer_group_id` = '1') AS `reward`, (SELECT COUNT(*) FROM `oc_review` `r` WHERE `r`.`product_id` = `p`.`product_id` AND `r`.`status` = '1' GROUP BY `r`.`product_id`) AS `reviews` FROM `oc_product_to_store` `p2s` LEFT JOIN `oc_product` `p` ON (`p`.`product_id` = `p2s`.`product_id` AND `p`.`status` = '1' AND `p2s`.`store_id` = '0' AND `p`.`date_available` <= NOW()) LEFT JOIN `oc_product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`) LEFT JOIN `oc_product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '1' AND ( (`pd`.`name` LIKE '%_%') OR LCASE(`p`.`model`) = '_' OR pc.`value` LIKE '_%') GROUP BY `p`.`product_id` ORDER BY `p`.`sort_order` ASC, LCASE(`pd`.`name`) ASC"
+
+opencart/tests/unit/rf-06/ProductSearchTest.php:244
+
+5) Tests\Rf11\ReturnsControllerTest::test_DEF_11_01_un_numero_de_pedido_invalido_no_se_acepta with data set "con letras" ('abc')
+Hamcrest\AssertionError: Expected: array with key "error"
+     but: array was ["redirect" => "index.php?route=account/returns.success&language=en-gb"]
+
+opencart/tests/unit/rf-11/ReturnsControllerTest.php:172
+
+6) Tests\Rf11\ReturnsControllerTest::test_DEF_11_01_un_numero_de_pedido_invalido_no_se_acepta with data set "negativo" ('-5')
+Hamcrest\AssertionError: Expected: array with key "error"
+     but: array was ["redirect" => "index.php?route=account/returns.success&language=en-gb"]
+
+opencart/tests/unit/rf-11/ReturnsControllerTest.php:172
+
+7) Tests\Rf11\ReturnsControllerTest::test_DEF_11_07_si_hay_condiciones_de_devolucion_hay_que_aceptarlas
+Hamcrest\AssertionError: Expected: array with key "error"
+     but: array was ["redirect" => "index.php?route=account/returns.success&language=en-gb"]
+
+opencart/tests/unit/rf-11/ReturnsControllerTest.php:196
+
+ERRORS!
+Tests: 7, Assertions: 6, Errors: 7.

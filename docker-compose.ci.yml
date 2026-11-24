@@ -1,0 +1,18 @@
+# Tienda de prueba para el pipeline de Jenkins (ver Jenkinsfile).
+# No publica puertos: el agente de Jenkins se conecta a la red del proyecto y
+# habla con la tienda por su nombre (http://opencart).
+services:
+  opencart:
+    build:
+      context: .
+      dockerfile: Dockerfile.ci
+    depends_on:
+      - mysql
+    command: ["bash", "/ci-entrypoint.sh"]
+
+  mysql:
+    image: mysql:5.7
+    platform: linux/amd64
+    environment:
+      - MYSQL_ROOT_PASSWORD=opencart
+      - MYSQL_DATABASE=opencart

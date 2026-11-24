@@ -42,17 +42,19 @@ class Language extends \Opencart\System\Engine\Model {
 		// Attribute
 		$this->load->model('catalog/attribute');
 
-		$results = $this->model_catalog_attribute->getAttributeDescriptionsByLanguageId($this->config->get('config_language_id'));
+		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute) {
-			$this->model_catalog_attribute->addAttributeDescription((int)$attribute['attribute_id'], $language_id, $attribute);
+			$this->model_catalog_attribute->addDescription($attribute['attribute_id'], $language_id, $attribute);
 		}
 
 		// Attribute Group
-		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+		$this->load->model('catalog/attribute_group');
+
+		$results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute_group) {
-			$this->model_catalog_attribute->addDescription((int)$attribute_group['attribute_group_id'], $language_id, $attribute_group);
+			$this->model_catalog_attribute_group->addDescription($attribute_group['attribute_group_id'], $language_id, $attribute_group);
 		}
 
 		// Banner
@@ -70,7 +72,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_category->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $category) {
-			$this->model_catalog_category->addDescription((int)$category['category_id'], $language_id, $category);
+			$this->model_catalog_category->addDescription($category['category_id'], $language_id, $category);
 		}
 
 		// Country
@@ -79,7 +81,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_country->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $country) {
-			$this->model_localisation_country->addDescription((int)$country['country_id'], $language_id, $country);
+			$this->model_localisation_country->addDescription($country['country_id'], $language_id, $country);
 		}
 
 		// Customer Group
@@ -88,7 +90,23 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_customer_customer_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $customer_group) {
-			$this->model_customer_customer_group->addDescription((int)$customer_group['customer_group_id'], $language_id, $customer_group);
+			$this->model_customer_customer_group->addDescription($customer_group['customer_group_id'], $language_id, $customer_group);
+		}
+
+		// Custom Field
+		$this->load->model('customer/custom_field');
+
+		$results = $this->model_customer_custom_field->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $custom_field) {
+			$this->model_customer_custom_field->addDescription($custom_field['custom_field_id'], $language_id, $custom_field);
+		}
+
+		// Custom Field Value
+		$results = $this->model_customer_custom_field->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $custom_field_value) {
+			$this->model_customer_custom_field->addValueDescription($custom_field_value['custom_field_value_id'], $custom_field_value['custom_field_id'], $language_id, $custom_field_value);
 		}
 
 		// Download
@@ -97,23 +115,25 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_download->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $download) {
-			$this->model_catalog_download->addDescription((int)$download['download_id'], $language_id, $download);
+			$this->model_catalog_download->addDescription($download['download_id'], $language_id, $download);
 		}
 
-		// Filter Group
+		// Filter
 		$this->load->model('catalog/filter');
 
 		$results = $this->model_catalog_filter->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
-		foreach ($results as $filter_group) {
-			$this->model_catalog_filter->addDescription((int)$filter_group['filter_group_id'], $language_id, $filter_group);
+		foreach ($results as $filter) {
+			$this->model_catalog_filter->addDescription($filter['filter_id'], $language_id, $filter);
 		}
 
-		// Filter
-		$results = $this->model_catalog_filter->getFilterDescriptionsByLanguageId($this->config->get('config_language_id'));
+		// Filter Group
+		$this->load->model('catalog/filter_group');
 
-		foreach ($results as $filter) {
-			$this->model_catalog_filter->addFilterDescription((int)$filter['filter_id'], $language_id, $filter);
+		$results = $this->model_catalog_filter_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $filter_group) {
+			$this->model_catalog_filter_group->addDescription($filter_group['filter_group_id'], $language_id, $filter_group);
 		}
 
 		// Information
@@ -122,7 +142,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_information->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $information) {
-			$this->model_catalog_information->addDescription((int)$information['information_id'], $language_id, $information);
+			$this->model_catalog_information->addDescription($information['information_id'], $language_id, $information);
 		}
 
 		// Length
@@ -131,16 +151,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_length_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $length) {
-			$this->model_localisation_length_class->addDescription((int)$length['length_class_id'], $language_id, $length);
-		}
-
-		// Manufacturer
-		$this->load->model('catalog/manufacturer');
-
-		$results = $this->model_catalog_manufacturer->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $manufacturer) {
-			$this->model_catalog_manufacturer->addDescription((int)$manufacturer['manufacturer_id'], $language_id, $manufacturer);
+			$this->model_localisation_length_class->addDescription($length['length_class_id'], $language_id, $length);
 		}
 
 		// Option
@@ -149,14 +160,14 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_option->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $option) {
-			$this->model_catalog_option->addDescription((int)$option['option_id'], $language_id, $option);
+			$this->model_catalog_option->addDescription($option['option_id'], $language_id, $option);
 		}
 
 		// Option Value
 		$results = $this->model_catalog_option->getValueDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $option_value) {
-			$this->model_catalog_option->addValueDescription((int)$option_value['option_value_id'], (int)$option_value['option_id'], $language_id, $option_value);
+			$this->model_catalog_option->addValueDescription($option_value['option_value_id'], $option_value['option_id'], $language_id, $option_value);
 		}
 
 		// Order Status
@@ -165,7 +176,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_order_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $order_status) {
-			$this->model_localisation_order_status->addDescription((int)$order_status['order_status_id'], $language_id, $order_status);
+			$this->model_localisation_order_status->addDescription($order_status['order_status_id'], $language_id, $order_status);
 		}
 
 		// Product
@@ -174,14 +185,14 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_product->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $product) {
-			$this->model_catalog_product->addDescription((int)$product['product_id'], $language_id, $product);
+			$this->model_catalog_product->addDescription($product['product_id'], $language_id, $product);
 		}
 
 		// Product Attribute
 		$results = $this->model_catalog_product->getAttributesByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $product_attribute) {
-			$this->model_catalog_product->addAttribute((int)$product_attribute['product_id'], (int)$product_attribute['attribute_id'], $language_id, $product_attribute);
+			$this->model_catalog_product->addAttribute($product_attribute['product_id'], $product_attribute['attribute_id'], $language_id, $product_attribute);
 		}
 
 		// Return Action
@@ -190,7 +201,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_return_action->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $return_action) {
-			$this->model_localisation_return_action->addDescription((int)$return_action['return_action_id'], $language_id, $return_action);
+			$this->model_localisation_return_action->addDescription($return_action['return_action_id'], $language_id, $return_action);
 		}
 
 		// Return Reason
@@ -199,7 +210,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_return_reason->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $return_reason) {
-			$this->model_localisation_return_reason->addDescription((int)$return_reason['return_reason_id'], $language_id, $return_reason);
+			$this->model_localisation_return_reason->addDescription($return_reason['return_reason_id'], $language_id, $return_reason);
 		}
 
 		// Return Status
@@ -208,7 +219,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_return_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $return_status) {
-			$this->model_localisation_return_status->addDescription((int)$return_status['return_status_id'], $language_id, $return_status);
+			$this->model_localisation_return_status->addDescription($return_status['return_status_id'], $language_id, $return_status);
 		}
 
 		// Stock Status
@@ -217,7 +228,16 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_stock_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $stock_status) {
-			$this->model_localisation_stock_status->addDescription((int)$stock_status['stock_status_id'], $language_id, $stock_status);
+			$this->model_localisation_stock_status->addDescription($stock_status['stock_status_id'], $language_id, $stock_status);
+		}
+
+		// Weight Class
+		$this->load->model('localisation/weight_class');
+
+		$results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
+
+		foreach ($results as $weight_class) {
+			$this->model_localisation_weight_class->addDescription($weight_class['weight_class_id'], $language_id, $weight_class);
 		}
 
 		// Subscription Plan
@@ -226,7 +246,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_subscription_plan->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $subscription_plan) {
-			$this->model_catalog_subscription_plan->addDescription((int)$subscription_plan['subscription_plan_id'], $language_id, $subscription_plan);
+			$this->model_catalog_subscription_plan->addDescription($subscription_plan['subscription_plan_id'], $language_id, $subscription_plan);
 		}
 
 		// Subscription Status
@@ -235,7 +255,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_subscription_status->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $subscription) {
-			$this->model_localisation_subscription_status->addDescription((int)$subscription['subscription_status_id'], $language_id, $subscription);
+			$this->model_localisation_subscription_status->addDescription($subscription['subscription_status_id'], $language_id, $subscription);
 		}
 
 		// SEO
@@ -266,22 +286,13 @@ class Language extends \Opencart\System\Engine\Model {
 			}
 		}
 
-		// Topic
+		// Topic Status
 		$this->load->model('cms/topic');
 
 		$results = $this->model_cms_topic->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $topic) {
-			$this->model_cms_topic->addDescription((int)$topic['topic_id'], $language_id, $topic);
-		}
-
-		// Weight Class
-		$this->load->model('localisation/weight_class');
-
-		$results = $this->model_localisation_weight_class->getDescriptionsByLanguageId($this->config->get('config_language_id'));
-
-		foreach ($results as $weight_class) {
-			$this->model_localisation_weight_class->addDescription((int)$weight_class['weight_class_id'], $language_id, $weight_class);
+			$this->model_cms_topic->addDescription($topic['topic_id'], $language_id, $topic);
 		}
 
 		// Zone
@@ -290,7 +301,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_localisation_zone->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $zone) {
-			$this->model_localisation_zone->addDescription((int)$zone['zone_id'], $language_id, $zone);
+			$this->model_localisation_zone->addDescription($zone['zone_id'], $language_id, $zone);
 		}
 
 		return $language_id;
@@ -359,7 +370,10 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_catalog_attribute->deleteDescriptionsByLanguageId($language_id);
 
-		$this->model_catalog_attribute->deleteAttributeDescriptionsByLanguageId($language_id);
+		// Attribute Group
+		$this->load->model('catalog/attribute_group');
+
+		$this->model_catalog_attribute_group->deleteDescriptionsByLanguageId($language_id);
 
 		// Banner
 		$this->load->model('design/banner');
@@ -381,6 +395,12 @@ class Language extends \Opencart\System\Engine\Model {
 
 		$this->model_customer_customer_group->deleteDescriptionsByLanguageId($language_id);
 
+		// Custom Field
+		$this->load->model('customer/custom_field');
+
+		$this->model_customer_custom_field->deleteDescriptionsByLanguageId($language_id);
+		$this->model_customer_custom_field->deleteValueDescriptionsByLanguageId($language_id);
+
 		// Download
 		$this->load->model('catalog/download');
 
@@ -390,7 +410,11 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('catalog/filter');
 
 		$this->model_catalog_filter->deleteDescriptionsByLanguageId($language_id);
-		$this->model_catalog_filter->deleteFilterDescriptionsByLanguageId($language_id);
+
+		// Filter Group
+		$this->load->model('catalog/filter_group');
+
+		$this->model_catalog_filter_group->deleteDescriptionsByLanguageId($language_id);
 
 		// Information
 		$this->load->model('catalog/information');
@@ -401,11 +425,6 @@ class Language extends \Opencart\System\Engine\Model {
 		$this->load->model('localisation/length_class');
 
 		$this->model_localisation_length_class->deleteDescriptionsByLanguageId($language_id);
-
-		// Manufacturer
-		$this->load->model('catalog/manufacturer');
-
-		$this->model_catalog_manufacturer->deleteDescriptionsByLanguageId($language_id);
 
 		// Option
 		$this->load->model('catalog/option');
@@ -595,26 +614,28 @@ class Language extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$results = $this->cache->get('language.' . md5($sql));
+		$results = $this->cache->get('language.' . hash('sha256', $sql));
 
 		if (!$results) {
 			$query = $this->db->query($sql);
 
 			$results = $query->rows;
 
-			$this->cache->set('language.' . md5($sql), $results);
+			$this->cache->set('language.' . hash('sha256', $sql), $results);
 		}
 
 		$language_data = [];
 
 		foreach ($results as $result) {
+			$image = HTTP_CATALOG;
+
 			if (!$result['extension']) {
-				$image = HTTP_SERVER . 'language/' . $result['code'] . '/' . $result['code'] . '.png';
+				$image .= 'catalog/';
 			} else {
-				$image = HTTP_CATALOG . 'extension/' . $result['extension'] . '/catalog/language/' . $result['code'] . '/' . $result['code'] . '.png';
+				$image .= 'extension/' . $result['extension'] . '/catalog/';
 			}
 
-			$language_data[$result['language_id']] = $result + ['image' => $image];
+			$language_data[$result['code']] = $result + ['image' => $image . 'language/' . $result['code'] . '/' . $result['code'] . '.png'];
 		}
 
 		return $language_data;

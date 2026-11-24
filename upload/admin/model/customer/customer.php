@@ -86,6 +86,26 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Edit Token
+	 *
+	 * Edit customer token record in the database.
+	 *
+	 * @param int    $customer_id primary key of the customer record
+	 * @param string $token
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_customer_customer->editToken($customer_id, $token);
+	 */
+	public function editToken(int $customer_id, string $token): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `token` = '" . $this->db->escape($token) . "' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
 	 * Edit Commenter
 	 *
 	 * Edit customer commenter record in the database.
@@ -124,13 +144,19 @@ class Customer extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer` WHERE `customer_id` = '" . (int)$customer_id . "'");
 
 		$this->deleteActivities($customer_id);
+
 		$this->deleteAddresses($customer_id);
 		$this->deleteAuthorizes($customer_id);
 		$this->deleteHistories($customer_id);
+		$this->deleteRewards($customer_id);
 		$this->deleteTransactions($customer_id);
 		$this->deleteWishlists($customer_id);
 		$this->deleteIps($customer_id);
-		$this->deleteTokens($customer_id);
+
+		// Affiliate
+		$this->load->model('marketing/affiliate');
+
+		$this->model_marketing_affiliate->deleteAffiliate($customer_id);
 
 		// Customer Approval
 		$this->load->model('customer/customer_approval');
@@ -251,16 +277,16 @@ class Customer extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'           => 'name',
-			'email'          => 'c.email',
-			'customer_group' => 'customer_group',
-			'status'         => 'c.status',
-			'ip'             => 'c.ip',
-			'date_added'     => 'c.date_added'
+			'name',
+			'c.email',
+			'customer_group',
+			'c.status',
+			'c.ip',
+			'c.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `name`";
 		}
@@ -1034,6 +1060,158 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Add Reward
+	 *
+	 * Create a new customer reward record in the database.
+	 *
+	 * @param int    $customer_id primary key of the customer record
+	 * @param string $description
+	 * @param int    $points
+	 * @param int    $order_id    primary key of the order record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_customer_customer->addReward($customer_id, (string)$description, (int)$points, (int)$order_id);
+	 */
+	public function addReward(int $customer_id, string $description = '', int $points = 0, int $order_id = 0): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_reward` SET `customer_id` = '" . (int)$customer_id . "', `order_id` = '" . (int)$order_id . "', `points` = '" . (int)$points . "', `description` = '" . $this->db->escape($description) . "', `date_added` = NOW()");
+	}
+
+	/**
+	 * Delete Rewards
+	 *
+	 * Delete customer reward records in the database.
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_customer_customer->deleteRewards($customer_id);
+	 */
+	public function deleteRewards(int $customer_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
+	 * Delete Rewards By Order ID
+	 *
+	 * Delete customer reward by order records in the database.
+	 *
+	 * @param int $order_id primary key of the order record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_customer_customer->deleteRewardsByOrderId($order_id);
+	 */
+	public function deleteRewardsByOrderId(int $order_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > '0'");
+	}
+
+	/**
+	 * Get Rewards
+	 *
+	 * Get the record of the customer reward records in the database.
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return array<int, array<string, mixed>> reward records that have customer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $results = $this->model_customer_customer->getRewards($customer_id, $start, $limit);
+	 */
+	public function getRewards(int $customer_id, int $start = 0, int $limit = 10): array {
+		if ($start < 0) {
+			$start = 0;
+		}
+
+		if ($limit < 1) {
+			$limit = 10;
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "' ORDER BY `date_added` DESC LIMIT " . (int)$start . "," . (int)$limit);
+
+		return $query->rows;
+	}
+
+	/**
+	 * Get Total Rewards
+	 *
+	 * Get the total number of customer reward records in the database.
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return int total number of reward records that have customer ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $reward_total = $this->model_customer_customer->getTotalRewards($customer_id);
+	 */
+	public function getTotalRewards(int $customer_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Reward Total
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return int
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $reward_total = $this->model_customer_customer->getRewardTotal($customer_id);
+	 */
+	public function getRewardTotal(int $customer_id): int {
+		$query = $this->db->query("SELECT SUM(points) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `customer_id` = '" . (int)$customer_id . "'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
+	 * Get Total Rewards By Order ID
+	 *
+	 * Get the total number of customer reward by order records in the database.
+	 *
+	 * @param int $order_id primary key of the order record
+	 *
+	 * @return int total number of reward records that have order ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $reward_total = $this->model_customer_customer->getTotalRewardsByOrderId($order_id);
+	 */
+	public function getTotalRewardsByOrderId(int $order_id): int {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "customer_reward` WHERE `order_id` = '" . (int)$order_id . "' AND `points` > '0'");
+
+		return (int)$query->row['total'];
+	}
+
+	/**
 	 * Delete Ips
 	 *
 	 * Delete customer ip records in the database.
@@ -1165,6 +1343,25 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
+	 * Reset Authorizes
+	 *
+	 * Edit customer authorize record in the database.
+	 *
+	 * @param int $customer_id primary key of the customer record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('customer/customer');
+	 *
+	 * $this->model_account_customer->resetAuthorizes($customer_id);
+	 */
+	public function resetAuthorizes(int $customer_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
+	}
+
+	/**
 	 * Delete Authorizes
 	 *
 	 * Delete customer authorize records in the database.
@@ -1191,30 +1388,12 @@ class Customer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Reset Authorizes
-	 *
-	 * Edit customer authorize record in the database.
-	 *
-	 * @param int $customer_id primary key of the customer record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('customer/customer');
-	 *
-	 * $this->model_account_customer->resetAuthorizes($customer_id);
-	 */
-	public function resetAuthorizes(int $customer_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_authorize` SET `total` = '0' WHERE `customer_id` = '" . (int)$customer_id . "'");
-	}
-
-	/**
 	 * Get Authorize
 	 *
 	 * Get the record of the customer authorize record in the database.
 	 *
 	 * @param int $customer_authorize_id
+	 * @param int $user_authorize_id     primary key of the user authorize record
 	 *
 	 * @return array<string, mixed> authorize record that has user authorize ID
 	 *
@@ -1310,35 +1489,5 @@ class Customer extends \Opencart\System\Engine\Model {
 		} else {
 			return 0;
 		}
-	}
-
-	/*
-	 * Add Token
-	 */
-	public function addToken(int $customer_id, string $type, string $code): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "' AND `type` = '" . $this->db->escape($type) . "'");
-
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_token` SET `customer_id` = '" . (int)$customer_id . "', `code` = '" . $this->db->escape($code) . "', `type` = '" . $this->db->escape($type) . "', `date_added` = NOW()");
-	}
-
-	public function deleteTokens(int $customer_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `customer_id` = '" . (int)$customer_id . "'");
-	}
-
-	/**
-	 * Delete Token By Code
-	 *
-	 * @param string $code
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('account/customer');
-	 *
-	 * $this->model_account_customer->deleteToken($customer_id);
-	 */
-	public function deleteTokenByCode(string $code): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_token` WHERE `code` = '" . $this->db->escape($code) . "'");
 	}
 }

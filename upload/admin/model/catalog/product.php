@@ -66,7 +66,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 		// Description
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->model_catalog_product->addDescription($product_id, (int)$language_id, $value);
+			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
 		}
 
 		// Code
@@ -89,14 +89,6 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
 				$this->model_catalog_product->addFilter($product_id, $filter_id);
-			}
-		}
-
-		// Tag
-		if (isset($data['product_tag'])) {
-			foreach ($data['product_tag'] as $tag_id) {
-				$this->model_catalog_product->addTag($product_id, $tag_id);
-
 			}
 		}
 
@@ -129,7 +121,7 @@ class Product extends \Opencart\System\Engine\Model {
 					$this->model_catalog_product->deleteAttributes($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], (int)$language_id, $product_attribute_description);
+						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -164,13 +156,22 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Reward
+		if (isset($data['product_reward'])) {
+			foreach ($data['product_reward'] as $customer_group_id => $product_reward) {
+				if ((int)$product_reward['points'] > 0) {
+					$this->model_catalog_product->addReward($product_id, $customer_group_id, $product_reward);
+				}
+			}
+		}
+
 		// SEO
 		if (isset($data['product_seo_url'])) {
 			$this->load->model('design/seo_url');
 
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, (int)$language_id);
+					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -179,7 +180,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->model_catalog_product->addLayout($product_id, (int)$store_id, $layout_id);
+					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -244,7 +245,7 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteDescriptions($product_id);
 
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->model_catalog_product->addDescription($product_id, (int)$language_id, $value);
+			$this->model_catalog_product->addDescription($product_id, $language_id, $value);
 		}
 
 		// Code
@@ -272,16 +273,6 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_filter'])) {
 			foreach ($data['product_filter'] as $filter_id) {
 				$this->model_catalog_product->addFilter($product_id, $filter_id);
-			}
-		}
-
-		// Tag
-		$this->model_catalog_product->deleteTags($product_id);
-
-		if (isset($data['product_tag'])) {
-			foreach ($data['product_tag'] as $tag_id) {
-				$this->model_catalog_product->addTag($product_id, $tag_id);
-
 			}
 		}
 
@@ -322,7 +313,7 @@ class Product extends \Opencart\System\Engine\Model {
 					$this->model_catalog_product->deleteAttributes($product_id, $product_attribute['attribute_id']);
 
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
-						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], (int)$language_id, $product_attribute_description);
+						$this->model_catalog_product->addAttribute($product_id, $product_attribute['attribute_id'], $language_id, $product_attribute_description);
 					}
 				}
 			}
@@ -364,14 +355,24 @@ class Product extends \Opencart\System\Engine\Model {
 			}
 		}
 
+		// Rewards
+		$this->model_catalog_product->deleteRewards($product_id);
+
+		if (isset($data['product_reward'])) {
+			foreach ($data['product_reward'] as $customer_group_id => $value) {
+				if ((int)$value['points'] > 0) {
+					$this->model_catalog_product->addReward($product_id, $customer_group_id, $value);
+				}
+			}
+		}
+
 		// SEO
-		$this->load->model('design/seo_url');
 		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
 
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, (int)$store_id, (int)$language_id);
+					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -382,7 +383,7 @@ class Product extends \Opencart\System\Engine\Model {
 		if (isset($data['product_layout'])) {
 			foreach ($data['product_layout'] as $store_id => $layout_id) {
 				if ($layout_id) {
-					$this->model_catalog_product->addLayout($product_id, (int)$store_id, $layout_id);
+					$this->model_catalog_product->addLayout($product_id, $store_id, $layout_id);
 				}
 			}
 		}
@@ -422,13 +423,13 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['product_description'] = $this->model_catalog_product->getDescriptions($product_id);
 			$product_data['product_discount'] = $this->model_catalog_product->getDiscounts($product_id);
 			$product_data['product_download'] = $this->model_catalog_product->getDownloads($product_id);
-			$product_data['product_tags'] = $this->model_catalog_product->getFilters($product_id);
-			$product_data['product_filter'] = $this->model_catalog_product->getTags($product_id);
+			$product_data['product_filter'] = $this->model_catalog_product->getFilters($product_id);
 			$product_data['product_image'] = $this->model_catalog_product->getImages($product_id);
 			$product_data['product_layout'] = $this->model_catalog_product->getLayouts($product_id);
 			$product_data['product_option'] = $this->model_catalog_product->getOptions($product_id);
 			$product_data['product_subscription'] = $this->model_catalog_product->getSubscriptions($product_id);
 			$product_data['product_related'] = $this->model_catalog_product->getRelated($product_id);
+			$product_data['product_reward'] = $this->model_catalog_product->getRewards($product_id);
 			$product_data['product_store'] = $this->model_catalog_product->getStores($product_id);
 
 			foreach ($product_data['product_option'] as $po => $product_option) {
@@ -477,11 +478,11 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->model_catalog_product->deleteOptions($product_id);
 		$this->model_catalog_product->deleteRelated($product_id);
 		$this->model_catalog_product->deleteReports($product_id);
+		$this->model_catalog_product->deleteRewards($product_id);
 		$this->model_catalog_product->deleteStores($product_id);
 		$this->model_catalog_product->deleteSubscriptions($product_id);
-		$this->model_catalog_product->deleteTags($product_id);
 
-		// Reviews
+		// Review
 		$this->load->model('catalog/review');
 
 		$this->model_catalog_review->deleteReviewsByProductId($product_id);
@@ -604,6 +605,11 @@ class Product extends \Opencart\System\Engine\Model {
 				$product_data['product_related'] = $this->model_catalog_product->getRelated($master_id);
 			}
 
+			// Rewards
+			if (!isset($override['product_reward'])) {
+				$product_data['product_reward'] = $this->model_catalog_product->getRewards($master_id);
+			}
+
 			// SEO
 			// product_seo table is not overwritten because that needs to have unique seo keywords for every product
 
@@ -682,9 +688,7 @@ class Product extends \Opencart\System\Engine\Model {
 			// Description
 			$product_descriptions = $this->model_catalog_product->getDescriptions($master_id);
 
-			foreach ($product_descriptions as $product_description) {
-				$language_id = $product_description['language_id'];
-
+			foreach ($product_descriptions as $language_id => $product_description) {
 				foreach ($product_description as $key => $value) {
 					if (!isset($override['product_description'][$language_id][$key])) {
 						$product_data['product_description'][$language_id][$key] = $value;
@@ -738,6 +742,11 @@ class Product extends \Opencart\System\Engine\Model {
 			// Related
 			if (!isset($override['product_related'])) {
 				$product_data['product_related'] = $this->model_catalog_product->getRelated($master_id);
+			}
+
+			// Rewards
+			if (!isset($override['product_reward'])) {
+				$product_data['product_reward'] = $this->model_catalog_product->getRewards($master_id);
 			}
 
 			// SEO
@@ -821,9 +830,7 @@ class Product extends \Opencart\System\Engine\Model {
 			// Descriptions
 			$product_descriptions = $this->model_catalog_product->getDescriptions($product['product_id']);
 
-			foreach ($product_descriptions as $product_description) {
-				$language_id = $product_description['language_id'];
-
+			foreach ($product_descriptions as $language_id => $product_description) {
 				foreach ($product_description as $key => $value) {
 					// If override set use the POST data values
 					if (isset($override['product_description'][$language_id][$key])) {
@@ -832,11 +839,6 @@ class Product extends \Opencart\System\Engine\Model {
 				}
 			}
 
-			// Codes
-			if (isset($override['product_code'])) {
-				$product_data['product_code'] = $this->model_catalog_product->getCodes($product['product_id']);
-			}
-			
 			// Attributes
 			if (isset($override['product_attribute'])) {
 				$product_data['product_attribute'] = $this->model_catalog_product->getAttributes($product['product_id']);
@@ -882,6 +884,11 @@ class Product extends \Opencart\System\Engine\Model {
 				$product_data['product_related'] = $this->model_catalog_product->getRelated($product['product_id']);
 			}
 
+			// Rewards
+			if (isset($override['product_reward'])) {
+				$product_data['product_reward'] = $this->model_catalog_product->getRewards($product['product_id']);
+			}
+
 			// SEO
 			$product_data['product_seo_url'] = $this->model_catalog_product->getSeoUrls($product['product_id']);
 
@@ -914,46 +921,6 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Master ID
-	 *
-	 * Edit product master record in the database.
-	 *
-	 * @param int $product_id primary key of the product record
-	 * @param int $master_id  primary key of the product record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->editMasterId($product_id, 0);
-	 */
-	public function editMasterId(int $product_id, int $master_id): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$master_id . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
-	}
-
-	/**
-	 * Edit Sales
-	 *
-	 * Edit product rating record in the database.
-	 *
-	 * @param int $product_id primary key of the product record
-	 * @param int $rating
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->editSale($result['product_id'], $this->model_catalog_review->getRating($product_id));
-	 */
-	public function editSale(int $product_id, int $total): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `sale` = '" . (int)$total . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
-	}
-
-	/**
 	 * Edit Rating
 	 *
 	 * Edit product rating record in the database.
@@ -974,12 +941,12 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
+	 * Edit Master ID
 	 *
-	 * Edit category status record in the database.
+	 * Edit product master record in the database.
 	 *
-	 * @param int  $product_id primary key of the product record
-	 * @param bool $status
+	 * @param int $product_id primary key of the product record
+	 * @param int $master_id  primary key of the product record
 	 *
 	 * @return void
 	 *
@@ -987,10 +954,10 @@ class Product extends \Opencart\System\Engine\Model {
 	 *
 	 * $this->load->model('catalog/product');
 	 *
-	 * $this->model_catalog_product->editStatus($product_id, $status);
+	 * $this->model_catalog_product->editMasterId($product_id, 0);
 	 */
-	public function editStatus(int $product_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = '" . (bool)$status . "' WHERE `product_id` = '" . (int)$product_id . "'");
+	public function editMasterId(int $product_id, int $master_id): void {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `master_id` = '" . (int)$master_id . "', `date_modified` = NOW() WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	/**
@@ -1053,35 +1020,13 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getProducts($filter_data);
 	 */
 	public function getProducts(array $data = []): array {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
-		$sql = "SELECT *, `p`.`product_id` AS `product_id` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
 
 		if (!empty($data['filter_model'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
-		}
-
-		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p`.`product_id` = `p2c`.`product_id`)";
-		}
-
-		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`p`.`product_id` = `pf`.`product_id`)";
-		}
-
-		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `pt` ON (`p`.`product_id` = `pt`.`product_id`)";
-		}
-
-		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
+		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
 			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
@@ -1096,19 +1041,11 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
+			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
 		}
 
 		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
-		}
-
-		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
-			$sql .= " AND `pf`.`filter_id` = '" . (int)$data['filter_filter_id'] . "'";
-		}
-
-		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
-			$sql .= " AND `p2t`.`tag_id` = '" . (int)$data['filter_tag_id'] . "'";
 		}
 
 		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
@@ -1127,10 +1064,6 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `p2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
-		}
-
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
 			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
 		}
@@ -1138,16 +1071,16 @@ class Product extends \Opencart\System\Engine\Model {
 		$sql .= " GROUP BY `p`.`product_id`";
 
 		$sort_data = [
-			'name'       => 'pd.name',
-			'model'      => 'p.model',
-			'price'      => 'p.price',
-			'quantity'   => 'p.quantity',
-			'status'     => 'p.status',
-			'sort_order' => 'p.sort_order'
+			'pd.name',
+			'p.model',
+			'p.price',
+			'p.quantity',
+			'p.status',
+			'p.sort_order'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `pd`.`name`";
 		}
@@ -1184,54 +1117,6 @@ class Product extends \Opencart\System\Engine\Model {
 		return $product_data;
 	}
 
-	public function getProductsByAttributeId(int $attribute_id): array {
-		$product_attribute_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `attribute_id` = '" . (int)$attribute_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_attribute_data[] = $result['product_id'];
-		}
-
-		return $product_attribute_data;
-	}
-
-	public function getProductsByCategoryId(int $category_id): array {
-		$product_category_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_category` WHERE `category_id` = '" . (int)$category_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_category_data[] = $result['product_id'];
-		}
-
-		return $product_category_data;
-	}
-
-	public function getProductsByFilterId(int $filter_id): array {
-		$product_filter_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_filter_data[] = $result['product_id'];
-		}
-
-		return $product_filter_data;
-	}
-
-	public function getProductsByOptionId(int $option_id): array {
-		$product_option_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option` WHERE `option_id` = '" . (int)$option_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_option_data[] = $result['product_id'];
-		}
-
-		return $product_option_data;
-	}
-
 	/**
 	 * Get Total Products
 	 *
@@ -1262,35 +1147,13 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_total = $this->model_catalog_product->getTotalProducts();
 	 */
 	public function getTotalProducts(array $data = []): int {
-		if (!empty($data['filter_language_id'])) {
-			$language_id = $data['filter_language_id'];
-		} else {
-			$language_id = $this->config->get('config_language_id');
-		}
-
 		$sql = "SELECT COUNT(DISTINCT `p`.`product_id`) AS `total` FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
 
 		if (!empty($data['filter_model'])) {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_store` `p2s` ON (`p`.`product_id` = `p2s`.`product_id`)";
-		}
-
-		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_category` `p2c` ON (`p`.`product_id` = `p2c`.`product_id`)";
-		}
-
-		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_to_tag` `pt` ON (`p`.`product_id` = `pt`.`product_id`)";
-		}
-
-		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_filter` `pf` ON (`p`.`product_id` = `pf`.`product_id`)";
-		}
-
-		$sql .= " WHERE `pd`.`language_id` = '" . (int)$language_id . "'";
+		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_master_id'])) {
 			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
@@ -1305,19 +1168,11 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " AND `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'";
+			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
 		}
 
 		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
 			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
-		}
-
-		if (isset($data['filter_tag_id']) && $data['filter_tag_id'] !== '') {
-			$sql .= " AND `p2t`.`tag_id` = '" . (int)$data['filter_tag_id'] . "'";
-		}
-
-		if (isset($data['filter_filter_id']) && $data['filter_filter_id'] !== '') {
-			$sql .= " AND `pf`.`filter_id` = '" . (int)$data['filter_filter_id'] . "'";
 		}
 
 		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
@@ -1334,10 +1189,6 @@ class Product extends \Opencart\System\Engine\Model {
 
 		if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
 			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
-		}
-
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
-			$sql .= " AND `p2s`.`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
@@ -1470,6 +1321,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_data['product_description'] = [
 	 *     'name'             => 'Product Name',
 	 *     'description'      => 'Product Description',
+	 *     'tag'              => 'Product Tag',
 	 *     'meta_title'       => 'Meta Title',
 	 *     'meta_description' => 'Meta Description',
 	 *     'meta_keyword'     => 'Meta Keyword'
@@ -1480,7 +1332,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_product->addDescription($product_id, $language_id, $product_data);
 	 */
 	public function addDescription(int $product_id, int $language_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
@@ -1539,10 +1391,10 @@ class Product extends \Opencart\System\Engine\Model {
 	public function getDescriptions(int $product_id): array {
 		$product_description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `pd`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "product_description` `pd` WHERE `pd`.`product_id` = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
-			$product_description_data[$result['code']] = $result;
+			$product_description_data[$result['language_id']] = $result;
 		}
 
 		return $product_description_data;
@@ -1592,7 +1444,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->addCode($product_id, $data);
 	 */
 	public function addCode(int $product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . (int)$product_id . "', `identifier_id` = '" . (int)$data['identifier_id'] . "', `value` = '" . $this->db->escape($data['value']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_code` SET `product_id` = '" . (int)$product_id . "', `code` = '" . $this->db->escape($data['code']) . "', `value` = '" . $this->db->escape($data['value']) . "'");
 	}
 
 	/**
@@ -1630,7 +1482,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getCodes($product_id);
 	 */
 	public function getCodes(int $product_id): array {
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "identifier` WHERE `identifier_id` = `pc`.`identifier_id`) AS `code` FROM `" . DB_PREFIX . "product_code` `pc` WHERE `pc`.`product_id` = '" . (int)$product_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_code` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		return $query->rows;
 	}
@@ -1721,91 +1573,6 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Add Tag
-	 *
-	 * Create a new product category record in the database.
-	 *
-	 * @param int $product_id  primary key of the product record
-	 * @param int $tag_id primary key of the category record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->addTag($product_id, $tag_id);
-	 */
-	public function addTag(int $product_id, int $tag_id): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_tag` SET `product_id` = '" . (int)$product_id . "', `tag_id` = '" . (int)$tag_id . "'");
-	}
-
-	/**
-	 * Delete Tags
-	 *
-	 * Delete product category records in the database.
-	 *
-	 * @param int $product_id primary key of the product record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->deleteTags($product_id);
-	 */
-	public function deleteTags(int $product_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_tag` WHERE `product_id` = '" . (int)$product_id . "'");
-	}
-
-	/**
-	 * Delete Tags By Tag ID
-	 *
-	 * Delete categories by category record in the database.
-	 *
-	 * @param int $category_id primary key of the category record
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $this->model_catalog_product->deleteTagByTagId($tag_id);
-	 */
-	public function deleteTagsByTagId(int $tag_id): void {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_tag` WHERE `tag_id` = '" . (int)$tag_id . "'");
-	}
-
-	/**
-	 * Get Tags
-	 *
-	 * Get the record of the product category records in the database.
-	 *
-	 * @param int $product_id primary key of the product record
-	 *
-	 * @return array<int, int> category records that have category ID
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/product');
-	 *
-	 * $categories = $this->model_catalog_product->getCategories($product_id);
-	 */
-	public function getTags(int $product_id): array {
-		$product_tag_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_tag` WHERE `product_id` = '" . (int)$product_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_tag_data[] = $result['tag_id'];
-		}
-
-		return $product_tag_data;
-	}
-
-	/**
 	 * Add Filter
 	 *
 	 * Create a new product filter record in the database.
@@ -1888,12 +1655,6 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return $product_filter_data;
-	}
-
-	public function getTotalFiltersByFilterId(int $filter_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_filter` WHERE `filter_id` = '" . (int)$filter_id . "'");
-
-		return (int)$query->row['total'];
 	}
 
 	/**
@@ -1983,21 +1744,23 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_attributes = $this->model_catalog_product->getAttributes($product_id);
 	 */
 	public function getAttributes(int $product_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` `pa` WHERE `pa`.`product_id` = '" . (int)$product_id . "'");
+		$product_attribute_data = [];
 
-		return $query->rows;
-	}
+		$product_attribute_query = $this->db->query("SELECT `pa`.`attribute_id` FROM `" . DB_PREFIX . "product_attribute` `pa` LEFT JOIN `" . DB_PREFIX . "attribute` a ON (`a`.`attribute_id` = `pa`.`attribute_id`) LEFT JOIN `" . DB_PREFIX . "attribute_group` `ag` ON (`ag`.`attribute_group_id` = `a`.`attribute_group_id`) WHERE `pa`.`product_id` = '" . (int)$product_id . "' GROUP BY `pa`.`attribute_id` ORDER BY `ag`.`sort_order` ASC, `a`.`sort_order` ASC");
 
-	public function getAttributeDescriptions(int $product_id, int $attribute_id): array {
-		$product_attribute_description_data = [];
+		foreach ($product_attribute_query->rows as $product_attribute) {
+			$product_attribute_description_data = [];
 
-		$query = $this->db->query("SELECT *, (SELECT `code` FROM `" . DB_PREFIX . "language` `l` WHERE `pa`.`language_id` = `l`.`language_id`) AS `code` FROM `" . DB_PREFIX . "product_attribute` `pa` WHERE `pa`.`product_id` = '" . (int)$product_id . "' AND `pa`.`attribute_id` = '" . (int)$attribute_id . "'");
+			$product_attribute_description_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' AND `attribute_id` = '" . (int)$product_attribute['attribute_id'] . "'");
 
-		foreach ($query->rows as $result) {
-			$product_attribute_description_data[$result['code']] = $result;
+			foreach ($product_attribute_description_query->rows as $product_attribute_description) {
+				$product_attribute_description_data[$product_attribute_description['language_id']] = $product_attribute_description;
+			}
+
+			$product_attribute_data[] = ['product_attribute_description' => $product_attribute_description_data] + $product_attribute;
 		}
 
-		return $product_attribute_description_data;
+		return $product_attribute_data;
 	}
 
 	/**
@@ -2227,8 +1990,11 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'quantity'                => 1,
 	 *     'subtract'                => 0,
 	 *     'price'                   => '0.0000',
+	 *     'price_prefix'            => '',
 	 *     'points'                  => '0',
+	 *     'points_prefix'           => '',
 	 *     'weight'                  => '0.0000',
+	 *     'weight_prefix'           => ''
 	 * ];
 	 *
 	 * $this->load->model('catalog/product');
@@ -2242,7 +2008,7 @@ class Product extends \Opencart\System\Engine\Model {
 			$sql .= "`product_option_value_id` = '" . (int)$data['product_option_value_id'] . "', ";
 		}
 
-		$sql .= "`product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$option_id . "', `option_value_id` = '" . (int)$data['option_value_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `subtract` = '" . (int)$data['subtract'] . "', `price` = '" . (float)$data['price'] . "', `points` = '" . (int)$data['points'] . "', `weight` = '" . (float)$data['weight'] . "'";
+		$sql .= "`product_option_id` = '" . (int)$product_option_id . "', `product_id` = '" . (int)$product_id . "', `option_id` = '" . (int)$option_id . "', `option_value_id` = '" . (int)$data['option_value_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `subtract` = '" . (int)$data['subtract'] . "', `price` = '" . (float)$data['price'] . "', `price_prefix` = '" . $this->db->escape($data['price_prefix']) . "', `points` = '" . (int)$data['points'] . "', `points_prefix` = '" . $this->db->escape($data['points_prefix']) . "', `weight` = '" . (float)$data['weight'] . "', `weight_prefix` = '" . $this->db->escape($data['weight_prefix']) . "'";
 
 		$this->db->query($sql);
 
@@ -2285,15 +2051,9 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $product_option_value_info = $this->model_catalog_product->getOptionValue($product_id, $product_option_value_id);
 	 */
 	public function getOptionValue(int $product_id, int $product_option_value_id): array {
-		$query = $this->db->query("SELECT `pov`.`option_value_id`, `ovd`.`name`, `pov`.`quantity`, `pov`.`subtract`, `pov`.`price`, `pov`.`points`, `pov`.`weight` FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT `pov`.`option_value_id`, `ovd`.`name`, `pov`.`quantity`, `pov`.`subtract`, `pov`.`price`, `pov`.`price_prefix`, `pov`.`points`, `pov`.`points_prefix`, `pov`.`weight`, `pov`.`weight_prefix` FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_value_id` = '" . (int)$product_option_value_id . "' AND `ovd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
-	}
-
-	public function getOptionValues(int $product_id, int $product_option_id): array {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_value` `pov` LEFT JOIN `" . DB_PREFIX . "option_value` `ov` ON (`pov`.`option_value_id` = `ov`.`option_value_id`) LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ov`.`option_value_id` = `ovd`.`option_value_id`) WHERE `pov`.`product_id` = '" . (int)$product_id . "' AND `pov`.`product_option_id` = '" . (int)$product_option_id . "'");
-
-		return $query->rows;
 	}
 
 	/**
@@ -2421,6 +2181,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 *     'priority'          => 0,
 	 *     'price'             => '0.0000',
 	 *     'type'              => 'Product Discount Type',
+	 *     'special'           => 0,
 	 *     'date_start'        => '2021-01-01',
 	 *     'date_end'          => '2021-01-31'
 	 * ];
@@ -2430,7 +2191,7 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $this->model_catalog_product->addDiscount($product_id, $product_data);
 	 */
 	public function addDiscount(int $product_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_discount` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `type` = '" . $this->db->escape($data['type']) . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_discount` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$data['customer_group_id'] . "', `quantity` = '" . (int)$data['quantity'] . "', `priority` = '" . (int)$data['priority'] . "', `price` = '" . (float)$data['price'] . "', `type` = '" . $this->db->escape($data['type']) . "', `special` = '" . (bool)$data['special'] . "', `date_start` = '" . $this->db->escape($data['date_start']) . "', `date_end` = '" . $this->db->escape($data['date_end']) . "'");
 	}
 
 	/**
@@ -2453,7 +2214,7 @@ class Product extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Delete Discounts By Customer Group ID
+	 * Delete Discounts By Customer ID
 	 *
 	 * Delete discounts by customer group records in the database.
 	 *
@@ -2490,6 +2251,96 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_discount` WHERE `product_id` = '" . (int)$product_id . "' ORDER BY `quantity`, `priority`, `price`");
 
 		return $query->rows;
+	}
+
+	/**
+	 * Add Reward
+	 *
+	 * Create a new reward record in the database.
+	 *
+	 * @param int                  $product_id        primary key of the product record
+	 * @param int                  $customer_group_id primary key of the customer group record
+	 * @param array<string, mixed> $data              array of data
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $product_data['product_reward'] = [
+	 *     'points' => 0
+	 * ];
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->addReward($product_id, $customer_group_id, $product_data);
+	 */
+	public function addReward(int $product_id, int $customer_group_id, array $data): void {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_reward` SET `product_id` = '" . (int)$product_id . "', `customer_group_id` = '" . (int)$customer_group_id . "', `points` = '" . (int)$data['points'] . "'");
+	}
+
+	/**
+	 * Delete Rewards
+	 *
+	 * Delete product reward records in the database.
+	 *
+	 * @param int $product_id primary key of the product record
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->deleteRewards($product_id);
+	 */
+	public function deleteRewards(int $product_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
+	}
+
+	/**
+	 * Delete Rewards By Customer Group ID
+	 *
+	 * Delete rewards by customer group records in the database.
+	 *
+	 * @param int $customer_group_id primary key of the customer group record to be deleted
+	 *
+	 * @return void
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $this->model_catalog_product->deleteRewardsByCustomerGroupId($customer_group_id);
+	 */
+	public function deleteRewardsByCustomerGroupId(int $customer_group_id): void {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_reward` WHERE `customer_group_id` = '" . (int)$customer_group_id . "'");
+	}
+
+	/**
+	 * Get Rewards
+	 *
+	 * Get the record of the reward records in the database.
+	 *
+	 * @param int $product_id primary key of the product record
+	 *
+	 * @return array<int, array<string, mixed>> reward records that have product ID
+	 *
+	 * @example
+	 *
+	 * $this->load->model('catalog/product');
+	 *
+	 * $product_reward = $this->model_catalog_product->getRewards($product_id);
+	 */
+	public function getRewards(int $product_id): array {
+		$product_reward_data = [];
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_reward` WHERE `product_id` = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_reward_data[$result['customer_group_id']] = $result;
+		}
+
+		return $product_reward_data;
 	}
 
 	/**
@@ -2575,12 +2426,6 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return $product_download_data;
-	}
-
-	public function getTotalDownloads(int $product_id): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "product_to_download` WHERE `product_id` = '" . (int)$product_id . "'");
-
-		return (int)$query->row['total'];
 	}
 
 	/**
@@ -2687,21 +2532,6 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		return $product_store_data;
-	}
-
-	/*
-	 * Get information data based on stores
-	 */
-	public function getStoresByStoreId(int $store_id): array {
-		$product_data = [];
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_to_store` WHERE `store_id` = '" . (int)$store_id . "'");
-
-		foreach ($query->rows as $result) {
-			$product_data[] = $result['product_id'];
-		}
-
-		return $product_data;
 	}
 
 	/**

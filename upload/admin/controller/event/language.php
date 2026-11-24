@@ -9,47 +9,6 @@ class Language extends \Opencart\System\Engine\Controller {
 	/**
 	 * Index
 	 *
-	 * Adds task to generate new language list
-	 *
-	 * Triggered using admin/model/localisation/language.addLanguage/after
-	 * Triggered using admin/model/localisation/language.editLanguage/after
-	 * Triggered using admin/model/localisation/language.deleteLanguage/after
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
-	 * @return void
-	 */
-	public function index(string &$route, array &$args): void {
-		$task_data = [
-			'code'   => 'admin.language',
-			'action' => 'task/admin/language',
-			'args'   => []
-		];
-
-		$this->load->model('setting/task');
-
-		$this->model_setting_task->addTask($task_data);
-
-		$this->load->model('setting/store');
-
-		$store_ids = [0, ...array_column($this->model_setting_store->getStores(), 'store_id')];
-
-		foreach ($store_ids as $store_id) {
-			$task_data = [
-				'code'   => 'language.' . $store_id,
-				'action' => 'task/catalog/language',
-				'args'   => ['store_id' => $store_id]
-			];
-
-			$this->model_setting_task->addTask($task_data);
-		}
-	}
-
-	/**
-	 * template
-	 *
 	 * Dump all the language vars into the template.
 	 *
 	 * view/ * /before
@@ -59,7 +18,7 @@ class Language extends \Opencart\System\Engine\Controller {
 	 *
 	 * @return void
 	 */
-	public function template(string &$route, array &$args): void {
+	public function index(string &$route, array &$args): void {
 		foreach ($this->language->all() as $key => $value) {
 			if (!isset($args[$key])) {
 				$args[$key] = $value;

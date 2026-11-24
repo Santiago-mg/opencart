@@ -166,7 +166,7 @@ class TaxClass extends \Opencart\System\Engine\Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$key = md5($sql);
+		$key = hash('sha256', $sql);
 
 		$tax_class_data = $this->cache->get('tax_class.' . $key);
 

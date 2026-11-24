@@ -1,0 +1,79 @@
+# Plan de OWASP ZAP (Automation Framework) para RF-06 a RF-11.
+#
+# Pide las páginas y acciones de las seis funcionalidades y deja que el
+# escáner pasivo revise cada respuesta (cabeceras, cookies, formularios,
+# información que se filtra). No ataca la tienda: el análisis activo
+# (inyección SQL, XSS, permisos) ya lo hacen las pruebas de seguridad de
+# Vitest en tests/regresion/santiago/security-testing.
+env:
+  contexts:
+    - name: OpenCart RF-06 a RF-11
+      urls:
+        - http://host.docker.internal/
+      includePaths:
+        - http://host.docker.internal/.*
+  parameters:
+    failOnError: false
+    failOnWarning: false
+    progressToStdout: true
+
+jobs:
+  - type: passiveScan-config
+    parameters:
+      scanOnlyInScope: true
+      maxAlertsPerRule: 10
+
+  - type: requestor
+    requests:
+      # RF-06 búsqueda y filtrado
+      - url: http://host.docker.internal/index.php?route=product/search&search=mac&language=en-gb
+        method: GET
+      - url: http://host.docker.internal/index.php?route=product/search&search=mac&category_id=20&sub_category=1&sort=p.price&order=DESC&language=en-gb
+        method: GET
+      # RF-07 carrito
+      - url: http://host.docker.internal/index.php?route=product/product&product_id=40&language=en-gb
+        method: GET
+      - url: http://host.docker.internal/index.php?route=checkout/cart.add&language=en-gb
+        method: POST
+        headers:
+          - "Content-Type: application/x-www-form-urlencoded"
+        data: product_id=40&quantity=1
+      - url: http://host.docker.internal/index.php?route=checkout/cart&language=en-gb
+        method: GET
+      # RF-08 cupones
+      - url: http://host.docker.internal/index.php?route=extension/opencart/checkout/coupon.save&language=en-gb
+        method: POST
+        headers:
+          - "Content-Type: application/x-www-form-urlencoded"
+        data: coupon=NOEXISTE
+      # RF-09 reseñas
+      - url: http://host.docker.internal/index.php?route=product/review.list&product_id=40&language=en-gb
+        method: GET
+      # RF-10 comparar
+      - url: http://host.docker.internal/index.php?route=product/compare.add&language=en-gb
+        method: POST
+        headers:
+          - "Content-Type: application/x-www-form-urlencoded"
+        data: product_id=40
+      - url: http://host.docker.internal/index.php?route=product/compare&language=en-gb
+        method: GET
+      # RF-11 devoluciones
+      - url: http://host.docker.internal/index.php?route=account/returns.add&language=en-gb
+        method: GET
+
+  - type: passiveScan-wait
+    parameters:
+      maxDuration: 2
+
+  - type: report
+    parameters:
+      template: traditional-html
+      reportDir: /zap/wrk/evidencia/dinamico
+      reportFile: zap-reporte
+      reportTitle: OWASP ZAP - OpenCart RF-06 a RF-11
+  - type: report
+    parameters:
+      template: traditional-json
+      reportDir: /zap/wrk/evidencia/dinamico
+      reportFile: zap-reporte
+      reportTitle: OWASP ZAP - OpenCart RF-06 a RF-11

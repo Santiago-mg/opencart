@@ -3,7 +3,7 @@
  * @package     OpenCart
  *
  * @author      Daniel Kerr
- * @copyright   Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
+ * @copyright   Copyright (c) 2005 - 2017, OpenCart, Ltd. (https://www.opencart.com/)
  * @license     https://opensource.org/licenses/GPL-3.0
  *
  * @see        https://www.opencart.com
@@ -38,7 +38,7 @@ class Action {
 	 * @param string $route
 	 */
 	public function __construct(string $route) {
-		$this->route = preg_replace('/[^a-zA-Z0-9_\/\.]/', '', $route);
+		$this->route = preg_replace('/[^a-zA-Z0-9_|\/\.]/', '', $route);
 
 		$pos = strrpos($route, '.');
 

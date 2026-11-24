@@ -9,6 +9,7 @@ $_['text_return']       = 'Returns';
 $_['text_sitemap']      = 'Site Map';
 $_['text_gdpr']         = 'GDPR';
 $_['text_manufacturer'] = 'Brands';
+$_['text_affiliate']    = 'Affiliate';
 $_['text_special']      = 'Specials';
 $_['text_account']      = 'My Account';
 $_['text_order']        = 'Order History';

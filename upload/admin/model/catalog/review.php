@@ -83,26 +83,6 @@ class Review extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Edit Status
-	 *
-	 * Edit review status record in the database.
-	 *
-	 * @param int  $review_id primary key of the product record
-	 * @param bool $status
-	 *
-	 * @return void
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/review');
-	 *
-	 * $this->model_catalog_review->editStatus($review_id, $status);
-	 */
-	public function editStatus(int $review_id, bool $status): void {
-		$this->db->query("UPDATE `" . DB_PREFIX . "review` SET `status` = '" . (bool)$status . "' WHERE `review_id` = '" . (int)$review_id . "'");
-	}
-
-	/**
 	 * Delete Review
 	 *
 	 * Delete review record in the database.
@@ -227,11 +207,7 @@ class Review extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_review->getReviews($filter_data);
 	 */
 	public function getReviews(array $data = []): array {
-		$sql = "SELECT `r`.`review_id`, `r`.`product_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
-		if (!empty($data['filter_product_id'])) {
-			$sql .= " AND `r`.`product_id` = '" . (int)$data['filter_product_id'] . "'";
-		}
+		$sql = "SELECT `r`.`review_id`, `pd`.`name`, `r`.`author`, `r`.`rating`, `r`.`status`, `r`.`date_added` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_product']) . '%') . "'";
@@ -254,15 +230,15 @@ class Review extends \Opencart\System\Engine\Model {
 		}
 
 		$sort_data = [
-			'name'       => 'pd.name',
-			'author'     => 'r.author',
-			'rating'     => 'r.rating',
-			'status'     => 'r.status',
-			'date_added' => 'r.date_added'
+			'pd.name',
+			'r.author',
+			'r.rating',
+			'r.status',
+			'r.date_added'
 		];
 
-		if (isset($data['sort']) && array_key_exists($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $sort_data[$data['sort']];
+		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
 			$sql .= " ORDER BY `r`.`date_added`";
 		}
@@ -319,10 +295,6 @@ class Review extends \Opencart\System\Engine\Model {
 	 */
 	public function getTotalReviews(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "review` `r` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`r`.`product_id` = `pd`.`product_id`) WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-
-		if (!empty($data['filter_product_id'])) {
-			$sql .= " AND `r`.`product_id` = '" . (int)$data['filter_product_id'] . "'";
-		}
 
 		if (!empty($data['filter_product'])) {
 			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_product']) . '%') . "'";
